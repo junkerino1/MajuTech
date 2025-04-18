@@ -3,7 +3,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="./index.html" class="text-nowrap logo-img">
-                        <img src="${pageContext.request.contextPath}/image/icon.jpg" width="100" height="84" alt="Company Logo" />
+                        <img src="${pageContext.request.contextPath}/image/logo.png" width="100" height="84" alt="Company Logo" />
                     </a>
                 </div>
                 <!-- Sidebar navigation-->

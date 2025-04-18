@@ -10,6 +10,9 @@ public class SSLUtil {
     // Method to disable SSL verification
     public static void disableSslVerification() throws NoSuchAlgorithmException, KeyManagementException {
         // Set up a TrustManager that accepts all certificates (this is unsafe for production)
+        
+        System.setProperty("https.protocols", "TLSv1.2");
+        
         TrustManager[] trustAllCertificates = new TrustManager[]{
             new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
@@ -27,7 +30,7 @@ public class SSLUtil {
         };
 
         // Install the all-trusting TrustManager into the SSLContext
-        SSLContext sslContext = SSLContext.getInstance("TLS");
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
         sslContext.init(null, trustAllCertificates, new java.security.SecureRandom());
 
         // Set the default SSLContext to use the one we created (bypassing certificate validation)

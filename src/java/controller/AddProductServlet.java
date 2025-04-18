@@ -7,7 +7,6 @@ import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.util.List;
 
@@ -23,7 +22,6 @@ import service.CategoryService;
 import utils.CloudinaryConfig;
 import utils.SSLUtil;
 
-@WebServlet("/add-product")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB

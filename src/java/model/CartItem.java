@@ -5,16 +5,18 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "CARTITEMS")
 public class CartItem {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "cart_id")
-    private int cart_id;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @Column(name = "product_id")
-    private int product_id;
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     @Column(name = "quantity")
     private int quantity;
@@ -22,12 +24,11 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(int cart_id, int product_id, int quantity) {
-        this.cart_id = cart_id;
-        this.product_id = product_id;
-        this.quantity = quantity;
-    }
-
+    public CartItem(Cart cart, Product product, int quantity) {
+    this.cart = cart;
+    this.product = product;
+    this.quantity = quantity;
+}
     public int getId() {
         return id;
     }
@@ -36,20 +37,20 @@ public class CartItem {
         this.id = id;
     }
 
-    public int getCartId() {
-        return cart_id;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(int cart_id) {
-        this.cart_id = cart_id;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public int getProductId() {
-        return product_id;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int product_id) {
-        this.product_id = product_id;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
     <title>Login & Registration</title>
 </head>
 <body>
@@ -62,7 +62,7 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                     <div class="logo-wrapper">
-                        <img src="img/logo.png" alt="Logo">
+                        <img src="${pageContext.request.contextPath}/image/logo.png" alt="Logo">
                       </div>
                     <h1>Hello, Friend!</h1>
                     <p>Enter your personal details and start journey with us</p>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="overlay-panel overlay-right">
                     <div class="logo-wrapper">
-                        <img src="${pageContext.request.contextPath}/image/icon.png" alt="Logo">
+                        <img src="${pageContext.request.contextPath}/image/logo.png" alt="Logo">
                       </div>
                     <h1>Welcome Back!</h1>
                     <p>To keep connected with us please login with your personal info</p>

@@ -108,6 +108,6 @@
             </div>
         </section>
     </body>
-
+<jsp:include page="client-footer.jsp"/>
     <script src="${pageContext.request.contextPath}/script/script.js"></script>
 </html>

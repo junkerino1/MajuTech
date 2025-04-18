@@ -46,4 +46,10 @@ public class ProductService {
         return product;
     }
 
+    public void updateProduct(Product product) {
+
+        em.merge(product);
+
+    }
+
 }

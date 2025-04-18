@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     </head>
 
-
     <body>
 
         <section id="hero">
@@ -58,22 +57,35 @@
             </div>
 
             <div class="product-grid">
-                <!-- Product 1 -->
+                <%
+                    List<Product> promoProducts = (List<Product>) request.getAttribute("promoProducts");
+                    if (promoProducts != null && !promoProducts.isEmpty()) {
+                        for (Product product : promoProducts) {
+                            if ("promotion".equalsIgnoreCase(product.getStatus())) {
+                %>
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="/api/placeholder/200/150" alt="Smart Watch">
+                        <img src="<%= product.getImage1()%>" alt="<%= product.getProductName()%>" width="200px" height="200px">
                     </div>
                     <div class="product-details">
-                        <h3 class="product-name">Smart Watch Pro</h3>
+                        <h3 class="product-name"><%= product.getProductName()%></h3>
                         <div class="price-container">
-                            <span class="original-price">$199.99</span>
-                            <span class="discounted-price">$129.99</span>
-                            <span class="discount-badge">-35%</span>
+                            <span class="original-price">RM <%= String.format("%.2f", product.getUnitPrice())%></span><br>
+                            <span class="discounted-price">RM <%= String.format("%.2f", product.getEffectivePrice())%></span>
+                            <%
+                                double discountPercent = 100 - ((product.getEffectivePrice() / product.getUnitPrice()) * 100);
+                            %>
                         </div>
                         <button class="buy-button">Add to Cart</button>
                     </div>
                 </div>
-
+                <%
+                        }
+                    }
+                } else {
+                %>
+                <p class="no-promo">No active promotions at this time</p>
+                <% } %>
             </div>
 
 
@@ -156,6 +168,40 @@
 
 
         <script src="${pageContext.request.contextPath}/script/clientscript.js"></script>
+
+        <script>
+                // Get the end date from server-side attribute
+                const endDateStr = '${endDate}'; // This will be in format "yyyy-MM-dd"
+                console.log("End date from server:", endDateStr);
+
+                // Parse the end date (add time component to make it end of day)
+                const countdownDate = new Date(endDateStr + 'T23:59:59');
+
+                // Update the countdown every second
+                const countdown = setInterval(function () {
+                    const now = new Date().getTime();
+                    const distance = countdownDate - now;
+
+                    // Calculate days, hours, minutes and seconds
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result
+                    document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                    document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                    document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                    document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+                    // If the countdown is finished
+                    if (distance < 0) {
+                        clearInterval(countdown);
+                        document.querySelector(".promotion-subtitle").innerHTML = "Promotion Has Ended!";
+                        document.querySelector(".buy-button").disabled = true;
+                    }
+                }, 1000);
+        </script>
     </body>
 
     <jsp:include page="client-footer.jsp" />

@@ -150,8 +150,7 @@ header {
 /* -----    Hero Section -- */
 /* ========================= */
 #hero {
-  /* background-image: url("../img/hero4.png"); */
-  background-image: url("../image/home.jpg");
+  background-image: url("../image/home.png");
   background-repeat: no-repeat;
   height: 90vh;
   width: 100%;
@@ -264,6 +263,7 @@ header {
 
 .product-card {
   background-color: #fff;
+  height: 300px;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -277,6 +277,7 @@ header {
 
 .product-image {
   height: 150px;
+  width: 150px;
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
@@ -1154,6 +1155,7 @@ footer .copyright {
   #hero {
     height: 70vh;
     background-position: top 30% right 30%;
+    background-image: url();
     padding: 0 80px;
   }
   #feature {

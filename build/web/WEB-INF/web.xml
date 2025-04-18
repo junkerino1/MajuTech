@@ -69,8 +69,8 @@
         <servlet-class>controller.CampaignConfirmationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddCampaignServlet</servlet-name>
-        <servlet-class>controller.AddCampaignServlet</servlet-class>
+        <servlet-name>CreateCampaignServlet</servlet-name>
+        <servlet-class>controller.CreateCampaignServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminLoginServlet</servlet-name>
@@ -107,8 +107,8 @@
         <url-pattern>/admin/campaign-confirmation</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddCampaignServlet</servlet-name>
-        <url-pattern>/admin/add-campaign</url-pattern>
+        <servlet-name>CreateCampaignServlet</servlet-name>
+        <url-pattern>/admin/create-campaign</url-pattern>
     </servlet-mapping>
     
     <!--admin controls-->

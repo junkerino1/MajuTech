@@ -2,7 +2,9 @@ package service;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import java.time.LocalDate;
 import model.Campaign;
 import model.CampaignItem;
 
@@ -30,5 +32,32 @@ public class CampaignService {
         return em.createQuery("SELECT ci.discountedPrice FROM CampaignItem ci WHERE ci.productId = :prod", Double.class)
                 .setParameter("prod", productId)
                 .getSingleResult();
+    }
+
+    public void createNewCampaign(Campaign newCampaign) {
+        em.persist(newCampaign);
+    }
+
+    public void createCampaignItems(CampaignItem item) {
+        em.persist(item);
+    }
+
+    public Campaign getOngoingCampaign() {
+        LocalDate currentDate = LocalDate.now();
+
+        try {
+            // Query to get the ongoing campaign based on current date
+            Campaign currentCampaign = em.createQuery(
+                    "SELECT c FROM Campaign c WHERE c.dateStart <= :currentDate AND c.dateEnd >= :currentDate", Campaign.class)
+                    .setParameter("currentDate", currentDate)
+                    .getSingleResult();
+
+            // Return the found campaign
+            return currentCampaign;
+
+        } catch (NoResultException e) {
+            // Handle case when no campaign is found
+            return null;
+        }
     }
 }

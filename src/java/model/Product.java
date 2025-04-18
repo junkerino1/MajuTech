@@ -15,31 +15,34 @@ public class Product {
 
     @Column(name = "unit_price")
     private double unitPrice;
-    
+
     @Column(name = "category_id")
     private int category_id;
-    
+
     @Column(name = "specification")
     private String specification;
-    
+
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "status")
     private String status;
-    
+
     @Column(name = "image1")
     private String image1;
-    
+
     @Column(name = "image2")
     private String image2;
-    
+
     @Column(name = "image3")
     private String image3;
-    
+
     @Column(name = "image4")
     private String image4;
 
+    @Transient
+    private double effectivePrice;  // This field is calculated dynamically
+    
     public Product() {
     }
     
@@ -55,7 +58,8 @@ public class Product {
         this.image3 = image3;
         this.image4 = image4;
     }
-        
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -63,7 +67,7 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getProductName() {
         return productName;
     }
@@ -80,22 +84,6 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public int getCategoryId() {
         return category_id;
     }
@@ -110,6 +98,22 @@ public class Product {
 
     public void setSpecification(String specification) {
         this.specification = specification;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getImage1() {
@@ -144,5 +148,11 @@ public class Product {
         this.image4 = image4;
     }
 
-    
+    public double getEffectivePrice() {
+        return effectivePrice;
+    }
+
+    public void setEffectivePrice(double effectivePrice) {
+        this.effectivePrice = effectivePrice;
+    }
 }

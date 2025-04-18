@@ -1,9 +1,12 @@
 package service;
 
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import model.Product;
+import model.CampaignItem;
+import service.CampaignService;
 
 import java.util.List;
 
@@ -13,16 +16,34 @@ public class ProductService {
     @PersistenceContext(unitName = "MajuTechPU")
     private EntityManager em;
 
+    @Inject
+    private CampaignService campaignService;
+
     public void addProduct(Product product) {
         em.persist(product);
     }
 
     public List<Product> getAllProducts() {
-        return em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+        List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+        for (Product product : products) {
+            if ("promotion".equalsIgnoreCase(product.getStatus())) {
+                product.setEffectivePrice(campaignService.getDiscountedPrice(product.getId()));
+                System.out.println("new price:" + product.getEffectivePrice());
+            } else {
+                product.setEffectivePrice(product.getUnitPrice());
+            }
+        }
+        return products;
     }
-    
+
     public Product getProductById(int productId) {
-        return em.find(Product.class, productId);
+        Product product = em.find(Product.class, productId);
+        if ("promotion".equalsIgnoreCase(product.getStatus())) {
+            product.setEffectivePrice(campaignService.getDiscountedPrice(productId));
+        } else {
+            product.setEffectivePrice(product.getUnitPrice());
+        }
+        return product;
     }
-    
+
 }

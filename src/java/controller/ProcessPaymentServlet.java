@@ -6,14 +6,17 @@ import jakarta.servlet.http.*;
 import service.CartService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import model.Cart;
 import model.CartItem;
 import model.Order;
 import model.OrderItem;
+import model.Product;
 import model.ShippingAddress;
 import model.User;
 import service.OrderService;
+import service.ProductService;
 
 public class ProcessPaymentServlet extends HttpServlet {
 
@@ -23,31 +26,41 @@ public class ProcessPaymentServlet extends HttpServlet {
     @Inject
     private OrderService orderService;
 
+    @Inject
+    private ProductService productService;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int cartId = Integer.parseInt(request.getParameter("cartId"));
         int addressId = Integer.parseInt(request.getParameter("addressId"));
-        ShippingAddress address = cartService.getAddressById(addressId);
         String paymentMethod = request.getParameter("paymentMethod");
+        
+        ShippingAddress address = cartService.getAddressById(addressId);
         List<CartItem> cartItems = cartService.getCartById(cartId);
-        double grandTotal = countTotalAmount(cartItems);
+        List<Product> productsInCart = new ArrayList<>();
+
+        for (CartItem item : cartItems) {
+            int productId = item.getProduct().getId();
+            Product product = productService.getProductById(productId);
+            productsInCart.add(product);
+        }
+
+        double totalAmount = countTotalAmount(productsInCart, cartItems);
         String status = "Processing";
 
         User user = (User) request.getSession().getAttribute("user");
-        System.out.println("user:" + user);
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
-        Order order = new Order(user, grandTotal, paymentMethod, address, status);
+        Order order = new Order(user, totalAmount, paymentMethod, address, status);
 
         orderService.createNewOrder(order);
 
         int orderId = order.getOrderId();
-        System.out.println("orderid: " + orderId);
 
         // ensure transfering process is completed before redirecting
         int complete = transferCartToOrder(order, cartItems);
@@ -66,38 +79,54 @@ public class ProcessPaymentServlet extends HttpServlet {
         int addressId = Integer.parseInt(request.getParameter("addressId"));
 
         List<CartItem> cartItems = cartService.getCartById(cartId);
+        List<Product> productsInCart = new ArrayList<>();
+
+        for (CartItem item : cartItems) {
+            int productId = item.getProduct().getId();
+            Product product = productService.getProductById(productId);
+            productsInCart.add(product);
+        }
+
+        double totalAmount = countTotalAmount(productsInCart, cartItems);
 
         // Pass data to JSP
         request.setAttribute("cartId", cartId);
-        request.setAttribute("cartItems", cartItems);
         request.setAttribute("addressId", addressId);
+        request.setAttribute("cartItems", cartItems);
+        request.setAttribute("productsInCart", productsInCart);
+        request.setAttribute("totalAmount", totalAmount);
+
         request.getRequestDispatcher("/view/payment-gateway.jsp").forward(request, response);
     }
 
-    public double countTotalAmount(List<CartItem> cartItems) {
-
+    public double countTotalAmount(List<Product> productsInCart, List<CartItem> cartItems) {
         double total = 0.0;
         double shipping;
 
-        for (CartItem item : cartItems) {
-            double price = item.getProduct().getUnitPrice() * item.getQuantity();
+        for (int i = 0; i < cartItems.size(); i++) {
+            Product product = productsInCart.get(i);
+            CartItem item = cartItems.get(i);
+
+            double price = product.getEffectivePrice() * item.getQuantity();
             total += price;
         }
+
         if (total > 1000) {
             shipping = 0.0;
         } else {
             shipping = 10.0;
         }
 
-        double grandTotal = total + shipping;
-
-        return grandTotal;
+        return total + shipping;
     }
 
     public int transferCartToOrder(Order order, List<CartItem> cartItems) {
 
         for (CartItem item : cartItems) {
-            OrderItem orderItem = new OrderItem(item.getProduct(), order, item.getQuantity());
+            int productId = item.getProduct().getId();
+            Product product = productService.getProductById(productId);
+            double currentPrice = product.getEffectivePrice();
+            OrderItem orderItem = new OrderItem(item.getProduct(), order, item.getQuantity(), currentPrice);
 
             orderService.createNewOrderItem(orderItem);
             cartService.removeFromCart(item.getId());

@@ -111,8 +111,8 @@ body {
 }
 
 .product-image {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background-color: #f9f9f9;
     border: 1px dashed #ddd;
     display: flex;

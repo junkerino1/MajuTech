@@ -60,33 +60,69 @@
         <servlet-name>OrderConfirmationServlet</servlet-name>
         <servlet-class>controller.OrderConfirmationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CampaignListServlet</servlet-name>
+        <servlet-class>controller.CampaignListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CampaignConfirmationServlet</servlet-name>
+        <servlet-class>controller.CampaignConfirmationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCampaignServlet</servlet-name>
+        <servlet-class>controller.AddCampaignServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <servlet-class>controller.AdminLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateAdminServlet</servlet-name>
+        <servlet-class>controller.CreateAdminServlet</servlet-class>
+    </servlet>
     
     
     
     
     
-<!--    mapping     -->
+    <!--mapping-->
     
+    <!--product CRUD-->
     <servlet-mapping>
         <servlet-name>AddProductServlet</servlet-name>
-        <url-pattern>/add-product</url-pattern>
+        <url-pattern>/admin/add-product</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductListServlet</servlet-name>
-        <url-pattern>/products-list</url-pattern>
+        <url-pattern>/admin/products-list</url-pattern>
+    </servlet-mapping>
+    
+    <!--campaign--> 
+    <servlet-mapping>
+        <servlet-name>CampaignListServlet</servlet-name>
+        <url-pattern>/admin/campaign</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddToCartServlet</servlet-name>
-        <url-pattern>/add-to-cart</url-pattern>
+        <servlet-name>CampaignConfirmationServlet</servlet-name>
+        <url-pattern>/admin/campaign-confirmation</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CreateUserServlet</servlet-name>
-        <url-pattern>/create-user</url-pattern>
+        <servlet-name>AddCampaignServlet</servlet-name>
+        <url-pattern>/admin/add-campaign</url-pattern>
+    </servlet-mapping>
+    
+    <!--admin controls-->
+    <servlet-mapping>
+        <servlet-name>CreateAdminServlet</servlet-name>
+        <url-pattern>/admin/createAdmin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <servlet-name>AdminLoginServlet</servlet-name>
+        <url-pattern>/admin/login</url-pattern>
     </servlet-mapping>
+    
+    
+    <!--client-->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -95,6 +131,12 @@
         <servlet-name>ShopServlet</servlet-name>
         <url-pattern>/product</url-pattern>
         <url-pattern>/product/*</url-pattern>
+    </servlet-mapping>
+    
+    <!--cart and order-->
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/add-to-cart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewCartServlet</servlet-name>
@@ -130,5 +172,18 @@
         <url-pattern>/order</url-pattern>
         <url-pattern>/order/*</url-pattern>
     </servlet-mapping>
+    
+    <!--client controls-->
+    <servlet-mapping>
+        <servlet-name>CreateUserServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    
+    
+   
     
 </web-app>

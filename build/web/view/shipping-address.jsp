@@ -1,3 +1,4 @@
+<%@page import="model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.ShippingAddress" %>
@@ -19,7 +20,6 @@
 
         <%
             List<ShippingAddress> address = (List<ShippingAddress>) request.getAttribute("address");
-            List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
             int cartId = (int) request.getAttribute("cartId");
         %>
 
@@ -125,24 +125,30 @@
                     <h2>Order Summary</h2>
 
                     <%
+                        List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
+                        List<Product> productsInCart = (List<Product>) request.getAttribute("productsInCart");
+
                         double total = 0.0;
                         double shipping = 5.99;
 
-                        if (cartItems != null && !cartItems.isEmpty()) {
+                        if (cartItems != null && productsInCart != null && !cartItems.isEmpty() && cartItems.size() == productsInCart.size()) {
                     %>
 
                     <div class="order-items">
                         <%
-                            for (CartItem item : cartItems) {
-                                double price = item.getProduct().getUnitPrice() * item.getQuantity();
+                            for (int i = 0; i < cartItems.size(); i++) {
+                                CartItem item = cartItems.get(i);
+                                Product product = productsInCart.get(i);
+
+                                double price = product.getEffectivePrice() * item.getQuantity();
                                 total += price;
                         %>
                         <div class="order-item">
                             <div class="item-image">
-                                <img src="<%= item.getProduct().getImage1()%>" width="45px">
+                                <img src="<%= product.getImage1()%>" width="45px">
                             </div>
                             <div class="item-details">
-                                <h4><%= item.getProduct().getProductName()%></h4>
+                                <h4><%= product.getProductName()%></h4>
                                 <p>Quantity: <%= item.getQuantity()%></p>
                                 <p class="item-price">RM <%= String.format("%.2f", price)%></p>
                             </div>
@@ -185,6 +191,7 @@
                         }
                     %>
                 </div>
+
             </div>
         </div>
 

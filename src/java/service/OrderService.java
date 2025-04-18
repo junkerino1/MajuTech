@@ -7,6 +7,7 @@ import model.Order;
 
 import java.util.List;
 import model.OrderItem;
+import model.User;
 
 @Stateless
 public class OrderService {
@@ -27,7 +28,7 @@ public class OrderService {
     }
 
     public List<OrderItem> getOrderItemByOrder(Order order) {
-        
+
         return em.createQuery(
                 "SELECT ot FROM OrderItem ot WHERE ot.order = :order", OrderItem.class)
                 .setParameter("order", order)
@@ -39,6 +40,13 @@ public class OrderService {
                 "SELECT o FROM Order o WHERE o.order_id = :orderId", Order.class)
                 .setParameter("orderId", orderId)
                 .getSingleResult();
+    }
+
+    public List<Order> getOrderByUser(User user) {
+        return em.createQuery(
+                "SELECT o FROM Order o WHERE o.user = :user", Order.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 
 }

@@ -6,15 +6,21 @@ import jakarta.servlet.http.*;
 import service.CartService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import model.User;
 import model.CartItem;
+import model.Product;
 import model.ShippingAddress;
+import service.ProductService;
 
 public class CheckoutCartServlet extends HttpServlet {
 
     @Inject
     private CartService cartService;
+    
+    @Inject
+    private ProductService productService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,10 +37,20 @@ public class CheckoutCartServlet extends HttpServlet {
             return;
         }
         
+        List<Product> productsInCart = new ArrayList<>();
+
+        for (CartItem item : cartItems) {
+            int productId = item.getProduct().getId();
+            Product product = productService.getProductById(productId);
+            productsInCart.add(product);
+        }
+        
+        
         List<ShippingAddress> address = cartService.getAddressByUserId(user.getId());
         
         request.setAttribute("cartId", cartId);
         request.setAttribute("cartItems", cartItems);
+        request.setAttribute("productsInCart", productsInCart);
         request.setAttribute("address", address);
 
         

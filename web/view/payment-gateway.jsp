@@ -1,3 +1,4 @@
+<%@page import="model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.ShippingAddress" %>
@@ -22,10 +23,6 @@
         <%
             int cartId = (int) request.getAttribute("cartId");
             int addressId = (int) request.getAttribute("addressId");
-
-            double total = 0.0;
-            double shipping = 5.99;
-
         %>
 
         <div class="container">
@@ -116,22 +113,29 @@
 
                     <%
                         List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
+                        List<Product> productsInCart = (List<Product>) request.getAttribute("productsInCart");
 
-                        if (cartItems != null && !cartItems.isEmpty()) {
+                        double total = 0.0;
+                        double shipping = 5.99;
+
+                        if (cartItems != null && productsInCart != null && !cartItems.isEmpty() && cartItems.size() == productsInCart.size()) {
                     %>
 
                     <div class="order-items">
                         <%
-                            for (CartItem item : cartItems) {
-                                double price = item.getProduct().getUnitPrice() * item.getQuantity();
+                            for (int i = 0; i < cartItems.size(); i++) {
+                                CartItem item = cartItems.get(i);
+                                Product product = productsInCart.get(i);
+
+                                double price = product.getEffectivePrice() * item.getQuantity();
                                 total += price;
                         %>
                         <div class="order-item">
                             <div class="item-image">
-                                <img src="<%= item.getProduct().getImage1()%>" width="45px">
+                                <img src="<%= product.getImage1()%>" width="45px">
                             </div>
                             <div class="item-details">
-                                <h4><%= item.getProduct().getProductName()%></h4>
+                                <h4><%= product.getProductName()%></h4>
                                 <p>Quantity: <%= item.getQuantity()%></p>
                                 <p class="item-price">RM <%= String.format("%.2f", price)%></p>
                             </div>
@@ -141,6 +145,8 @@
 
                             if (total > 1000) {
                                 shipping = 0.0;
+                            } else {
+                                shipping = 10.0;
                             }
 
                             double grandTotal = total + shipping;
@@ -165,55 +171,60 @@
                     </div>
 
                     <%
+                    } else {
+                    %>
+                    <p class="empty-cart">Your cart is empty</p>
+                    <%
                         }
                     %>
                 </div>
+
             </div>
         </div>
-    </div>
 
-    <script>
-        function switchTab(tab) {
 
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        <script>
+            function switchTab(tab) {
 
-            // Show selected tab
-            if (tab === 'card') {
-                document.querySelector('.tab:nth-child(1)').classList.add('active');
-                document.querySelector('#tab-card').classList.add('active');
-            } else if (tab === 'ewallet') {
-                document.querySelector('.tab:nth-child(2)').classList.add('active');
-                document.querySelector('#tab-ewallet').classList.add('active');
-            }
-        }
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
 
-        function requestOTP() {
-
-            document.getElementById('otp-section').style.display = 'block';
-        }
-
-        function completePayment() {
-            alert('Processing payment...');
-            // In a real application, this would connect to a payment processor
-        }
-
-        // Auto-tab for OTP inputs
-        document.querySelectorAll('.otp-input input').forEach(input => {
-            input.addEventListener('input', function () {
-                if (this.value.length === 1) {
-                    const nextInput = this.nextElementSibling;
-                    if (nextInput) {
-                        nextInput.focus();
-                    }
+                // Show selected tab
+                if (tab === 'card') {
+                    document.querySelector('.tab:nth-child(1)').classList.add('active');
+                    document.querySelector('#tab-card').classList.add('active');
+                } else if (tab === 'ewallet') {
+                    document.querySelector('.tab:nth-child(2)').classList.add('active');
+                    document.querySelector('#tab-ewallet').classList.add('active');
                 }
+            }
+
+            function requestOTP() {
+
+                document.getElementById('otp-section').style.display = 'block';
+            }
+
+            function completePayment() {
+                alert('Processing payment...');
+                // In a real application, this would connect to a payment processor
+            }
+
+            // Auto-tab for OTP inputs
+            document.querySelectorAll('.otp-input input').forEach(input => {
+                input.addEventListener('input', function () {
+                    if (this.value.length === 1) {
+                        const nextInput = this.nextElementSibling;
+                        if (nextInput) {
+                            nextInput.focus();
+                        }
+                    }
+                });
             });
-        });
 
-    </script>
-</body>
+        </script>
+    </body>
 
-<jsp:include page="client-footer.jsp"/>
+    <jsp:include page="client-footer.jsp"/>
 
 </html>
 

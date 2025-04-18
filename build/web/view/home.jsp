@@ -124,17 +124,22 @@
                 %>
                 <div class="pro-container">
                     <% if (featuredProducts != null) {
-                        for (Product p : featuredProducts) {%>
+                            for (Product p : featuredProducts) {%>
                     <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
                         <img src="<%= p.getImage1()%>">
                         <div class="des">
                             <h5><%= p.getProductName()%></h5>
-                            <h4>RM <%= p.getUnitPrice()%></h4> 
+                            <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
+                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
+                            <% } else {%>
+                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                            <% } %>
                             <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
                         </div>
                     </div>
                     <%  }
-                    }%>
+                        }%>
                 </div>
             </section>
         </div>

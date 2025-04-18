@@ -20,14 +20,26 @@ public class OrderItem {
 
     @Column(name = "quantity")
     private int quantity;
+    
+    @Column(name = "current_price")
+    private double currentPrice;
 
-    public OrderItem(Product product, Order order, int quantity) {
+    public OrderItem(Product product, Order order, int quantity, double currentPrice) {
         this.product = product;
         this.order = order;
         this.quantity = quantity;
+        this.currentPrice = currentPrice;
     }
 
     public OrderItem() {
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public int getId() {

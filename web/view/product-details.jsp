@@ -46,13 +46,18 @@
 
             <div class="single-pro-details">
                 <h1><%= product.getProductName()%></h1>
-                <h2>RM <%= product.getUnitPrice()%></h2>
+                <% if ("promotion".equalsIgnoreCase(product.getStatus())) {%>
+                            <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
+                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", product.getUnitPrice())%></span>
+                            <% } else {%>
+                            <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
+                            <% } %>
                 <ul style="font-weight: bold;list-style-type: disc;padding-left: 20px;">
                     <%= product.getSpecification()%>
                 </ul>
 
                 <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
-                    <input type="hidden" name="productId" value="<%= product.getId() %>" />
+                    <input type="hidden" name="productId" value="<%= product.getId()%>" />
                     <input type="number" name="quantity" value="1" />
                     <button class="normal">Add To cart</button>
                 </form>
@@ -87,8 +92,8 @@
         </script>
 
         <section id="product1" class="section-p1">
-            <h2>Featured Products</h2>
-            <p class="heading">Popular Right Now!</p>
+            <h2>You May Also Like:</h2>
+            <p class="heading">Yeah So We Can Earn Your Money!</p>
             <%
                 List<Product> featuredProducts = (List<Product>) request.getAttribute("featuredProducts");
             %>
@@ -98,16 +103,21 @@
                 <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
                     <img src="<%= p.getImage1()%>">
                     <div class="des">
-                        <h3><%= p.getProductName()%></h3>
-                        <h4>RM <%= p.getUnitPrice()%></h4> 
-                        <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-                    </div>
+                            <h5><%= p.getProductName()%></h5>
+                            <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
+                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
+                            <% } else {%>
+                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                            <% } %>
+                            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                        </div>
                 </div>
                 <%  }
                     }%>
             </div>
         </section>
     </body>
-<jsp:include page="client-footer.jsp"/>
+    <jsp:include page="client-footer.jsp"/>
     <script src="${pageContext.request.contextPath}/script/script.js"></script>
 </html>

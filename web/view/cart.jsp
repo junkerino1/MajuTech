@@ -35,12 +35,15 @@
                 </thead>
                 <%
                     List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
+                    List<Product> productsInCart = (List<Product>) request.getAttribute("productsInCart");
                     double total = 0.0;
-                    if (cartItems != null && !cartItems.isEmpty()) {
 
-                        for (CartItem item : cartItems) {
-                            Product product = item.getProduct();
-                            double subtotal = product.getUnitPrice() * item.getQuantity();
+                    if (cartItems != null && productsInCart != null && cartItems.size() == productsInCart.size()) {
+                        for (int i = 0; i < cartItems.size(); i++) {
+                            CartItem item = cartItems.get(i);
+                            Product product = productsInCart.get(i);
+
+                            double subtotal = product.getEffectivePrice() * item.getQuantity();
                             total += subtotal;
                 %>
                 <tbody>
@@ -53,7 +56,7 @@
                         </td>
                         <td><img src="<%= product.getImage1()%>" width="80" height="80" /></td>
                         <td><%= product.getProductName()%></td>
-                        <td>RM <%= String.format("%.2f", product.getUnitPrice())%></td>
+                        <td>RM <%= String.format("%.2f", product.getEffectivePrice())%></td>
                         <td><%= item.getQuantity()%></td>
                         <td>RM <%= String.format("%.2f", subtotal)%></td>
                     </tr>

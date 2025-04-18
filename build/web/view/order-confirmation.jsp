@@ -56,7 +56,7 @@
                 </div>
                 <div class="detail-row">
                     <div class="detail-label">Total Amount</div>
-                    <div class="detail-value">$<%= String.format("%.2f", order.getTotalAmount())%></div>
+                    <div class="detail-value">RM <%= String.format("%.2f", order.getTotalAmount())%></div>
                 </div>
             </div>
 
@@ -65,11 +65,11 @@
                 <% for (OrderItem item : orderItems) {%>
                 <div class="product-item">
                     <div class="product-image">
-                        <img src="<%= item.getProduct().getImage1()%>" width="45px" alt="Product Image" />
+                        <img src="<%= item.getProduct().getImage1()%>" alt="Product Image" />
                     </div>
                     <div class="product-details">
                         <div class="product-name"><%= item.getProduct().getProductName()%></div>
-                        <div class="product-price">$<%= String.format("%.2f", item.getProduct().getUnitPrice())%></div>
+                        <div class="product-price">RM <%= String.format("%.2f", item.getCurrentPrice())%></div>
                         <div class="product-meta">
                             <div>Quantity: <%= item.getQuantity()%></div>
                         </div>
@@ -113,10 +113,6 @@
                         <div class="timeline-step completed">
                             <div>Order Confirmed</div>
                             <div class="step-time"><%= formattedProcessing%></div>
-                        </div>
-                        <div class="timeline-step pending">
-                            <div>Processing</div>
-                            <div class="step-time">Estimated: <%= formattedProcessing%></div>
                         </div>
                         <div class="timeline-step pending">
                             <div>Shipped</div>

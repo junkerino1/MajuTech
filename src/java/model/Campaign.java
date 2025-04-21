@@ -22,6 +22,9 @@ public class Campaign {
 
     @Column(name = "discount_percentage")
     private double discountPercentage;
+    
+    @Column(name = "status")
+    private String status;
 
     public Campaign() {
     }
@@ -31,6 +34,7 @@ public class Campaign {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.discountPercentage = discountPercentage;
+        this.status = "inactive";
     }
 
     public int getId() {
@@ -43,6 +47,14 @@ public class Campaign {
 
     public String getCampaignName() {
         return campaignName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setCampaignName(String campaignName) {

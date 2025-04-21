@@ -17,9 +17,14 @@ public class HomeServlet extends HttpServlet {
 
     @Inject
     private ProductService productService;
-    
+
     @Inject
     private CampaignService campaignService;
+
+    @Override
+    public void init() {
+        campaignService.checkOngoingCampaign();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,15 +40,15 @@ public class HomeServlet extends HttpServlet {
         List<Product> featuredProducts = products.size() > 8
                 ? products.subList(0, 8)
                 : products;
-        
-        Campaign ongoingCampaign = campaignService.getOngoingCampaign();
-        
-        LocalDate endDate = ongoingCampaign.getDateEnd();
-        
-        request.setAttribute("promoProducts", products);
-        request.setAttribute("endDate", endDate);
-        request.setAttribute("featuredProducts", featuredProducts);
 
+        Campaign ongoingCampaign = campaignService.getOngoingCampaign();
+        if (ongoingCampaign != null) {
+            LocalDate endDate = ongoingCampaign.getDateEnd();
+            request.setAttribute("endDate", endDate);
+        }
+
+        request.setAttribute("promoProducts", products);
+        request.setAttribute("featuredProducts", featuredProducts);
         request.getRequestDispatcher("/view/home.jsp").forward(request, response);
     }
 

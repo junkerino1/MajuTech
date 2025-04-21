@@ -3,10 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/payment-gateway.jsp</file>
-            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/OrderService.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/css/style.css</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/css/order-confirmation.css</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/ViewOrderServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/shipping-address.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/AddToCartServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/AddProductServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/ProcessAddressServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/admin-header.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/OrderConfirmationServlet.java</file>
-            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/order-confirmation.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/RemoveFromCartServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/CampaignService.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/model/Campaign.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/CampaignListServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/campaign.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/create-campaign.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/edit-campaign.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/add-product.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/CreateCampaignServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/CartService.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/model/Product.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/ProductService.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/HomeServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/home.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/script/clientscript.js</file>
         </group>
     </open-files>
 </project-private>

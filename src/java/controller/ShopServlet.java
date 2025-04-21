@@ -9,8 +9,17 @@ import service.ProductService;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import service.CampaignService;
 
 public class ShopServlet extends HttpServlet {
+
+    @Override
+    public void init() {
+        campaignService.checkOngoingCampaign();
+    }
+    
+    @Inject
+    private CampaignService campaignService;
 
     @Inject
     private ProductService productService;
@@ -32,11 +41,11 @@ public class ShopServlet extends HttpServlet {
                 Product product = productService.getProductById(productId);
                 if (product != null) {
                     List<Product> products = productService.getAllProducts();
-                    
+
                     // Shuffle the products and fetch a maximum of 4 products for featuring
                     Collections.shuffle(products);
                     List<Product> featuredProducts = products.subList(0, Math.min(4, products.size()));
-                    
+
                     // Set attribute
                     request.setAttribute("featuredProducts", featuredProducts);
                     request.setAttribute("product", product);
@@ -56,8 +65,8 @@ public class ShopServlet extends HttpServlet {
             // Search by keyword (if any)
             if (searchQuery != null && !searchQuery.isBlank()) {
                 filteredProducts = filteredProducts.stream()
-                        .filter(p -> p.getProductName().toLowerCase().contains(searchQuery.trim().toLowerCase()) ||
-                                    p.getDescription().toLowerCase().contains(searchQuery.trim().toLowerCase()))
+                        .filter(p -> p.getProductName().toLowerCase().contains(searchQuery.trim().toLowerCase())
+                        || p.getDescription().toLowerCase().contains(searchQuery.trim().toLowerCase()))
                         .collect(Collectors.toList());
             }
 

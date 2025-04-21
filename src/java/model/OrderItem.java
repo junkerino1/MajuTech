@@ -1,10 +1,11 @@
 package model;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ORDER_ITEMS")
-public class OrderItem {
+public class OrderItem implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

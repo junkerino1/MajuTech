@@ -42,12 +42,16 @@
         <servlet-class>controller.CampaignListServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CampaignConfirmationServlet</servlet-name>
-        <servlet-class>controller.CampaignConfirmationServlet</servlet-class>
+        <servlet-name>DeleteCampaignServlet</servlet-name>
+        <servlet-class>controller.DeleteCampaignServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateCampaignServlet</servlet-name>
         <servlet-class>controller.CreateCampaignServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCampaignServlet</servlet-name>
+        <servlet-class>controller.EditCampaignServlet</servlet-class>
     </servlet>
 
     <!-- ========== CLIENT CONTROLS ========== -->
@@ -107,6 +111,14 @@
         <servlet-name>ViewOrderServlet</servlet-name>
         <servlet-class>controller.ViewOrderServlet</servlet-class>
     </servlet>
+    
+    
+    
+    
+    
+    
+    
+    
 
     <!-- ========== URL MAPPINGS ========== -->
 
@@ -150,12 +162,16 @@
         <url-pattern>/admin/campaign</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CampaignConfirmationServlet</servlet-name>
-        <url-pattern>/admin/campaign-confirmation</url-pattern>
+        <servlet-name>DeleteCampaignServlet</servlet-name>
+        <url-pattern>/admin/delete-campaign</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCampaignServlet</servlet-name>
         <url-pattern>/admin/create-campaign</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCampaignServlet</servlet-name>
+        <url-pattern>/admin/edit-campaign</url-pattern>
     </servlet-mapping>
 
     <!-- Client controls -->

@@ -26,7 +26,6 @@ public class ProductService {
         for (Product product : products) {
             if ("promotion".equalsIgnoreCase(product.getStatus())) {
                 product.setEffectivePrice(campaignService.getDiscountedPrice(product.getId()));
-                System.out.println("new price:" + product.getEffectivePrice());
             } else {
                 product.setEffectivePrice(product.getUnitPrice());
             }

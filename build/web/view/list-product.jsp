@@ -1,3 +1,4 @@
+<%@page import="model.Category"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.Product" %>
@@ -40,7 +41,7 @@
                 <div class="container-fluid">
 
                     <%
-                        String message = (String) request.getAttribute("message");
+                        String message = (String) session.getAttribute("message");
                         if (message != null && !message.isEmpty()) {
                     %>
                     <div class="card text-white bg-success mb-3" style="max-width: 100%;">
@@ -61,7 +62,6 @@
                                             <th>ID</th>
                                             <th>Product Name</th>
                                             <th>Category ID</th>
-                                            <th>Description</th>
                                             <th>Unit Price</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -70,29 +70,44 @@
                                     <tbody>
                                         <%
                                             List<Product> products = (List<Product>) request.getAttribute("products");
+                                            List<Category> category = (List<Category>) request.getAttribute("categories");
                                             if (products != null) {
                                                 for (Product p : products) {
+                                                    String categoryName = null;
+                                                    for (Category c : category) {
+                                                        if (c.getId() == p.getCategoryId()) {
+                                                            categoryName = c.getCategoryName();
+                                                            break;
+                                                        }
+                                                    }
+
                                         %>
                                         <tr>
                                             <td><%= p.getId()%></td>
                                             <td><%= p.getProductName()%></td>
-                                            <td><%= p.getCategoryId()%></td>
-                                            <td><%= p.getDescription()%></td>
-                                            <td><%= p.getUnitPrice()%></td>
+                                            <td><%= categoryName%></td>
+                                            <td>RM <%= String.format("%.2f", p.getUnitPrice())%></td>
                                             <td><%= p.getStatus()%></td>
 
                                             <td>
-                                                <a href="edit-product.jsp?id=<%= p.getId()%>">
-                                                    <button class="btn btn-sm btn-primary">
+                                                <div style="display: inline-flex; gap: 10px;">
+                                                    <button class="btn btn-sm btn-primary" onclick="window.location.href = '${pageContext.request.contextPath}/admin/edit-product?id=<%= p.getId()%>'">
                                                         <i class="bi bi-pen"></i>
                                                     </button>
-                                                </a>
-                                                <form action="delete-product" method="post" style="display:inline;">
-                                                    <input type="hidden" name="id" value="<%= p.getId()%>"/>
-                                                    <button class="btn btn-sm btn-danger" type="submit">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
+
+                                                    <form action="${pageContext.request.contextPath}/admin/delete-product" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                                                        <button class="btn btn-sm btn-danger" type="submit">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                        <input type="hidden" name="id" value="<%= p.getId()%>"/>
+                                                    </form>
+
+                                                    <script>
+                                                        function confirmDelete() {
+                                                            return confirm("Are you sure you want to delete this product?");
+                                                        }
+                                                    </script>
+                                                </div>
                                             </td>
                                         </tr>
                                         <%

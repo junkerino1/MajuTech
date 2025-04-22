@@ -44,7 +44,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="${pageContext.request.contextPath}/add-product" method="post" enctype="multipart/form-data">
+                            <form action="${pageContext.request.contextPath}/admin/add-product" method="post" enctype="multipart/form-data">
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="product_name" name="product_name"

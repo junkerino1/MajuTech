@@ -23,16 +23,29 @@ public class CampaignService {
                 .getResultList();
     }
 
+    public Campaign getCampaignById(int campaignId) {
+        return em.find(Campaign.class, campaignId);
+    }
+
+    public void editCampaign(Campaign campaign) {
+        em.merge(campaign);
+    }
+
     public List<CampaignItem> getCampaignItem(int campaignId) {
         return em.createQuery("SELECT ci FROM CampaignItem ci WHERE ci.campaignId = :campaignId", CampaignItem.class)
                 .setParameter("campaignId", campaignId)
                 .getResultList();
     }
 
-    public double getDiscountedPrice(int productId) {
-        return em.createQuery("SELECT ci.discountedPrice FROM CampaignItem ci WHERE ci.productId = :prod", Double.class)
-                .setParameter("prod", productId)
-                .getSingleResult();
+    public Double getDiscountedPrice(int productId) {
+        try {
+            return em.createQuery("SELECT ci.discountedPrice FROM CampaignItem ci WHERE ci.productId = :prod", Double.class)
+                    .setParameter("prod", productId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
     }
 
     public void createNewCampaign(Campaign newCampaign) {
@@ -41,6 +54,20 @@ public class CampaignService {
 
     public void createCampaignItems(CampaignItem item) {
         em.persist(item);
+    }
+
+    public void deleteCampaignItem(int campaignId) {
+
+        List<CampaignItem> items = getCampaignItem(campaignId);
+
+        for (CampaignItem item : items) {
+
+            Product product = em.find(Product.class, item.getProductId());
+            product.setStatus("normal");
+            em.merge(product);
+
+            em.remove(item);
+        }
     }
 
     public Campaign getOngoingCampaign() {
@@ -72,6 +99,7 @@ public class CampaignService {
                     .getSingleResult();
         } catch (NoResultException e) {
             activeCampaign = null;
+            System.out.println("no active campaign");
         }
 
         if (activeCampaign != null) {
@@ -93,22 +121,31 @@ public class CampaignService {
                 // Mark old campaign as inactive
                 activeCampaign.setStatus("inactive");
                 em.merge(activeCampaign);
+                
+                setNewCampaign();
 
-                // Look for new ongoing campaign based on date
-                Campaign newCampaign = getOngoingCampaign(); 
+            }
+            else{
+                
+            }
+        } else{
+            setNewCampaign();
+        }        
+    }
+    
+    public void setNewCampaign(){
+        Campaign newCampaign = getOngoingCampaign();
 
-                if (newCampaign != null) {
-                    newCampaign.setStatus("active");
-                    em.merge(newCampaign);
+        if (newCampaign != null) {
+            newCampaign.setStatus("active");
+            em.merge(newCampaign);
 
-                    List<CampaignItem> newCampaignItems = getCampaignItem(newCampaign.getId());
-                    for (CampaignItem item : newCampaignItems) {
-                        Product product = em.find(Product.class, item.getProductId());
-                        if (product != null) {
-                            product.setStatus("promotion");
-                            em.merge(product);
-                        }
-                    }
+            List<CampaignItem> newCampaignItems = getCampaignItem(newCampaign.getId());
+            for (CampaignItem item : newCampaignItems) {
+                Product product = em.find(Product.class, item.getProductId());
+                if (product != null) {
+                    product.setStatus("promotion");
+                    em.merge(product);
                 }
             }
         }

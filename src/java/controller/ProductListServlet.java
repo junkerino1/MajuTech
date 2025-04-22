@@ -1,7 +1,7 @@
 package controller;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import model.Product;
 import service.ProductService;
@@ -9,40 +9,26 @@ import service.ProductService;
 import jakarta.persistence.*;
 import java.io.*;
 import java.util.List;
+import model.Category;
+import service.CategoryService;
 
 public class ProductListServlet extends HttpServlet {
+
+    @Inject
+    public ProductService productService;
+
+    @Inject
+    public CategoryService categoryService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        List<Product> products = productService.getAllProducts();
+        List<Category> categories = categoryService.getAllCategory();
 
-        try {
-            // Create EntityManagerFactory and EntityManager
-            emf = Persistence.createEntityManagerFactory("MajuTechPU");
-            em = emf.createEntityManager();
-
-            // Query all products
-            List<Product> products = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
-
-            // Set products as request attribute
-            request.setAttribute("products", products);
-
-            // Forward request to list-products.jsp
-            request.getRequestDispatcher("/view/list-product.jsp").forward(request, response);
-
-        } catch (PersistenceException e) {
-            e.printStackTrace(); // Log the exception (or use a logger)
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error occurred.");
-
-        } finally {
-            // Close resources if they were initialized
-            if (em != null) em.close();
-            if (emf != null) emf.close();
-        }
+        request.setAttribute("categories", categories);
+        request.setAttribute("products", products);
+        request.getRequestDispatcher("/view/list-product.jsp").forward(request, response);
     }
 }
-
-

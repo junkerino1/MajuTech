@@ -39,8 +39,8 @@ public class CreateCampaignServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String promoName = request.getParameter("promoName");
-        Double percentageDiscount = Double.parseDouble(request.getParameter("percentageDiscount"));
-
+        double percentageDiscount = Double.parseDouble(request.getParameter("percentageDiscount"));
+        String message = "";
         // Parse the start and end dates as LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = null;
@@ -77,30 +77,26 @@ public class CreateCampaignServlet extends HttpServlet {
 
         // insert into campaign table
         Campaign newCampaign = new Campaign(promoName, startDate, endDate, percentageDiscount);
-
         campaignService.createNewCampaign(newCampaign);
-
         int newCampaignId = newCampaign.getId();
 
         for (Integer productId : productIds) {
-
             int productIdInt = productId.intValue();
-
             Product product = productService.getProductById(productIdInt);
 
             if (product != null) {
                 double unitPrice = product.getUnitPrice();
                 double discountPrice = unitPrice * (100 - percentageDiscount) / 100;
-
-                product.setStatus("promotion");
-                productService.updateProduct(product);
-
                 CampaignItem newItem = new CampaignItem(newCampaignId, productIdInt, discountPrice);
 
                 campaignService.createCampaignItems(newItem);
-
             }
         }
+        
+        message = "Successfully created " + promoName + " campaign.";
+        
+        request.getSession().setAttribute("campaignMessage", message);
+        response.sendRedirect(request.getContextPath() + "/admin/campaign");
 
     }
 }

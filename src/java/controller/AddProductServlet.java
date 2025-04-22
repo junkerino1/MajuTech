@@ -56,7 +56,7 @@ public class AddProductServlet extends HttpServlet {
         double unitPrice = Double.parseDouble(request.getParameter("unit_price"));
         String description = request.getParameter("description");
         String specification = request.getParameter("specification");
-        String status = request.getParameter("status");
+        String status = "normal";
         
         try {
             // Handle multiple image uploads
@@ -90,7 +90,7 @@ public class AddProductServlet extends HttpServlet {
             utx.commit();
 
             // Redirect after success
-            response.sendRedirect("products-list");
+            response.sendRedirect("/product");
 
         } catch (Exception e) {
             try {

@@ -24,6 +24,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     public void init() {
         campaignService.checkOngoingCampaign();
+        System.out.println("checked");
     }
 
     @Override

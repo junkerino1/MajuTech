@@ -22,6 +22,7 @@ import service.CategoryService;
 import utils.CloudinaryConfig;
 import utils.SSLUtil;
 
+@MultipartConfig
 public class EditProductServlet extends HttpServlet {
 
     @Override
@@ -48,38 +49,44 @@ public class EditProductServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String productName = request.getParameter("product_name");
+        System.out.println("categoryID");
         int categoryId = Integer.parseInt(request.getParameter("category_id"));
+        System.out.println(categoryId);
         double unitPrice = Double.parseDouble(request.getParameter("unit_price"));
         String description = request.getParameter("description");
         String specification = request.getParameter("specification");
-        String status = request.getParameter("status");
+        int productId = Integer.parseInt(request.getParameter("product_id"));
+        String status = "normal";
 
         String message;
-
         Cloudinary cloudinary = CloudinaryConfig.getInstance();
         String[] imageUrls = new String[4];
 
         try {
             utx.begin();
+
             for (int i = 0; i < 4; i++) {
-                Part filePart = request.getPart("image" + i);
-                String existingImage = request.getParameter("existingImage" + i);
+                Part filePart = request.getPart("image" + (i + 1));
+                String existingImage = request.getParameter("existingImage" + (i + 1));
 
                 if (filePart != null && filePart.getSize() > 0) {
-                    InputStream imageStream = filePart.getInputStream();
-                    byte[] imageBytes = imageStream.readAllBytes();
+                    // New image uploaded
+                    byte[] imageBytes = filePart.getInputStream().readAllBytes();
 
                     Map uploadResult = cloudinary.uploader().upload(imageBytes,
                             ObjectUtils.asMap("folder", "majutech_products/"));
 
                     imageUrls[i] = uploadResult.get("secure_url").toString();
                 } else {
-                    // Use existing image if no new upload
+                    // Keep old image
                     imageUrls[i] = existingImage;
                 }
             }
 
-            Product product = new Product(productName, unitPrice, categoryId, specification, description, status, imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3]);
+            Product product = new Product(productName, unitPrice, categoryId, specification, description, status,
+                    imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3]);
+
+            product.setId(productId);
             productService.updateProduct(product);
             utx.commit();
             message = "Successfully updated product details";
@@ -90,18 +97,19 @@ public class EditProductServlet extends HttpServlet {
             } catch (Exception rollbackEx) {
                 rollbackEx.printStackTrace();
             }
+            e.printStackTrace();
             message = "Failed to update product details";
         }
 
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/view/list-product.jsp").forward(request, response);
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
+        int productId = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getProductById(productId);
         List<Category> categories = categoryService.getAllCategory();
 

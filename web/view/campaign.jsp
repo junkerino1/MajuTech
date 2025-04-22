@@ -43,6 +43,19 @@
 
 
                 <div class="container-fluid">
+
+                    <%
+                        String message = (String) session.getAttribute("campaignMessage");
+                        if (message != null && !message.isEmpty()) {
+                    %>
+                    <div class="card text-white bg-success mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <p class="card-text"><%= message%></p>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -71,8 +84,8 @@
                                             for (Campaign campaign : campaigns) {
                                                 int id = campaign.getId();
                                                 String name = campaign.getCampaignName();
-                                                String start = campaign.getDateEnd().toString();
-                                                String end = campaign.getDateStart().toString();
+                                                String start = campaign.getDateStart().toString();
+                                                String end = campaign.getDateEnd().toString();
                                                 double discount = campaign.getDiscountPercentage();
                                                 int itemCount = campaignItemCounts.getOrDefault(id, 0);
                                         %>
@@ -84,10 +97,10 @@
                                             <td><%= discount%>%</td>
                                             <td><%= itemCount%></td>
                                             <td>
-                                                <a href="${pageContext.request.contextPath}/view-campaign?id=<%= id%>" class="btn btn-sm btn-info text-white">
+                                                <a href="${pageContext.request.contextPath}/admin/view-campaign?id=<%= id%>" class="btn btn-sm btn-info text-white">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
-                                                <a href="${pageContext.request.contextPath}/edit-campaign?id=<%= id%>" class="btn btn-sm btn-primary">
+                                                <a href="${pageContext.request.contextPath}/admin/edit-campaign?id=<%= id%>" class="btn btn-sm btn-primary">
                                                     <i class="bi bi-pen"></i>
                                                 </a>
                                                 <form action="${pageContext.request.contextPath}/delete-campaign" method="post" style="display:inline;">

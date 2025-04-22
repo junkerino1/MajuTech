@@ -165,28 +165,37 @@
             modal.hide();
         });
 
-        document.getElementById("promotionForm").addEventListener("submit", function (e) {
+        function validateForm() {
+        const startDateInput = document.getElementById("promotionDateStart");
+        const endDateInput = document.getElementById("promotionDateEnd");
+        const selectedProductsInput = document.getElementById("selectedProducts");
 
-            // Validate dates
-            if (endDate <= startDate) {
-                e.preventDefault();
-                alert("End date must be after start date");
-                return;
-            }
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
 
-            // If you need to do any final validation before submission
-            const selectedProducts = JSON.parse(selectedProductsInput.value || "[]");
-            if (selectedProducts.length === 0) {
-                e.preventDefault();
-                alert("Please select at least one product");
-                return;
-            } else if (selectedProducts.length > 6) {
-                e.preventDefault();
-                alert("Maximum 6 products per campaign");
-                return;
-            }
+        // Date validation
+        if (!startDateInput.value || !endDateInput.value) {
+            alert("Please select both start and end dates.");
+            return false;
+        }
 
-        });
+        if (startDate >= endDate) {
+            alert("Start date must be before end date.");
+            return false;
+        }
+
+        // Product count validation
+        const selectedProductIds = selectedProductsInput.value.split(",");
+        const filteredProductIds = selectedProductIds.filter(id => id.trim() !== "");
+
+        if (filteredProductIds.length > 5) {
+            alert("You can only select up to 5 products for the promotion.");
+            return false;
+        }
+        
+        
+        return true;
+    }
     </script>
 </body>
 </html>

@@ -7,8 +7,6 @@ import jakarta.servlet.http.*;
 import jakarta.transaction.UserTransaction;
 import java.io.IOException;
 import service.ProductService;
-import service.CategoryService;
-import utils.SSLUtil;
 
 public class DeleteProductServlet extends HttpServlet {
 
@@ -22,7 +20,7 @@ public class DeleteProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int productId = Integer.parseInt(request.getParameter("productId"));
+        int productId = Integer.parseInt(request.getParameter("id"));
         String message;
         try {
             utx.begin();
@@ -38,8 +36,8 @@ public class DeleteProductServlet extends HttpServlet {
             message = "Failed to delete product";
         }
         
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/view/list-product.jsp").forward(request, response);
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 
 }

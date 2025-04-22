@@ -3,10 +3,9 @@ package utils;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import java.util.Map;
 
 public class CloudinaryConfig {
-    private static Cloudinary cloudinary;
+    private static final Cloudinary cloudinary;
 
     static {
         cloudinary = new Cloudinary(ObjectUtils.asMap(

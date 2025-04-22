@@ -34,10 +34,23 @@
             <jsp:include page="sidebar.jsp" />
             <!--  Main wrapper -->
             <div class="body-wrapper">
-                
+
                 <jsp:include page="admin-header.jsp"/>
                 <!-- Main Content -->
                 <div class="container-fluid">
+
+                    <%
+                        String message = (String) request.getAttribute("message");
+                        if (message != null && !message.isEmpty()) {
+                    %>
+                    <div class="card text-white bg-success mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <p class="card-text"><%= message%></p>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Product List</h4>
@@ -67,7 +80,7 @@
                                             <td><%= p.getDescription()%></td>
                                             <td><%= p.getUnitPrice()%></td>
                                             <td><%= p.getStatus()%></td>
-                                            
+
                                             <td>
                                                 <a href="edit-product.jsp?id=<%= p.getId()%>">
                                                     <button class="btn btn-sm btn-primary">
@@ -97,9 +110,9 @@
             </div>
 
         </div>  
-                                
-            <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
-            <script src="${pageContext.request.contextPath}/script/script.js"></script>
+
+        <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
+        <script src="${pageContext.request.contextPath}/script/script.js"></script>
     </body>
 
 </html>

@@ -20,9 +20,6 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
-
         try {
             User user = userService.findByUsername(username);
 

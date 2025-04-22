@@ -5,14 +5,12 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/cart"}) // Add more protected URLs here
+@WebFilter(urlPatterns = {"/cart", "/order"}) 
 public class SessionFilter implements Filter {
 
-    public void init(FilterConfig filterConfig) {}
-
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
@@ -23,13 +21,10 @@ public class SessionFilter implements Filter {
         boolean loggedIn = (session != null && session.getAttribute("user") != null);
 
         if (loggedIn) {
-            // Continue to the requested page
             chain.doFilter(request, response);
         } else {
-            // Redirect to login
             res.sendRedirect(req.getContextPath() + "/login");
         }
     }
-
-    public void destroy() {}
+    
 }

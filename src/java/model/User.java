@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,5 @@ public class User implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-
-    
 
 }

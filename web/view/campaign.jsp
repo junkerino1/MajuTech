@@ -108,6 +108,7 @@
                     </div>
                 </div>
             </div>
-
+            <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
+            <script src="${pageContext.request.contextPath}/script/script.js"></script>
     </body>
 </html>

@@ -2932,7 +2932,7 @@ progress {
 
 .form-control {
     display: block;
-    width: 60%;
+    width: 100%;
     padding: 8px 16px;
     font-size: 0.875rem;
     font-weight: 400;

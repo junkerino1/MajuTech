@@ -112,8 +112,8 @@
     </div>
 
 
-    <script src="script/sidebarmenu.js"></script>
-    <script src="script/script.js"></script>
+    <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
+    <script src="${pageContext.request.contextPath}/script/script.js"></script>
     <script>
         // Get references to elements
         const promotionProductInput = document.getElementById("promotionProduct");

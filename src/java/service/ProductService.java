@@ -5,8 +5,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import model.Product;
-import model.CampaignItem;
-import service.CampaignService;
 
 import java.util.List;
 
@@ -50,6 +48,11 @@ public class ProductService {
 
         em.merge(product);
 
+    }
+
+    public void deleteProduct(int productId) {
+        Product product = em.find(Product.class, productId);
+        em.remove(product);
     }
 
 }

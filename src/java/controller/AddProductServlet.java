@@ -107,13 +107,6 @@ public class AddProductServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<Category> categories = categoryService.getAllCategory();
-
-        // debug
-        System.out.println("Fetched " + categories.size() + " categories:");
-        for (Category cat : categories) {
-            System.out.println(" - " + cat.getId() + ": " + cat.getCategoryName());
-        }
-
         request.setAttribute("categories", categories);
 
         request.getRequestDispatcher("/view/add-product.jsp").forward(request, response);

@@ -36,6 +36,6 @@
         </div>
     </nav>
     
-    
+    <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
 </header>
 <!--  Header End -->

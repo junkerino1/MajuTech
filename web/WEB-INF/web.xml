@@ -111,6 +111,10 @@
         <servlet-name>ViewOrderServlet</servlet-name>
         <servlet-class>controller.ViewOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReviewServlet</servlet-name>
+        <servlet-class>controller.ReviewServlet</servlet-class>
+    </servlet>
     
     
     
@@ -233,5 +237,9 @@
         <servlet-name>ViewOrderServlet</servlet-name>
         <url-pattern>/order</url-pattern>
         <url-pattern>/order/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewServlet</servlet-name>
+        <url-pattern>/review</url-pattern>
     </servlet-mapping>
 </web-app>

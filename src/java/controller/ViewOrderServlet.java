@@ -10,11 +10,15 @@ import model.Order;
 import model.OrderItem;
 import model.User;
 import service.OrderService;
+import service.ReviewService;
 
 public class ViewOrderServlet extends HttpServlet {
 
     @Inject
     private OrderService orderService;
+    
+    @Inject
+    private ReviewService reviewService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,14 +32,24 @@ public class ViewOrderServlet extends HttpServlet {
 
         List<Order> orderList = orderService.getOrderByUser(user);
 
-        // Map each order to its list of order items
         Map<Order, List<OrderItem>> orderMap = new LinkedHashMap<>();
+        Map<OrderItem, Boolean> reviewStatusMap = new HashMap<>();
+
         for (Order order : orderList) {
             List<OrderItem> items = orderService.getOrderItemByOrder(order);
             orderMap.put(order, items);
+
+            for (OrderItem item : items) {
+                int orderId = order.getOrderId();
+                int productId = item.getProduct().getId();
+
+                boolean reviewExists = reviewService.reviewExists(orderId, productId);
+                reviewStatusMap.put(item, reviewExists);
+            }
         }
 
         request.setAttribute("orderMap", orderMap);
+        request.setAttribute("reviewStatusMap", reviewStatusMap); 
         request.getRequestDispatcher("/view/order-history.jsp").forward(request, response);
     }
 }

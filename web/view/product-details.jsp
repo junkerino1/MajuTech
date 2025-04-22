@@ -1,3 +1,4 @@
+<%@page import="model.Review"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="model.Product" %>
 <%@ page import="java.util.*" %>
@@ -22,6 +23,9 @@
 
         <%
             Product product = (Product) request.getAttribute("product");
+            double rating = (double) request.getAttribute("rating");
+            int counter = (int) request.getAttribute("counter");
+            List<Review> reviews = (List<Review>) request.getAttribute("reviews");
         %>
 
         <section id="prodetails" class="section-p1">
@@ -46,12 +50,30 @@
 
             <div class="single-pro-details">
                 <h1><%= product.getProductName()%></h1>
+                <div class="star-rating">
+                    <%
+                        for (int i = 1; i <= 5; i++) {
+                            if (i <= (int) rating) {
+                    %>
+                    <i class="fa-solid fa-star"></i> <%-- Filled star --%>
+                    <%
+                    } else {
+                    %>
+                    <i class="fa-solid fa-star empty"></i> <%-- Empty star --%>
+                    <%
+                            }
+                        }
+                    %> 
+
+                    (<%= counter%>)
+                </div>
+
                 <% if ("promotion".equalsIgnoreCase(product.getStatus())) {%>
-                            <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
-                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", product.getUnitPrice())%></span>
-                            <% } else {%>
-                            <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
-                            <% } %>
+                <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
+                <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", product.getUnitPrice())%></span>
+                <% } else {%>
+                <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
+                <% }%>
                 <ul style="font-weight: bold;list-style-type: disc;padding-left: 20px;">
                     <%= product.getSpecification()%>
                 </ul>
@@ -91,6 +113,47 @@
             };
         </script>
 
+        <section class="section-p1">
+            <h2>Reviews</h2>
+            <div class="reviews-list">
+                <%
+                    for (Review review : reviews) {
+                %>
+                <div class="review-container">
+                    <div class="review-header">
+                        <div class="user-info">
+                            <span class="username"><%= review.getUsername()%></span>
+                        </div>
+                    </div>
+
+                    <div class="star-rating">
+
+                        <%
+                            int stars = (int) review.getRating();
+                            for (int i = 1; i <= 5; i++) {
+                                if (i <= stars) {
+                        %>
+                        <i class="fa-solid fa-star"></i> <%-- Filled star --%>
+                        <%
+                        } else {
+                        %>
+                        <i class="fa-solid fa-star empty"></i> <%-- Empty star --%>
+                        <%
+                                }
+                            }
+                        %>
+                    </div>
+
+                    <div class="review-comment">
+                        <%= review.getComment()%>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+
+        </section>
+
         <section id="product1" class="section-p1">
             <h2>You May Also Like:</h2>
             <p class="heading">Yeah So We Can Earn Your Money!</p>
@@ -103,15 +166,15 @@
                 <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
                     <img src="<%= p.getImage1()%>">
                     <div class="des">
-                            <h5><%= p.getProductName()%></h5>
-                            <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
-                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
-                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
-                            <% } else {%>
-                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
-                            <% } %>
-                            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-                        </div>
+                        <h5><%= p.getProductName()%></h5>
+                        <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
+                        <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                        <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
+                        <% } else {%>
+                        <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                        <% } %>
+                        <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                    </div>
                 </div>
                 <%  }
                     }%>

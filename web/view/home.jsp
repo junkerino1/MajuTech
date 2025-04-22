@@ -64,8 +64,8 @@
                             if ("promotion".equalsIgnoreCase(product.getStatus())) {
                 %>
                 <div class="product-card">
-                    <div class="product-image">
-                        <img src="<%= product.getImage1()%>" alt="<%= product.getProductName()%>" width="200px" height="200px">
+                    <div>
+                        <img src="<%= product.getImage1()%>" alt="<%= product.getProductName()%>" width="150px" height="150px">
                     </div>
                     <div class="product-details">
                         <h3 class="product-name"><%= product.getProductName()%></h3>
@@ -76,7 +76,7 @@
                                 double discountPercent = 100 - ((product.getEffectivePrice() / product.getUnitPrice()) * 100);
                             %>
                         </div>
-                        <button class="buy-button">Add to Cart</button>
+                        <button class="buy-button" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= product.getId()%>';">Add to Cart</button>
                     </div>
                 </div>
                 <%

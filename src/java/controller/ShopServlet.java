@@ -9,7 +9,9 @@ import service.ProductService;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import model.Review;
 import service.CampaignService;
+import service.ReviewService;
 
 public class ShopServlet extends HttpServlet {
 
@@ -17,9 +19,12 @@ public class ShopServlet extends HttpServlet {
     public void init() {
         campaignService.checkOngoingCampaign();
     }
-    
+
     @Inject
     private CampaignService campaignService;
+
+    @Inject
+    private ReviewService reviewService;
 
     @Inject
     private ProductService productService;
@@ -42,6 +47,18 @@ public class ShopServlet extends HttpServlet {
                 if (product != null) {
                     List<Product> products = productService.getAllProducts();
 
+                    // get rating of product
+                    List<Review> reviews = reviewService.getReviewByProduct(product);
+                    double totalRating = 0.0;
+                    int counter = 0;
+                    if (reviews != null || !reviews.isEmpty()) {
+                        for (Review review : reviews) {
+                            totalRating += (double) review.getRating();
+                            counter++;
+                        }
+                    }
+                    double rating = totalRating / counter;
+                    
                     // Shuffle the products and fetch a maximum of 4 products for featuring
                     Collections.shuffle(products);
                     List<Product> featuredProducts = products.subList(0, Math.min(4, products.size()));
@@ -49,6 +66,9 @@ public class ShopServlet extends HttpServlet {
                     // Set attribute
                     request.setAttribute("featuredProducts", featuredProducts);
                     request.setAttribute("product", product);
+                    request.setAttribute("rating", rating);
+                    request.setAttribute("counter", counter);
+                    request.setAttribute("reviews", reviews);
                     request.getRequestDispatcher("/view/product-details.jsp").forward(request, response);
                     return;
                 } else {

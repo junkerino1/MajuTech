@@ -20,11 +20,11 @@
     <body>
 
         <section id="hero">
-            <h4>Trade-in-offer</h4>
-            <h2>Super value deals</h2>
-            <h1>On all products</h1>
-            <p>Save more with coupons & up to 70% off!</p>
-            <button>Shop Now</button>
+            <h4>Welcome To MajuTech</h4>
+            <h2>Where Innovation</h2>
+            <h1>Meets Your Lifestyle</h1>
+            <h5>Always Low Price</h5>
+            <button>Jom Shopping!</button>
         </section>
 
 
@@ -161,7 +161,7 @@
         <!-- ===================== -->
         <section id="banner" class="section-m1">
             <h4>Check Out More!</h4>
-            <h2>Up to <span>70% off</span> - All T-shirts & Accessories</h2>
+            <h2>Up to <span>50% off</span> - All Gadgets & Accessories</h2>
             <button class="normal" onclick="window.location.href = '${pageContext.request.contextPath}/product/'">Explore More</button>
         </section>
 

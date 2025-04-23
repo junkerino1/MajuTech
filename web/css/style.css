@@ -164,12 +164,21 @@ header {
 }
 #hero h4 {
     margin-bottom: 15px;
+    color:white;
 }
+
+#hero h2{
+    color:white;
+}
+
 #hero h1 {
     color: #088178;
 }
-#hero p {
+#hero h5 {
     margin-bottom: 48px;
+    color: white;
+    font-size: 25px;
+    
 }
 #hero button {
     /* background-image: url(../img/button.png); */

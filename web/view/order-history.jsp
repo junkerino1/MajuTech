@@ -62,7 +62,9 @@
                             <span class="order-status status-delivered">Delivered</span>
                             <% } else if ("Processing".equalsIgnoreCase(order.getStatus())) { %>
                             <span class="order-status status-processing">Processing</span>
-                            <% } %>
+                            <% } else { %>
+                            <span class="order-status status-shipped">Shipped</span>
+                            <% } %> 
                         </div>
 
                         <%

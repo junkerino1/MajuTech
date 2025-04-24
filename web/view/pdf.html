@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Export PDF - MajuTech</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <h2>Generating PDF Report...</h2>
+  <script>
+    window.onload = () => {
+      const products = JSON.parse(localStorage.getItem("products"));
+      const date = localStorage.getItem("date");
+      const dailyRevenue = parseFloat(localStorage.getItem("dailyRevenue"));
+      const dailyOrderCount = parseInt(localStorage.getItem("dailyOrderCount"));
+      const dailyItemSold = parseInt(localStorage.getItem("dailyItemSold"));
+      const dailyDiscount = parseFloat(localStorage.getItem("dailyDiscount"));
+
+      if (!products || products.length === 0) {
+        alert("No product data available for PDF export.");
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Title
+      doc.setFontSize(18);
+      doc.text("MajuTech Sales Report", 14, 20);
+
+      // Summary
+      doc.setFontSize(11);
+      doc.text(`Date: ${formatDate(date)}`, 14, 30);
+      doc.text(`Total Revenue: RM ${dailyRevenue.toFixed(2)}`, 14, 37);
+      doc.text(`Orders: ${dailyOrderCount}`, 14, 44);
+      doc.text(`Items Sold: ${dailyItemSold}`, 14, 51);
+      doc.text(`Total Discount: RM ${dailyDiscount.toFixed(2)}`, 14, 58);
+
+      // Product table
+      doc.setFontSize(14);
+      doc.text("Products Sold", 14, 68);
+
+      const productBody = products.map(product => [
+        product.id,
+        product.name,
+        product.category,
+        product.quantity,
+        product.unitPrice.toFixed(2),
+        product.discount.toFixed(2),
+        product.total.toFixed(2)
+      ]);
+
+      doc.autoTable({
+        head: [['ID', 'Product', 'Category', 'Qty', 'Unit Price', 'Discount', 'Total']],
+        body: productBody,
+        startY: 72,
+        styles: { fontSize: 9 },
+        columnStyles: {
+          0: { cellWidth: 20 },
+          1: { cellWidth: 50 }
+        }
+      });
+
+      doc.save(`MajuTech_Sales_Report_${date}.pdf`);
+    };
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    }
+  </script>
+</body>
+</html>

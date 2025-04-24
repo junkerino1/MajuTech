@@ -44,11 +44,22 @@
                         String message = (String) session.getAttribute("message");
                         if (message != null && !message.isEmpty()) {
                     %>
-                    <div class="card text-white bg-success mb-3" style="max-width: 100%;">
+                    <div class="card text-white bg-success mb-3" id="message" style="max-width: 100%;">
                         <div class="card-body">
                             <p class="card-text"><%= message%></p>
                         </div>
                     </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const message = document.getElementById('message');
+
+                            setTimeout(function () {
+                                message.style.display = 'none';
+                            }, 5000);
+                        });
+                    </script>
+
                     <%
                         }
                     %>

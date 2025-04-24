@@ -3,6 +3,8 @@ package service;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import java.time.LocalDate;
+import java.util.Date;
 import model.Order;
 
 import java.util.List;
@@ -17,6 +19,11 @@ public class OrderService {
 
     public List<Order> getAllOrder() {
         return em.createQuery("SELECT o FROM Order o", Order.class).getResultList();
+    }
+
+    public List<Order> getAllOrderDesc() {
+        return em.createQuery("SELECT o FROM Order o ORDER BY o.date DESC", Order.class)
+                .getResultList();
     }
 
     public void createNewOrder(Order order) {
@@ -47,6 +54,35 @@ public class OrderService {
                 "SELECT o FROM Order o WHERE o.user = :user", Order.class)
                 .setParameter("user", user)
                 .getResultList();
+    }
+
+    public void updateOrder(Order order) {
+        em.merge(order);
+    }
+
+    public List<Order> getOrderByMonth(int year, int month) {
+
+        String query = """
+        SELECT o FROM Order o
+        WHERE FUNCTION('YEAR', o.date) = :year
+        AND FUNCTION('MONTH', o.date) = :month""";
+
+        return em.createQuery(query, Order.class)
+                .setParameter("year", year)
+                .setParameter("month", month)
+                .getResultList();
+    }
+
+    public List<Order> getOrderByDate(LocalDate date) {
+
+        String query = """
+        SELECT o FROM Order o
+        WHERE FUNCTION('DATE', o.date) = :date""";
+
+        return em.createQuery(query, Order.class)
+                .setParameter("date", date)
+                .getResultList();
+
     }
 
 }

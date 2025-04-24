@@ -150,5 +150,10 @@ public class CampaignService {
             }
         }
     }
+    
+    public void deleteCampaign(int campaignId){
+        Campaign c = em.find(Campaign.class, campaignId);
+        em.remove(c);
+    }
 
 }

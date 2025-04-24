@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import model.Product;
 
 import java.util.List;
+import model.Category;
 
 @Stateless
 public class ProductService {
@@ -52,6 +53,12 @@ public class ProductService {
     public void deleteProduct(int productId) {
         Product product = em.find(Product.class, productId);
         em.remove(product);
+    }
+
+    public String getCategoryNameById(int categoryId) {
+        return em.createQuery("SELECT c.categoryName FROM Category c WHERE c.id = :id", String.class)
+                .setParameter("id", categoryId)
+                .getSingleResult();
     }
 
 }

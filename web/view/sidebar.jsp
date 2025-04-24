@@ -16,7 +16,7 @@
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="" aria-expanded="false">
+                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/dashboard" aria-expanded="false">
                         <span>
                             <i class="bi bi-house"></i>
                         </span>
@@ -44,6 +44,49 @@
                     </ul>
                 </li>
                 
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <span>
+                            <i class="bi bi-tag"></i>
+                        </span>
+                        <span class="hide-menu">Campaign</span>
+                    </a>
+                    <ul class="collapse first-level" aria-expanded="false">
+                        <li class="sidebar-item">
+                            <a href="${pageContext.request.contextPath}/admin/campaign" class="sidebar-link">
+                                <span class="hide-menu">Campaign List</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="${pageContext.request.contextPath}/admin/create-campaign" class="sidebar-link">
+                                <span class="hide-menu">Create Campaign</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="sidebar-item">
+                            <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/sales">
+                                <i class="bi bi-graph-up"></i>
+                                <span class="hide-menu">Sales</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/order">
+                                <i class="bi bi-cart3"></i>
+                                <span class="hide-menu">Orders</span>
+                            </a>
+                        </li>
+                
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/customer" aria-expanded="false">
+                        <span>
+                            <i class="bi bi-people"></i>
+                        </span>
+                        <span class="hide-menu">Customer</span>
+                    </a>
+                </li>
+                
                 <% if ("manager".equals(adminRole)) { %>
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
@@ -66,46 +109,6 @@
                     </ul>
                 </li>
                 <% }%>
-                
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/customer" aria-expanded="false">
-                        <span>
-                            <i class="bi bi-people"></i>
-                        </span>
-                        <span class="hide-menu">Customer</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                        <span>
-                            <i class="bi bi-person"></i>
-                        </span>
-                        <span class="hide-menu">Campaign</span>
-                    </a>
-                    <ul class="collapse first-level" aria-expanded="false">
-                        <li class="sidebar-item">
-                            <a href="${pageContext.request.contextPath}/admin/campaign" class="sidebar-link">
-                                <span class="hide-menu">Campaign List</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="${pageContext.request.contextPath}/admin/create-campaign" class="sidebar-link">
-                                <span class="hide-menu">Create Campaign</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item">
-                    <!--belum buat-->
-                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/order" aria-expanded="false">
-                        <span>
-                            <i class="bi bi-person-square"></i>
-                        </span>
-                        <span class="hide-menu">Orders</span>
-                    </a>
-                </li>
 
                 <li class="sidebar-item">
                     <!--belum buat-->

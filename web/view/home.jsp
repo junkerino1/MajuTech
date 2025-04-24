@@ -33,7 +33,8 @@
         <!-- ===================== -->
         <div class="promotion-container">
             <div class="promotion-header">
-                <h1 class="promotion-title">FLASH SALE</h1>
+                <% String campaignName = (String) request.getAttribute("campaignName"); %>
+                <h1 class="promotion-title"><%=campaignName %></h1>
                 <p class="promotion-subtitle">Limited Time Offers - Grab Yours Before They're Gone!</p>
 
                 <div class="countdown-container">

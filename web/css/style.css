@@ -1895,26 +1895,6 @@ li {
     color: #333;
 }
 
-.review-metadata {
-    display: flex;
-    align-items: center;
-    margin-top: 4px;
-}
-
-.review-date {
-    font-size: 14px;
-    color: #888;
-}
-
-.product-name {
-    font-size: 14px;
-    color: #555;
-    margin-left: 8px;
-    padding-left: 8px;
-    border-left: 1px solid #ddd;
-    font-style: italic;
-}
-
 .star-rating {
     margin-bottom: 12px;
 }

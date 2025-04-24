@@ -31,9 +31,7 @@ public class ReviewServlet extends HttpServlet {
         // Set JSON response type
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        System.out.println("productID");
         int productId = Integer.parseInt(request.getParameter("productId"));
-        System.out.println(productId);
         Product product = productService.getProductById(productId);
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         Order order = orderService.getOrderById(orderId);

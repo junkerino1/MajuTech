@@ -23,18 +23,26 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
             String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirmPassword");
+            String gender = request.getParameter("gender");
 
-            System.out.println("username:" + username);
-            
-            User user = new User(username, password);
+            if (!password.equals(confirmPassword)) {
+                request.setAttribute("error", "Passwords do not match!");
+                request.getRequestDispatcher("/view/register.jsp").forward(request, response);
+                return;
+            }
+
+            User user = new User(username, password, email, phone, gender);
 
             utx.begin();
             userService.createUser(user);
             utx.commit();
-            
+
             response.sendRedirect("/home");
-            
+
         } catch (Exception e) {
             try {
                 utx.rollback();
@@ -43,5 +51,5 @@ public class RegisterServlet extends HttpServlet {
             throw new ServletException(e);
         }
     }
-   
+
 }

@@ -17,6 +17,18 @@
         <servlet-name>DashboardServlet</servlet-name>
         <servlet-class>controller.DashboardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderListServlet</servlet-name>
+        <servlet-class>controller.OrderListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesServlet</servlet-name>
+        <servlet-class>controller.SalesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesDetailServlet</servlet-name>
+        <servlet-class>controller.SalesDetailServlet</servlet-class>
+    </servlet>
 
     <!-- ========== PRODUCT CRUD SERVLETS ========== -->
     <servlet>
@@ -115,6 +127,26 @@
         <servlet-name>ReviewServlet</servlet-name>
         <servlet-class>controller.ReviewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateStatusServlet</servlet-name>
+        <servlet-class>controller.UpdateStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminListServlet</servlet-name>
+        <servlet-class>controller.AdminListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserListServlet</servlet-name>
+        <servlet-class>controller.UserListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAdminServlet</servlet-name>
+        <servlet-class>controller.DeleteAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminLogoutServlet</servlet-name>
+        <servlet-class>controller.AdminLogoutServlet</servlet-class>
+    </servlet>
     
     
     
@@ -139,6 +171,22 @@
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/admin/dashboard</url-pattern>
         <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderListServlet</servlet-name>
+        <url-pattern>/admin/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesServlet</servlet-name>
+        <url-pattern>/admin/sales</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesDetailServlet</servlet-name>
+        <url-pattern>/admin/sales/details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStatusServlet</servlet-name>
+        <url-pattern>/admin/update-status</url-pattern>
     </servlet-mapping>
 
     <!-- Product CRUD -->
@@ -242,4 +290,29 @@
         <servlet-name>ReviewServlet</servlet-name>
         <url-pattern>/review</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCampaignServlet</servlet-name>
+        <url-pattern>/admin/delete-campaign</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAdminServlet</servlet-name>
+        <url-pattern>/admin/delete-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListServlet</servlet-name>
+        <url-pattern>/admin/customer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminListServlet</servlet-name>
+        <url-pattern>/admin/staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAdminServlet</servlet-name>
+        <url-pattern>/admin/add-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminLogoutServlet</servlet-name>
+        <url-pattern>/admin/logout</url-pattern>
+    </servlet-mapping>
+
 </web-app>

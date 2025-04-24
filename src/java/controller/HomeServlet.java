@@ -23,8 +23,13 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     public void init() {
-        campaignService.checkOngoingCampaign();
-        System.out.println("checked");
+        try {
+            campaignService.checkOngoingCampaign();
+            System.out.println("checked");
+        } catch (Exception e) {
+            System.err.println("Failed to check ongoing campaigns: " + e.getMessage());
+            e.printStackTrace(); // Optional: log the full stack trace
+        }
     }
 
     @Override
@@ -45,7 +50,9 @@ public class HomeServlet extends HttpServlet {
         Campaign ongoingCampaign = campaignService.getOngoingCampaign();
         if (ongoingCampaign != null) {
             LocalDate endDate = ongoingCampaign.getDateEnd();
+            String campaignName = ongoingCampaign.getCampaignName();
             request.setAttribute("endDate", endDate);
+            request.setAttribute("campaignName", campaignName);
         }
 
         request.setAttribute("promoProducts", products);

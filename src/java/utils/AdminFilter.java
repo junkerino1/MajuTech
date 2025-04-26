@@ -18,9 +18,9 @@ public class AdminFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
-        
+
         String path = request.getRequestURI().substring(request.getContextPath().length());
-        
+
         if (path.equals("/admin/login")) {
             chain.doFilter(req, res);
             return;
@@ -30,8 +30,16 @@ public class AdminFilter implements Filter {
 
         if (admin != null) {
             session.setAttribute("adminRole", admin.getRole());
-            System.out.println("admin role" + admin.getRole());
+
+            if (path.startsWith("/admin/staff")) {
+                if (!"manager".equals(admin.getRole())) {
+                    request.getRequestDispatcher("/view/403.jsp").forward(request, response);
+                    return;
+                }
+            }
+
             chain.doFilter(request, response);
+
         } else {
             response.sendRedirect(request.getContextPath() + "/admin/login");
         }

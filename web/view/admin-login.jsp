@@ -29,7 +29,7 @@
                                 String message = (String) request.getAttribute("message");
                                 if (message != null && !message.isEmpty()) {
                             %>
-                            <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
+                            <div id="message" class="card text-white bg-danger mb-3" style="max-width: 100%;">
                                 <div class="card-body">
                                     <p class="card-text"><%= message%></p>
                                 </div>
@@ -37,6 +37,17 @@
                             <%
                                 }
                             %>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const message = document.getElementById('message');
+
+                                    setTimeout(function () {
+                                        message.style.display = 'none';
+                                    }, 5000);
+                                });
+                            </script>
+
                             <div class="card mb-0">
 
                                 <div class="card-body">

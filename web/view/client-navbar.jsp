@@ -5,7 +5,15 @@
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/product">Shop</a></li>
             <li><a href="${pageContext.request.contextPath}/order">Order</a></li>
-            <li><a href="#">Logout</a></li>
+                <%
+                    model.User user = (model.User) session.getAttribute("user");
+                    if (user != null) {
+                %>
+            <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+
+            <% } else { %>
+            <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+                <% }%>
             <li id="lg-bag"><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-bag-shopping"></i></a></li>
             <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
         </ul>

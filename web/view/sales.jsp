@@ -78,8 +78,9 @@
                 <!-- Main Content -->
 
                 <%
-                    List<Map<String, Object>> monthlyData = (List<Map<String, Object>>) request.getAttribute("monthly");
-                    List<Map<LocalDate, Object[]>> dailySalesList = (List<Map<LocalDate, Object[]>>) request.getAttribute("daily");
+                    List<Map<String, Object>> monthlyData = (List<Map<String, Object>>) request.getAttribute("monthlyComparison");
+                    List<Map<LocalDate, Object[]>> dailySalesList = (List<Map<LocalDate, Object[]>>) request.getAttribute("dailyReport");
+                    List<Map<String, Object[]>> monthlySalesList = (List<Map<String, Object[]>>)request.getAttribute("monthlyReport");
 
                     Map<String, Object> currentMonth = monthlyData.get(0);
                     Map<String, Object> previousMonth = monthlyData.get(1);
@@ -184,15 +185,13 @@
                         </div>
                     </div>
 
-                    <!-- Filter Row -->
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                    <h4 class="fw-bold py-3 mb-2">Daily Sales Report</h4>
-
-                            </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <h4 class="fw-bold py-3 mb-2">Daily Sales Report</h4>
                         </div>
+                    </div>
 
-                    <!-- Sales Table -->
+                    <!-- Daily Sales Table -->
                     <div class="card shadow-sm rounded">
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -227,6 +226,62 @@
                                             <td><%= String.format("%.2f", discount)%></td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/admin/sales/details?date=<%=date%>" class="btn btn-sm btn-primary">
+                                                    <i class="bi bi-eye"></i> View Details
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <h4 class="fw-bold py-3 mb-2">Monthly Sales Report</h4>
+                        </div>
+                    </div>
+
+
+                    <!-- Monthly Sales Table -->
+                    <div class="card shadow-sm rounded">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>No. Orders</th>
+                                            <th>Products Sold</th>
+                                            <th>Total Sales (RM)</th>
+                                            <th>Discounts Applied (RM)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            for (Map<String, Object[]> monthlyMap : monthlySalesList) {
+                                                for (Map.Entry<String, Object[]> entry : monthlyMap.entrySet()) {
+                                                    String month = entry.getKey(); // e.g., "JANUARY"
+                                                    Object[] metrics = entry.getValue();
+
+                                                    int orderCount = (Integer) metrics[0];
+                                                    int itemsSold = (Integer) metrics[1];
+                                                    double revenue = (Double) metrics[2];
+                                                    double discount = (Double) metrics[3];
+                                        %>
+                                        <tr>
+                                            <td><%= month.substring(0, 1).toUpperCase() + month.substring(1).toLowerCase()%></td>
+                                            <td><%= orderCount%></td>
+                                            <td><%= itemsSold%></td>
+                                            <td><%= String.format("%.2f", revenue)%></td>
+                                            <td><%= String.format("%.2f", discount)%></td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/admin/sales/details?month=<%=month%>" class="btn btn-sm btn-primary">
                                                     <i class="bi bi-eye"></i> View Details
                                                 </a>
                                             </td>

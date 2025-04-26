@@ -91,11 +91,21 @@ public class SalesServlet extends HttpServlet {
 
         monthlyComparison.add(cmData);
         monthlyComparison.add(pmData);
+        
+        List<Map<LocalDate, Object[]>> dailySalesList = getDailyReport();
+        List<Map<String, Object[]>> monthlySalesList = getMonthlyReport();
+        
+        request.setAttribute("monthlyComparison", monthlyComparison);
+        request.setAttribute("dailyReport", dailySalesList);
+        request.setAttribute("monthlyReport", monthlySalesList);
+        request.getRequestDispatcher("/view/sales.jsp").forward(request, response);
 
+    }
+
+    public List<Map<LocalDate, Object[]>> getDailyReport() {
         Map<String, JsonObject> salesDataMap = new HashMap<>();
         List<Map<LocalDate, Object[]>> dailySalesList = new ArrayList<>();
 
-        // Loop 1 week (7 days)
         for (int i = 0; i < 7; i++) {
             LocalDate date = LocalDate.now().minusDays(i);
             List<Order> dailyOrder = orderService.getOrderByDate(date);
@@ -107,35 +117,12 @@ public class SalesServlet extends HttpServlet {
             double dailyRevenue = 0.0;
             double dailyDiscount = 0.0;
 
-            // Maps to hold hourly data
-            Map<Integer, Double> salesByHour = new LinkedHashMap<>();
-            Map<Integer, Integer> ordersByHour = new LinkedHashMap<>();
-
-            // Initialize sales and orders for each hour
-            for (int hour = 0; hour <= 24; hour++) {
-                salesByHour.put(hour, 0.0);
-                ordersByHour.put(hour, 0);
-            }
-
-            // To store product purchased list
-            List<Map<String, Object>> productList = new ArrayList<>();
-
             for (Order order : dailyOrder) {
                 dailyOrderCount++;
                 dailyRevenue += order.getTotalAmount();
                 List<OrderItem> items = orderService.getOrderItemByOrder(order);
-                LocalDateTime dailyDate = order.getDate();
-                int hour = dailyDate.getHour();
-
-                double currentSales = salesByHour.get(hour);
-                salesByHour.put(hour, currentSales + order.getTotalAmount());
-
-                // Count order
-                int currentOrders = ordersByHour.get(hour);
-                ordersByHour.put(hour, currentOrders + 1);
 
                 for (OrderItem item : items) {
-                    // Customize product data to add to product list
                     Map<String, Object> productMap = new HashMap<>();
                     productMap.put("id", item.getProduct().getId());
                     productMap.put("name", item.getProduct().getProductName());
@@ -147,29 +134,9 @@ public class SalesServlet extends HttpServlet {
 
                     dailyItemSold += item.getQuantity();
                     dailyDiscount += (item.getProduct().getUnitPrice() - item.getCurrentPrice());
-
-                    // Check if product already exists in the list
-                    boolean found = false;
-                    for (Map<String, Object> existing : productList) {
-                        if (existing.get("id").equals(productMap.get("id"))) {
-                            int existingQty = (int) existing.get("quantity");
-                            existing.put("quantity", existingQty + item.getQuantity());
-
-                            double existingTotal = (double) existing.get("total");
-                            existing.put("total", existingTotal + (item.getQuantity() * item.getCurrentPrice()));
-
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found) {
-                        productList.add(new HashMap<>(productMap)); // add a copy to avoid overwriting
-                    }
                 }
             }
 
-            // store daily sales data
             Map<LocalDate, Object[]> dailyData = new HashMap<>();
             dailyData.put(currentDate, new Object[]{
                 dailyOrderCount,
@@ -178,65 +145,49 @@ public class SalesServlet extends HttpServlet {
                 dailyDiscount
             });
             dailySalesList.add(dailyData);
-
-            // Prepare hourly data for the JSON
-            JsonArrayBuilder hoursArray = Json.createArrayBuilder();
-            JsonArrayBuilder salesArray = Json.createArrayBuilder();
-            JsonArrayBuilder ordersArray = Json.createArrayBuilder();
-
-            for (int hour = 0; hour <= 24; hour++) {
-                hoursArray.add(String.format("%02d:00", hour));
-                salesArray.add(salesByHour.get(hour));
-                ordersArray.add(ordersByHour.get(hour));
-            }
-
-            JsonObject hourlyData = Json.createObjectBuilder()
-                    .add("hours", hoursArray)
-                    .add("sales", salesArray)
-                    .add("orders", ordersArray)
-                    .build();
-
-            // Create JSON object for this day's data
-            JsonArrayBuilder productArray = Json.createArrayBuilder();
-            for (Map<String, Object> prod : productList) {
-                productArray.add(Json.createObjectBuilder()
-                        .add("id", prod.get("id").toString())
-                        .add("name", prod.get("name").toString())
-                        .add("category", prod.get("category").toString())
-                        .add("quantity", (int) prod.get("quantity"))
-                        .add("unitPrice", (double) prod.get("unitPrice"))
-                        .add("discount", (double) prod.get("discount"))
-                        .add("total", (double) prod.get("total"))
-                );
-            }
-
-            JsonObject dailySales = Json.createObjectBuilder()
-                    .add("totalRevenue", dailyRevenue)
-                    .add("ordersCount", dailyOrderCount)
-                    .add("itemsSold", dailyItemSold)
-                    .add("totalDiscount", dailyDiscount)
-                    .add("products", productArray)
-                    .add("hourlyData", hourlyData)
-                    .build();
-
-            // Add daily sales data to the final salesData map with date as key
-            salesDataMap.put(date.toString(), dailySales);
         }
-
-        // Convert the final sales data map to the format you want (in JSON form)
-        JsonObjectBuilder finalJsonBuilder = Json.createObjectBuilder();
-        for (Map.Entry<String, JsonObject> entry : salesDataMap.entrySet()) {
-            finalJsonBuilder.add(entry.getKey(), entry.getValue());
-        }
-
-        // Get the final JSON as a string if needed
-        JsonObject finalJson = finalJsonBuilder.build();
         
-        request.setAttribute("monthly", monthlyComparison);
-        request.setAttribute("daily", dailySalesList);
-        request.setAttribute("salesData", finalJson);
-        request.getRequestDispatcher("/view/sales.jsp").forward(request, response);
-
+        return dailySalesList;
     }
-    
+
+    public List<Map<String, Object[]>> getMonthlyReport() {
+        Map<String, JsonObject> salesDataMap = new HashMap<>();
+        List<Map<String, Object[]>> monthlySalesList = new ArrayList<>();
+
+        for (int month = 1; month <= 12; month++) {
+            LocalDate monthStart = LocalDate.of(LocalDate.now().getYear(), month, 1);
+            LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
+
+            List<Order> monthlyOrders = orderService.getOrderByMonth(2025, month);
+
+            int monthlyOrderCount = 0;
+            int monthlyItemSold = 0;
+            double monthlyRevenue = 0.0;
+            double monthlyDiscount = 0.0;
+
+            for (Order order : monthlyOrders) {
+                monthlyOrderCount++;
+                monthlyRevenue += order.getTotalAmount();
+                List<OrderItem> items = orderService.getOrderItemByOrder(order);
+
+                for (OrderItem item : items) {
+                    monthlyItemSold += item.getQuantity();
+                    monthlyDiscount += (item.getProduct().getUnitPrice() - item.getCurrentPrice()) * item.getQuantity();
+                }
+            }
+
+            Map<String, Object[]> monthlyData = new HashMap<>();
+            monthlyData.put(monthStart.getMonth().name(), new Object[]{
+                monthlyOrderCount,
+                monthlyItemSold,
+                monthlyRevenue,
+                monthlyDiscount
+            });
+
+            monthlySalesList.add(monthlyData);
+        }
+        
+        return monthlySalesList;
+    }
+
 }

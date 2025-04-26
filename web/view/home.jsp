@@ -33,8 +33,10 @@
         <!-- ===================== -->
         <div class="promotion-container">
             <div class="promotion-header">
-                <% String campaignName = (String) request.getAttribute("campaignName"); %>
-                <h1 class="promotion-title"><%=campaignName %></h1>
+                <% String campaignName = (String) request.getAttribute("campaignName");
+                    List<Product> promoProducts = (List<Product>) request.getAttribute("promoProducts");
+                    if (promoProducts != null && !promoProducts.isEmpty()) {%>
+                <h1 class="promotion-title"><%=campaignName%></h1>
                 <p class="promotion-subtitle">Limited Time Offers - Grab Yours Before They're Gone!</p>
 
                 <div class="countdown-container">
@@ -59,10 +61,8 @@
 
             <div class="product-grid">
                 <%
-                    List<Product> promoProducts = (List<Product>) request.getAttribute("promoProducts");
-                    if (promoProducts != null && !promoProducts.isEmpty()) {
-                        for (Product product : promoProducts) {
-                            if ("promotion".equalsIgnoreCase(product.getStatus())) {
+                    for (Product product : promoProducts) {
+                        if ("promotion".equalsIgnoreCase(product.getStatus())) {
                 %>
                 <div class="product-card">
                     <div>
@@ -126,6 +126,9 @@
                     <h6>F24/7 Support</h6>
                 </div>
             </section>
+        </div>
+
+        <div class="feature">
             <!-- ===================== -->
             <!--    Products Section   -->
             <!-- ===================== -->
@@ -137,7 +140,7 @@
                 %>
                 <div class="pro-container">
                     <% if (featuredProducts != null) {
-                            for (Product p : featuredProducts) {%>
+                                for (Product p : featuredProducts) {%>
                     <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
                         <img src="<%= p.getImage1()%>">
                         <div class="des">
@@ -152,7 +155,7 @@
                         </div>
                     </div>
                     <%  }
-                        }%>
+                            }%>
                 </div>
             </section>
         </div>

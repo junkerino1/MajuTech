@@ -49,9 +49,21 @@ public class CreateCampaignServlet extends HttpServlet {
         try {
             startDate = LocalDate.parse(request.getParameter("startDate"), formatter);
             endDate = LocalDate.parse(request.getParameter("endDate"), formatter);
+
+            if (startDate.isAfter(endDate)) {
+                List<Product> productList = productService.getAllProducts(); // Reload products
+                request.setAttribute("products", productList);
+
+                request.setAttribute("error", "Start date cannot be later than end date.");
+                request.getRequestDispatcher("/view/create-campaign.jsp").forward(request, response);
+                return;
+            }
         } catch (DateTimeParseException e) {
-            // Handle invalid date format
-            response.getWriter().write("Invalid date format");
+            List<Product> productList = productService.getAllProducts(); // Reload products
+            request.setAttribute("products", productList);
+
+            request.setAttribute("error", "Invalid date format. Please enter a valid date.");
+            request.getRequestDispatcher("/view/create-campaign.jsp").forward(request, response);
             return;
         }
 
@@ -75,6 +87,20 @@ public class CreateCampaignServlet extends HttpServlet {
             }
         }
 
+        List<Campaign> existingCampaigns = campaignService.getAllCampaign();
+
+        for (Campaign c : existingCampaigns) {
+            if ((startDate.isBefore(c.getDateEnd()) && endDate.isAfter(c.getDateStart()))
+                    || (startDate.equals(c.getDateStart()) || endDate.equals(c.getDateEnd()))) {
+                List<Product> productList = productService.getAllProducts(); // Reload products
+                request.setAttribute("products", productList);
+
+                request.setAttribute("error", "Campaign period clashes with existing campaigns.");
+                request.getRequestDispatcher("/view/create-campaign.jsp").forward(request, response);
+                return;
+            }
+        }
+
         // insert into campaign table
         Campaign newCampaign = new Campaign(promoName, startDate, endDate, percentageDiscount);
         campaignService.createNewCampaign(newCampaign);
@@ -92,9 +118,9 @@ public class CreateCampaignServlet extends HttpServlet {
                 campaignService.createCampaignItems(newItem);
             }
         }
-        
+
         message = "Successfully created " + promoName + " campaign.";
-        
+
         request.getSession().setAttribute("campaignMessage", message);
         response.sendRedirect(request.getContextPath() + "/admin/campaign");
 

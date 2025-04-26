@@ -41,6 +41,11 @@
                                 <span class="hide-menu">Add Product</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="${pageContext.request.contextPath}/admin/review" class="sidebar-link">
+                                <span class="hide-menu">Reply Review</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 

@@ -19,9 +19,13 @@
 
         <jsp:include page="client-navbar.jsp" />
 
-
-
         <section id="cart" class="section-p1">
+            <%
+                List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
+                List<Product> productsInCart = (List<Product>) request.getAttribute("productsInCart");
+                if (!cartItems.isEmpty()) {
+
+            %>
             <table width="100%">
                 <thead>
                     <tr>
@@ -33,10 +37,8 @@
                         <td>Subtotal</td>
                     </tr>
                 </thead>
-                <%
-                    List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
-                    List<Product> productsInCart = (List<Product>) request.getAttribute("productsInCart");
-                    double total = 0.0;
+                <%                    double total = 0.0;
+                    double totalDiscount = 0.0;
 
                     if (cartItems != null && productsInCart != null && cartItems.size() == productsInCart.size()) {
                         for (int i = 0; i < cartItems.size(); i++) {
@@ -56,7 +58,18 @@
                         </td>
                         <td><img src="<%= product.getImage1()%>" width="80" height="80" /></td>
                         <td><%= product.getProductName()%></td>
-                        <td>RM <%= String.format("%.2f", product.getEffectivePrice())%></td>
+                        <td>
+
+                            <% if ("promotion".equalsIgnoreCase(product.getStatus())) {
+                                    double discount = product.getUnitPrice() - product.getEffectivePrice();
+                                    totalDiscount += discount;
+                            %>
+                            <h4  style="color: red;">RM <%= String.format("%.2f", product.getEffectivePrice())%></h4>
+                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", product.getUnitPrice())%></span>
+                            <% } else {%>
+                            <h4>RM <%= String.format("%.2f", product.getEffectivePrice())%></h4>
+                            <% }%>
+                        </td>
                         <td><%= item.getQuantity()%></td>
                         <td>RM <%= String.format("%.2f", subtotal)%></td>
                     </tr>
@@ -68,9 +81,11 @@
         </section>
 
         <%
-            double shipping = total > 1000 ? 0.00 : 10.00;
+            double shipping = total > 1000 ? 0.00 : 25.00;
             double grandTotal = total + shipping;
+
         %>
+
 
         <section id="cart-add" class="section-p1">
             <div id="subtotal">
@@ -79,6 +94,10 @@
                     <tr>
                         <td>Cart Subtotal</td>
                         <td>RM <%= String.format("%.2f", total)%></td>
+                    </tr>
+                    <tr>
+                        <td>Total Saved</td>
+                        <td>RM <%= String.format("%.2f", totalDiscount)%></td>
                     </tr>
                     <tr>
                         <td>Shipping</td>
@@ -103,9 +122,11 @@
                 </a>  
             </div>
             <%
+                    }
                 }
             %>
         </section>
+
 
 
 

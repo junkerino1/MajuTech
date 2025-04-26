@@ -41,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
             userService.createUser(user);
             utx.commit();
 
-            response.sendRedirect("/home");
+            response.sendRedirect("/MajuTech/home");
 
         } catch (Exception e) {
             try {

@@ -118,8 +118,8 @@ public class CampaignService {
                     }
                 }
 
-                // Mark old campaign as inactive
-                activeCampaign.setStatus("inactive");
+                // Mark old campaign as expired
+                activeCampaign.setStatus("expired");
                 em.merge(activeCampaign);
                 
                 setNewCampaign();

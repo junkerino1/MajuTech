@@ -30,4 +30,8 @@ public class UserService {
         return em.createQuery("SELECT u FROM User u", User.class)
                 .getResultList();
     }
+    public void deleteUser(int userId) {
+        User user = em.find(User.class, userId);
+        em.remove(user);
+    }
 }

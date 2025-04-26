@@ -40,6 +40,7 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Gender</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,6 +55,22 @@
                                             <td><%= user.getEmail()%></td>
                                             <td><%= user.getPhone()%></td>
                                             <td><%= user.getGender()%></td>
+                                            <td>
+                                                <div style="display: inline-flex; gap: 10px;">
+                                                    <form action="${pageContext.request.contextPath}/admin/delete-user" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                                                        <button class="btn btn-sm btn-danger" type="submit">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                        <input type="hidden" name="id" value="<%= user.getId()%>"/>
+                                                    </form>
+
+                                                    <script>
+                                                        function confirmDelete() {
+                                                            return confirm("Are you sure you want to delete this user?");
+                                                        }
+                                                    </script>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <%
                                                 }

@@ -5,8 +5,7 @@
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/product">Shop</a></li>
             <li><a href="${pageContext.request.contextPath}/order">Order</a></li>
-            <li><a href="${pageContext.request.contextPath}/history">History</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Logout</a></li>
             <li id="lg-bag"><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-bag-shopping"></i></a></li>
             <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
         </ul>
@@ -14,6 +13,5 @@
     <div id="mobile">
         <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-bag-shopping"></i></a>
         <i id="bar" class="fas fa-outdent"></i>
-
     </div>
 </header>

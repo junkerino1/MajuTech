@@ -8,7 +8,7 @@
     </div>
     <div class="col">
         <h4>About</h4>
-        <a href="about.html">About Us</a>
+       <a href="${pageContext.request.contextPath}/view/about-us.jsp">About Us</a>
         <a href="mailto:ooijunkang2005@gmail.com">Contact Us</a>
     </div>
     <div class="col">

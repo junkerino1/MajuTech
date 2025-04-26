@@ -1,3 +1,4 @@
+<%@page import="model.Reply"%>
 <%@page import="model.Review"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="model.Product" %>
@@ -17,6 +18,30 @@
         <!-- Font Awesome Library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <style>
+                        .admin-reply {
+                margin-top: 10px;
+                margin-left: 20px;
+                padding: 10px 15px;
+                background-color: #f8f9fa;
+                border-left: 3px solid #0d6efd;
+                border-radius: 4px;
+            }
+
+            .reply-header {
+                font-weight: bold;
+                color: #0d6efd;
+                margin-bottom: 5px;
+            }
+
+            .reply-header i {
+                margin-right: 5px;
+            }
+
+            .reply-content {
+                color: #333;
+            }
+        </style>
     </head>
 
     <body>
@@ -80,7 +105,7 @@
 
                 <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId()%>" />
-                    <input type="number" name="quantity" value="1" />
+                    <input type="number" name="quantity" value="1" min="1" max="10"/>
                     <button class="normal">Add To cart</button>
                 </form>
 
@@ -147,6 +172,24 @@
                     <div class="review-comment">
                         <%= review.getComment()%>
                     </div>
+
+                    <%
+                        Reply reply = review.getReply();
+                        if (reply != null && reply.getComment() != null && !reply.getComment().trim().isEmpty()) {
+                    %>
+                    <div class="admin-reply">
+                        <div class="reply-header">
+                            <i class="fa-solid fa-reply"></i> <span>Admin Response:</span>
+                        </div>
+                        <div class="reply-content">
+                            <%= reply.getComment()%>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
                 </div>
                 <% } %>
             </div>

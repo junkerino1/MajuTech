@@ -33,6 +33,7 @@ public class RegisterServlet extends HttpServlet {
             if (!password.equals(confirmPassword)) {
                 request.setAttribute("errorMessage", "Passwords are not the same!");
                 request.getRequestDispatcher("/view/login-register.jsp").forward(request, response);
+                return;
             }
 
             List<User> userList = userService.getAllUser();
@@ -42,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
                 if (username.equals(u.getUsername())) {
                     request.setAttribute("errorMessage", "Username existed!");
                     request.getRequestDispatcher("/view/login-register.jsp").forward(request, response);
+                    return;
                 }
             }
 

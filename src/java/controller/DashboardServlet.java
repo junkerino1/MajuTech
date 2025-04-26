@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Category;
 
 import model.Order;
 import model.OrderItem;
+import service.CategoryService;
 
 public class DashboardServlet extends HttpServlet {
 
-
     @Inject
     private OrderService orderService;
+
+    @Inject
+    private CategoryService categoryService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -75,6 +79,12 @@ public class DashboardServlet extends HttpServlet {
         
         List<Order> recentTransaction = orderService.getAllOrderDesc();
 
+        List<Object[]> topProducts = orderService.getTop10SellingProducts();
+        
+        List<Category> categories = categoryService.getAllCategory();
+
+        request.setAttribute("categories", categories);
+        request.setAttribute("topProducts", topProducts);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("totalSales", totalSales);
         request.setAttribute("totalQuantity", totalQuantity);

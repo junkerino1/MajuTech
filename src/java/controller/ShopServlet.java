@@ -9,6 +9,7 @@ import service.ProductService;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import model.Reply;
 import model.Review;
 import service.CampaignService;
 import service.ReviewService;
@@ -57,6 +58,14 @@ public class ShopServlet extends HttpServlet {
                             counter++;
                         }
                     }
+                    
+                    for (Review review : reviews) {
+                        Reply reply = reviewService.getReplyByReviewId(review.getId());
+                        if (reply != null) {
+                            review.setReply(reply);
+                        }
+                    }
+                    
                     double rating = totalRating / counter;
                     
                     // Shuffle the products and fetch a maximum of 4 products for featuring

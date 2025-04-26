@@ -1,3 +1,5 @@
+<%@page import="model.Category"%>
+<%@page import="model.Product"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="model.Order"%>
 <%@page import="java.util.List"%>
@@ -15,6 +17,14 @@
         <style>
             .sale-card {
                 margin-bottom: 1rem;
+            }
+
+            .small-images {
+                width: 50px;
+                height: 50px;
+                border-radius: 4px;
+                object-fit: cover;
+                border: 1px solid #dee2e6;
             }
 
             .filter-bar {
@@ -86,6 +96,7 @@
 
                                 List<Integer> orderStats = (List<Integer>) request.getAttribute("orderStats");
                                 List<Double> dailySales = (List<Double>) request.getAttribute("dailySales");
+                                List<Object[]> topProducts = (List<Object[]>) request.getAttribute("topProducts");
 
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy hh:mm a");
                             %>
@@ -193,10 +204,88 @@
                             <div class="row">
                                 <div class="card w-100">
                                     <div class="card-body p-4">
-                                        <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                                        <h5 class="card-title fw-semibold mb-4">Top 10 Products Sales Report</h5>
                                         <div class="table-responsive">
                                             <table class="table text-nowrap mb-0 align-middle">
-                                                <thead class="text-dark fs-4">
+                                                <thead class="text-white" style="background-color: rgba(75, 192, 192, 0.2);">
+                                                    <tr>
+                                                        <th class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">#</h6>
+                                                        </th>
+                                                        <th class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">Product</h6>
+                                                        </th>
+                                                        <th class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">Category</h6>
+                                                        </th>
+                                                        <th class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">Units Sold</h6>
+                                                        </th>
+                                                        <th class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">Total Revenue</h6>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        List<Category> categories = (List<Category>) request.getAttribute("categories");
+
+                                                        int counter = 1;
+
+                                                        for (Object[] row : topProducts) {
+                                                            Integer productId = (Integer) row[0];
+                                                            String productName = (String) row[1];
+                                                            Double unitPrice = (Double) row[2];
+                                                            String image1 = (String) row[3];
+                                                            Integer categoryId = (Integer) row[4];
+                                                            Long totalSold = (Long) row[5];
+
+                                                            String categoryName = null;
+                                                            for (Category c : categories) {
+                                                                if (c.getId() == categoryId) {
+                                                                    categoryName = c.getCategoryName();
+                                                                    break;
+                                                                }
+                                                            }
+                                                    %>
+                                                    <tr>
+                                                        <td class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0"><%= counter++%></h6>
+                                                        </td>
+                                                        <td class="border-bottom-0">
+                                                            
+                                                            <h6 class="fw-semibold mb-0"><img src="<%= image1%>" alt="<%= productName%>" class="small-images" style="margin-right: 15px"><%= productName%></h6>
+                                                        </td>
+                                                        <td class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0"><%= categoryName != null ? categoryName : "Unknown"%></h6>
+                                                        </td>
+                                                        <td class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0"><%= totalSold%></h6>
+                                                        </td>
+                                                        <td class="border-bottom-0">
+                                                            <h6 class="fw-semibold mb-0">
+                                                                RM <%= String.format("%.2f", totalSold * unitPrice)%>
+                                                            </h6>
+                                                        </td>
+                                                    </tr>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="card w-100">
+                                    <div class="card-body p-4">
+                                        <h5 class="card-title fw-semibold mb-4" >Recent Transactions</h5>
+                                        <div class="table-responsive">
+                                            <table class="table text-nowrap mb-0 align-middle">
+                                                <thead class="text-dark fs-4" style="background-color: rgba(153, 102, 255, 0.2)">
                                                     <tr>
                                                         <th class="border-bottom-0">
                                                             <h6 class="fw-semibold mb-0">Order ID</h6>
@@ -259,6 +348,9 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -307,7 +399,7 @@
                 const formatted = date.toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short'
-                }); 
+                });
 
                 dateLabels.push(formatted);
             }

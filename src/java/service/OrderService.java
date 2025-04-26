@@ -85,4 +85,14 @@ public class OrderService {
 
     }
 
+    public List<Object[]> getTop10SellingProducts() {
+        return em.createQuery(
+                "SELECT p.id, p.productName, p.unitPrice, p.image1, p.category_id, SUM(oi.quantity) "
+                + "FROM OrderItem oi JOIN oi.product p "
+                + "GROUP BY p.id, p.productName, p.unitPrice, p.image1, p.category_id "
+                + "ORDER BY SUM(oi.quantity) DESC", Object[].class)
+                .setMaxResults(10)
+                .getResultList();
+    }
+
 }

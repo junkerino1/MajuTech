@@ -19,7 +19,64 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <style>
-                        .admin-reply {
+            .out-of-stock {
+                background-color: #f8d7da;
+                border: 1px solid #f5c6cb;
+                border-radius: 4px;
+                padding: 15px;
+                margin-top: 10px;
+            }
+
+            .out-of-stock-badge {
+                display: inline-block;
+                background-color: #dc3545;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .stock-info {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            .stock-status {
+                margin-left: 8px;
+                font-weight: 500;
+            }
+
+            .in-stock {
+                color: #28a745;
+            }
+
+            .low-stock {
+                color: #ffc107;
+            }
+
+            .sold-out {
+                color: #dc3545;
+            }
+
+            .disabled-btn {
+                background-color: #cccccc !important;
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+
+            .out-of-stock-label {
+                display: inline-block;
+                color: #dc3545;
+                font-size: 12px;
+                font-weight: bold;
+                border: 1px solid #dc3545;
+                padding: 2px 6px;
+                border-radius: 3px;
+                margin-top: 5px;
+            }
+            .admin-reply {
                 margin-top: 10px;
                 margin-left: 20px;
                 padding: 10px 15px;
@@ -41,6 +98,7 @@
             .reply-content {
                 color: #333;
             }
+
         </style>
     </head>
 
@@ -99,16 +157,40 @@
                 <% } else {%>
                 <h2>RM <%= String.format("%.2f", product.getEffectivePrice())%></h2>
                 <% }%>
+
+                <!-- Stock Status Indicator -->
+                <div class="stock-info">
+                    <% if (product.getQuantity() > 10) {%>
+                    <i class="fa-solid fa-circle-check" style="color: #28a745;"></i>
+                    <span class="stock-status in-stock">In Stock (<%= product.getQuantity()%> available)</span>
+                    <% } else if (product.getQuantity() > 0) {%>
+                    <i class="fa-solid fa-circle-exclamation" style="color: #ffc107;"></i>
+                    <span class="stock-status low-stock">Low Stock (Only <%= product.getQuantity()%> left)</span>
+                    <% } else { %>
+                    <i class="fa-solid fa-circle-xmark" style="color: #dc3545;"></i>
+                    <span class="stock-status sold-out">Out of Stock</span>
+                    <% }%>
+                </div>
+
                 <ul style="font-weight: bold;list-style-type: disc;padding-left: 20px;">
                     <%= product.getSpecification()%>
                 </ul>
 
+                <% if (product.getQuantity() > 0) {%>
+                <!-- Product in stock - Show Add to Cart form -->
                 <form action="${pageContext.request.contextPath}/add-to-cart" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId()%>" />
-                    <input type="number" name="quantity" value="1" min="1" max="10"/>
-                    <button class="normal">Add To cart</button>
+                    <input type="number" name="quantity" value="1" min="1" max="<%= product.getQuantity()%>" />
+                    <button class="normal">Add To Cart</button>
                 </form>
-
+                <% } else { %>
+                <!-- Product out of stock - Show Out of Stock message -->
+                <div class="out-of-stock">
+                    <span class="out-of-stock-badge">Out of Stock</span>
+                    <p>Sorry, this item is currently out of stock. Please check back later or browse our similar products below.</p>
+                    <button class="normal disabled-btn" disabled>Add To Cart</button>
+                </div>
+                <% }%>
             </div>
         </section>
 
@@ -188,13 +270,9 @@
                     <%
                         }
                     %>
-
-
                 </div>
                 <% } %>
             </div>
-
-
         </section>
 
         <section id="product1" class="section-p1">
@@ -216,7 +294,12 @@
                         <% } else {%>
                         <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
                         <% } %>
-                        <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+
+                        <% if (p.getQuantity() > 0) {%>
+                        <a href="${pageContext.request.contextPath}/add-to-cart?productId=<%= p.getId()%>"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                            <% } else { %>
+                        <span class="out-of-stock-label">Out of stock</span>
+                        <% } %>
                     </div>
                 </div>
                 <%  }

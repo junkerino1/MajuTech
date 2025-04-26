@@ -57,6 +57,7 @@ public class EditProductServlet extends HttpServlet {
         String specification = request.getParameter("specification");
         int productId = Integer.parseInt(request.getParameter("product_id"));
         String status = "normal";
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
         String message;
         Cloudinary cloudinary = CloudinaryConfig.getInstance();
@@ -84,7 +85,7 @@ public class EditProductServlet extends HttpServlet {
             }
 
             Product product = new Product(productName, unitPrice, categoryId, specification, description, status,
-                    imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3]);
+                    imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3],quantity);
 
             product.setId(productId);
             productService.updateProduct(product);

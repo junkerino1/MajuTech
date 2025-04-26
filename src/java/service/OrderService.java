@@ -84,7 +84,7 @@ public class OrderService {
                 .getResultList();
 
     }
-
+    
     public List<Object[]> getTop10SellingProducts() {
         return em.createQuery(
                 "SELECT p.id, p.productName, p.unitPrice, p.image1, p.category_id, SUM(oi.quantity) "
@@ -94,5 +94,36 @@ public class OrderService {
                 .setMaxResults(10)
                 .getResultList();
     }
+    
+    public boolean deleteOrder(int orderId) {
+        try {
+            // First use find instead of query to get the order - safer approach
+            Order order = em.find(Order.class, orderId);
+            
+            // Check if order exists
+            if (order == null) {
+                return false;  // Order doesn't exist, nothing to delete
+            }
+            
+            // Get related order items
+            List<OrderItem> orderItems = getOrderItemByOrder(order);
+            
+            // Delete order items first
+            for (OrderItem item : orderItems) {
+                if (item != null) {
+                    em.remove(em.contains(item) ? item : em.merge(item));
+                }
+            }
+            
+            // Then delete the order using a safer approach
+            em.remove(em.contains(order) ? order : em.merge(order));
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

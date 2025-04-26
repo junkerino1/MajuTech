@@ -24,6 +24,17 @@
             .first-level.show {
                 max-height: 500px;
             }
+            
+            /* Add styles for low stock */
+            .low-stock {
+                color: #dc3545;
+                font-weight: bold;
+            }
+            
+            /* Add styles for good stock */
+            .good-stock {
+                color: #28a745;
+            }
         </style>
     </head>
 
@@ -72,9 +83,10 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Product Name</th>
-                                            <th>Category ID</th>
+                                            <th>Category</th>
                                             <th>Unit Price</th>
                                             <th>Status</th>
+                                            <th>Quantity</th> <!-- Added Quantity column -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -99,7 +111,11 @@
                                             <td><%= categoryName%></td>
                                             <td>RM <%= String.format("%.2f", p.getUnitPrice())%></td>
                                             <td><%= p.getStatus()%></td>
-
+                                            <!-- Added Quantity column with conditional styling based on stock level -->
+                                            <td class="<%= p.getQuantity() < 10 ? "low-stock" : "good-stock" %>">
+                                                <%= p.getQuantity()%> 
+                                                <% if(p.getQuantity() < 10) { %><span class="badge bg-danger">Low</span><% } %>
+                                            </td>
                                             <td>
                                                 <div style="display: inline-flex; gap: 10px;">
                                                     <button class="btn btn-sm btn-primary" onclick="window.location.href = '${pageContext.request.contextPath}/admin/edit-product?id=<%= p.getId()%>'">

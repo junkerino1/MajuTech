@@ -83,6 +83,13 @@
                                     <label class="form-label" for="unitPrice">Unit Price</label>
                                     <input type="number" class="form-control" id="unit_price" name="unit_price" value="<%= product.getUnitPrice()%>" step="0.01" required />
                                 </div>
+
+                                <!-- Added Quantity Field -->
+                                <div class="form-group-inline mb-3">
+                                    <label class="form-label" for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" value="<%= product.getQuantity()%>" min="0" max="10000" required />
+                                </div>
+
                                 <div class="form-group-inline mb-3">
                                     <label for="productImage" class="form-label">Images 1</label>
                                     <img src="<%= product.getImage1()%>" style="width:150px;">
@@ -115,8 +122,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
         <script src="${pageContext.request.contextPath}/script/script.js"></script>

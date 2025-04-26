@@ -57,6 +57,7 @@ public class AddProductServlet extends HttpServlet {
         String description = request.getParameter("description");
         String specification = request.getParameter("specification");
         String status = "normal";
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
         
         try {
             // Handle multiple image uploads
@@ -84,7 +85,7 @@ public class AddProductServlet extends HttpServlet {
             }
 
             // Create Product entity
-            Product product = new Product(productName, unitPrice, categoryId, specification, description, status, imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3]);
+            Product product = new Product(productName, unitPrice, categoryId, specification, description, status, imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3],quantity);
 
             productService.addProduct(product);
             utx.commit();

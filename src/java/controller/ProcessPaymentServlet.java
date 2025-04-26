@@ -40,11 +40,21 @@ public class ProcessPaymentServlet extends HttpServlet {
         ShippingAddress address = cartService.getAddressById(addressId);
         List<CartItem> cartItems = cartService.getCartById(cartId);
         List<Product> productsInCart = new ArrayList<>();
-
+        
+        // Check product availability before proceeding
+        boolean allProductsAvailable = true;
         for (CartItem item : cartItems) {
             int productId = item.getProduct().getId();
             Product product = productService.getProductById(productId);
             productsInCart.add(product);
+            
+            // Check if product has sufficient quantity
+            if (product.getQuantity() < item.getQuantity()) {
+                allProductsAvailable = false;
+                request.setAttribute("errorMessage", "Some products are not available in the requested quantity. Please update your cart.");
+                request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+                return;
+            }
         }
 
         double totalAmount = countTotalAmount(productsInCart, cartItems);
@@ -56,18 +66,34 @@ public class ProcessPaymentServlet extends HttpServlet {
             return;
         }
 
-        Order order = new Order(user, totalAmount, paymentMethod, address, status);
-
-        orderService.createNewOrder(order);
-
-        int orderId = order.getOrderId();
-
-        // ensure transfering process is completed before redirecting
-        int complete = transferCartToOrder(order, cartItems);
-
-        // Redirect to confirmation
-        if (complete == 1) {
-            response.sendRedirect("confirmation?orderId=" + orderId);
+        try {
+            // Create new order
+            Order order = new Order(user, totalAmount, paymentMethod, address, status);
+            orderService.createNewOrder(order);
+            int orderId = order.getOrderId();
+            
+            // Update product quantities and create order items
+            boolean updateSuccess = updateProductQuantities(cartItems, productsInCart);
+            
+            if (updateSuccess) {
+                // Transfer cart items to order items
+                int complete = transferCartToOrder(order, cartItems);
+                
+                // Redirect to confirmation if successful
+                if (complete == 1) {
+                    response.sendRedirect("confirmation?orderId=" + orderId);
+                    return;
+                }
+            } else {
+                // Roll back order if quantity update failed
+                orderService.deleteOrder(orderId);
+                request.setAttribute("errorMessage", "Transaction failed due to inventory issues. Please try again.");
+                request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            request.setAttribute("errorMessage", "An error occurred during checkout: " + e.getMessage());
+            request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
         }
     }
 
@@ -119,9 +145,47 @@ public class ProcessPaymentServlet extends HttpServlet {
 
         return total + shipping;
     }
+    
+    /**
+     * Updates product quantities in the database after successful payment
+     * @param cartItems List of items in the cart
+     * @param productsInCart List of corresponding products
+     * @return true if all quantities were successfully updated, false otherwise
+     */
+    private boolean updateProductQuantities(List<CartItem> cartItems, List<Product> productsInCart) {
+        try {
+            for (int i = 0; i < cartItems.size(); i++) {
+                CartItem item = cartItems.get(i);
+                Product product = productsInCart.get(i);
+                
+                // Calculate new quantity 
+                int currentQuantity = product.getQuantity();
+                int orderedQuantity = item.getQuantity();
+                int newQuantity = currentQuantity - orderedQuantity;
+                
+                // Validate new quantity is not negative
+                if (newQuantity < 0) {
+                    return false;
+                }
+                
+                // Update product quantity in database
+                product.setQuantity(newQuantity);
+                try {
+                    productService.updateProduct(product);
+                    // Since updateProduct is void, we just assume success if no exception
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public int transferCartToOrder(Order order, List<CartItem> cartItems) {
-
         for (CartItem item : cartItems) {
             int productId = item.getProduct().getId();
             Product product = productService.getProductById(productId);
@@ -134,5 +198,4 @@ public class ProcessPaymentServlet extends HttpServlet {
 
         return 1;
     }
-
 }

@@ -40,14 +40,17 @@ public class Product implements Serializable{
 
     @Column(name = "image4")
     private String image4;
-
+    
+    @Column (name = "quantity")
+    private int quantity;
+    
     @Transient
     private double effectivePrice;  // This field is calculated dynamically
     
     public Product() {
     }
     
-    public Product(String productName, double unitPrice, int category_id, String specification, String description, String status, String image1, String image2, String image3, String image4) {
+    public Product(String productName, double unitPrice, int category_id, String specification, String description, String status, String image1, String image2, String image3, String image4, int quantity) {
         this.productName = productName;
         this.unitPrice = unitPrice;
         this.category_id = category_id;
@@ -58,6 +61,7 @@ public class Product implements Serializable{
         this.image2 = image2;
         this.image3 = image3;
         this.image4 = image4;
+        this.quantity = quantity;
     }
 
     // Getters and Setters
@@ -155,5 +159,13 @@ public class Product implements Serializable{
 
     public void setEffectivePrice(double effectivePrice) {
         this.effectivePrice = effectivePrice;
+    }
+    
+    public int getQuantity(){
+        return quantity;
+    }
+    
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 }

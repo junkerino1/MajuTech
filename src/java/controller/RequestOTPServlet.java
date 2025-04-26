@@ -15,6 +15,16 @@ import utils.SSLUtil;
 public class RequestOTPServlet extends HttpServlet {
     
     @Override
+    public void init() throws ServletException {
+        try {
+            // Disable SSL verification at startup
+            SSLUtil.disableSslVerification();
+        } catch (Exception e) {
+            throw new ServletException("Error disabling SSL verification", e);
+        }
+    }
+    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         

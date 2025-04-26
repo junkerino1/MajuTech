@@ -145,6 +145,7 @@
                                             <th>End Date</th>
                                             <th>Discount (%)</th>
                                             <th>Total Products</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                             <th>Products</th>
                                         </tr>
@@ -164,6 +165,14 @@
                                             <td><%= campaign.getDateEnd()%></td>
                                             <td><%= campaign.getDiscountPercentage()%>%</td>
                                             <td><%= count%></td>
+                                            <td>
+                                            <span class="badge 
+                                                  <%="expired".equals(campaign.getStatus()) ? "bg-error text-dark"
+                                                          : "inactive".equals(campaign.getStatus()) ? "bg-warning text-dark"
+                                                          : "bg-success text-dark"%>">
+                                                <%= campaign.getStatus()%>
+                                            </span>
+                                            </td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/admin/edit-campaign?id=<%= campaign.getId()%>" class="btn btn-sm btn-primary">
                                                     <i class="bi bi-pen"></i>

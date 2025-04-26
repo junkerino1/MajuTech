@@ -30,6 +30,10 @@ public class Review implements Serializable{
 
     @Column(name= "comment")
     private String comment;
+    
+    @OneToOne
+    @JoinColumn(name = "reply_id")
+    private Reply reply;
 
     public Review(Order order, Product product, String username, int rating, String comment) {
         this.order = order;
@@ -38,6 +42,7 @@ public class Review implements Serializable{
         this.rating = rating;
         this.comment = comment;
     }
+    
 
     public Review() {
     }
@@ -88,6 +93,14 @@ public class Review implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Reply getReply() {
+        return reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
     }
     
     

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Order;
 import model.Product;
+import model.Reply;
 import model.Review;
 
 @Stateless
@@ -46,4 +47,40 @@ public class ReviewService {
             return new ArrayList<>();
         }
     }
+
+    public Review getReviewById(int reviewId) {
+
+        return em.find(Review.class, reviewId);
+
+    }
+
+    public void saveReply(Reply reply) {
+
+        em.persist(reply);
+
+    }
+
+    public List<Review> getAllReviews() {
+
+        return em.createQuery("SELECT r FROM Review r", Review.class)
+                .getResultList();
+
+    }
+
+    public Reply getReplyByReviewId(int reviewId) {
+        Review review = em.find(Review.class, reviewId);
+
+        if (review == null) {
+            return null; 
+        }
+
+        try {
+            return em.createQuery("SELECT r FROM Reply r WHERE r.review = :review", Reply.class)
+                    .setParameter("review", review)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            return null; 
+        }
+    }
+
 }

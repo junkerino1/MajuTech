@@ -25,6 +25,14 @@
         <servlet-name>SalesDetailServlet</servlet-name>
         <servlet-class>controller.SalesDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReplyServlet</servlet-name>
+        <servlet-class>controller.ReplyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReviewListServlet</servlet-name>
+        <servlet-class>controller.ReviewListServlet</servlet-class>
+    </servlet>
     <!-- ========== PRODUCT CRUD SERVLETS ========== -->
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
@@ -305,6 +313,14 @@
     <servlet-mapping>
         <servlet-name>DeleteUserServlet</servlet-name>
         <url-pattern>/admin/delete-user</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>ReplyServlet</servlet-name>
+        <url-pattern>/admin/reply</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewListServlet</servlet-name>
+        <url-pattern>/admin/review</url-pattern>
     </servlet-mapping>
     
     
@@ -312,35 +328,5 @@
     
     
     
-    <!--error page--> 
     
-    <error-page>
-        <error-code>401</error-code>
-        <location>/view/401.jsp</location>
-    </error-page>
-    
-    <error-page>
-        <error-code>403</error-code>
-        <location>/view/403.jsp</location>
-    </error-page>
-    
-    <error-page>
-        <error-code>404</error-code>
-        <location>/view/404.jsp</location>
-    </error-page>
-
-    <error-page>
-        <error-code>500</error-code>
-        <location>/view/500.jsp</location>
-    </error-page>
-
-    <error-page>
-        <error-code>503</error-code>
-        <location>/view/503.jsp</location>
-    </error-page>
-    
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/error.jsp</location>
-    </error-page>
 </web-app>

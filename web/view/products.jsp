@@ -23,7 +23,7 @@
         <div class="container">
                 <form method="get" class="search-container" action="${pageContext.request.contextPath}/product">
                     <input type="text" name="search" class="search-input" placeholder="Search for tech gadgets...">
-                    <button type="submit" class="search-button">Search</button>
+                    <button type="submit" class="search-button" style="border:none;">Search</button>
                 </form>
         </div>
         <div class="fe-title">

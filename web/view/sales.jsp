@@ -80,7 +80,7 @@
                 <%
                     List<Map<String, Object>> monthlyData = (List<Map<String, Object>>) request.getAttribute("monthlyComparison");
                     List<Map<LocalDate, Object[]>> dailySalesList = (List<Map<LocalDate, Object[]>>) request.getAttribute("dailyReport");
-                    List<Map<String, Object[]>> monthlySalesList = (List<Map<String, Object[]>>)request.getAttribute("monthlyReport");
+                    List<Map<String, Object[]>> monthlySalesList = (List<Map<String, Object[]>>) request.getAttribute("monthlyReport");
 
                     Map<String, Object> currentMonth = monthlyData.get(0);
                     Map<String, Object> previousMonth = monthlyData.get(1);
@@ -185,9 +185,18 @@
                         </div>
                     </div>
 
+                    <form action="${pageContext.request.contextPath}/admin/sales/details" class="d-flex justify-content-md-end gap-2 flex-wrap">
+                        <h5 class="mt-2">Search by date: </h5>
+                        <input type="date" name="date" class="form-control w-auto" />
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-file-earmark-bar-graph"></i> View Report
+                        </button>
+                    </form>
+
                     <div class="card-body">
                         <div class="row align-items-center">
                             <h4 class="fw-bold py-3 mb-2">Daily Sales Report</h4>
+
                         </div>
                     </div>
 
@@ -239,7 +248,7 @@
                             </div>
                         </div>
                     </div>
-                                    
+
                     <div class="card-body">
                         <div class="row align-items-center">
                             <h4 class="fw-bold py-3 mb-2">Monthly Sales Report</h4>

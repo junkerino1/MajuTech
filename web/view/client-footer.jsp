@@ -29,7 +29,4 @@
         <p>Secured Payment Gateways</p>
         <img src="${pageContext.request.contextPath}/image/pay/pay.png" alt="" />
     </div>
-    <div class="copyright">
-        <p>&copy; 2025,GUI Assignment Project - DFTGroup4</p>
-    </div>
 </footer>

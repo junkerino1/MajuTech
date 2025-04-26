@@ -307,7 +307,7 @@
         localStorage.setItem("dailyDiscount", dailyDiscount);
 
 
-        window.location.href = "../../view/export.html"; 
+        window.open("../../view/export.html", "_blank");
     }
     
     function exportCurrentDayPDF(){
@@ -318,7 +318,7 @@
         localStorage.setItem("dailyItemSold", dailyItemSold);
         localStorage.setItem("dailyDiscount", dailyDiscount);
         
-        window.location.href = "../../view/pdf.html"; 
+        window.open("../../view/pdf.html", "_blank");
     }
     
   </script>

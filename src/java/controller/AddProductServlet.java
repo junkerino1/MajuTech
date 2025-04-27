@@ -58,7 +58,7 @@ public class AddProductServlet extends HttpServlet {
         String specification = request.getParameter("specification");
         String status = "normal";
         int quantity = Integer.parseInt(request.getParameter("quantity"));
-        
+
         try {
             // Handle multiple image uploads
             List<Part> imageParts = request.getParts()
@@ -85,13 +85,13 @@ public class AddProductServlet extends HttpServlet {
             }
 
             // Create Product entity
-            Product product = new Product(productName, unitPrice, categoryId, specification, description, status, imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3],quantity);
+            Product product = new Product(productName, unitPrice, categoryId, specification, description, status, imageUrls[0], imageUrls[1], imageUrls[2], imageUrls[3], quantity);
 
             productService.addProduct(product);
             utx.commit();
 
-            // Redirect after success
-            response.sendRedirect("/product");
+            request.getSession().setAttribute("message", "Added new product");
+            request.getRequestDispatcher("/view/add-product.jsp").forward(request, response);
 
         } catch (Exception e) {
             try {

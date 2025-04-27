@@ -81,6 +81,10 @@
                                     <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter product unit price" step="0.01" required />
                                 </div>
                                 <div class="form-group-inline mb-3">
+                                    <label class="form-label" for="quantity">Stock quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter product quantity" min="1" required />
+                                </div>
+                                <div class="form-group-inline mb-3">
                                     <label for="productImage" class="form-label">Image</label>
                                     <input type="file" class="form-control" id="images" name="images" multiple>
                                 </div>

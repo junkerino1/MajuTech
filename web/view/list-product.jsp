@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.Product" %>
+<%@ page import="model.Admin" %>
 <!doctype html>
 <html lang="en">
 
@@ -180,6 +181,7 @@
 
                     <%
                         String message = (String) session.getAttribute("message");
+                        Admin admin = (Admin) session.getAttribute("admin");
                         if (message != null && !message.isEmpty()) {
                     %>
                     <div class="card text-white bg-success mb-3" id="message" style="max-width: 100%;">
@@ -253,12 +255,14 @@
                                                         <i class="bi bi-pen"></i>
                                                     </button>
 
+                                                    <% if (admin.getRole().equals("manager")) {%>
                                                     <form action="${pageContext.request.contextPath}/admin/delete-product" method="post" style="display:inline;" onsubmit="return confirmDelete();">
                                                         <button class="btn btn-sm btn-danger" type="submit">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                         <input type="hidden" name="id" value="<%= p.getId()%>"/>
                                                     </form>
+                                                    <% } %>
                                                 </div>
                                             </td>
                                         </tr>

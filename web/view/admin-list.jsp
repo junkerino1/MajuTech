@@ -137,12 +137,14 @@
                                                         <i class="bi bi-pen"></i>
                                                     </button>
                                                     
+                                                    <% if (a.getRole().equals("manager")) { %>
                                                     <form action="${pageContext.request.contextPath}/admin/delete-staff" method="post" style="display:inline;" onsubmit="return confirmDelete();">
                                                         <button class="btn btn-sm btn-danger" type="submit">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                         <input type="hidden" name="id" value="<%= a.getId()%>"/>
                                                     </form>
+                                                    <% } %>
                                                 </div>
                                             </td>
                                         </tr>

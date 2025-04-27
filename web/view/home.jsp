@@ -31,12 +31,25 @@
         <!-- ===================== -->
         <!--    Promotion Section  -->
         <!-- ===================== -->
+        <%
+            String campaignName = (String) request.getAttribute("campaignName");
+            List<Product> promoProducts = (List<Product>) request.getAttribute("promoProducts");
+
+            boolean hasPromotion = false;
+            if (promoProducts != null) {
+                for (Product product : promoProducts) {
+                    if ("promotion".equalsIgnoreCase(product.getStatus())) {
+                        hasPromotion = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasPromotion) {
+        %>
         <div class="promotion-container">
             <div class="promotion-header">
-                <% String campaignName = (String) request.getAttribute("campaignName");
-                    List<Product> promoProducts = (List<Product>) request.getAttribute("promoProducts");
-                    if (promoProducts != null && !promoProducts.isEmpty()) {%>
-                <h1 class="promotion-title"><%=campaignName%></h1>
+                <h1 class="promotion-title"><%= campaignName%></h1>
                 <p class="promotion-subtitle">Limited Time Offers - Grab Yours Before They're Gone!</p>
 
                 <div class="countdown-container">
@@ -77,136 +90,138 @@
                                 double discountPercent = 100 - ((product.getEffectivePrice() / product.getUnitPrice()) * 100);
                             %>
                         </div>
-                        <button class="buy-button" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= product.getId()%>';">Add to Cart</button>
+                        <button class="buy-button" onclick="window.location.href = '<%= request.getContextPath()%>/product/<%= product.getId()%>';">Add to Cart</button>
                     </div>
                 </div>
                 <%
                         }
                     }
-                } else {
                 %>
-                <p class="no-promo">No active promotions at this time</p>
-                <% } %>
+            </div> 
+        </div> 
+        <%
+            }
+        %>
+
+
+
+    </div>
+
+    <!-- ===================== -->
+    <!--    Features Section   -->
+    <!-- ===================== -->
+    <div class="feature">
+        <div class="fe-title">
+            <h2>Why buy from MajuTech?</h2>
+            <p>Your benefits!</p>
+        </div>
+        <section id="feature" class="section-p1">
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f1.png" alt="">
+                <h6>Free Shipping</h6>
             </div>
-
-
-        </div>
-
-        <!-- ===================== -->
-        <!--    Features Section   -->
-        <!-- ===================== -->
-        <div class="feature">
-            <div class="fe-title">
-                <h2>Why buy from MajuTech?</h2>
-                <p>Your benefits!</p>
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f2.png" alt="">
+                <h6>Online Order</h6>
             </div>
-            <section id="feature" class="section-p1">
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f1.png" alt="">
-                    <h6>Free Shipping</h6>
-                </div>
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f2.png" alt="">
-                    <h6>Online Order</h6>
-                </div>
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f3.png" alt="">
-                    <h6>Save Money</h6>
-                </div>
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f4.png" alt="">
-                    <h6>Promotions</h6>
-                </div>
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f5.png" alt="">
-                    <h6>Happy Sell</h6>
-                </div>
-                <div class="fe-box">
-                    <img src="${pageContext.request.contextPath}/image/features/f6.png" alt="">
-                    <h6>F24/7 Support</h6>
-                </div>
-            </section>
-        </div>
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f3.png" alt="">
+                <h6>Save Money</h6>
+            </div>
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f4.png" alt="">
+                <h6>Promotions</h6>
+            </div>
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f5.png" alt="">
+                <h6>Happy Sell</h6>
+            </div>
+            <div class="fe-box">
+                <img src="${pageContext.request.contextPath}/image/features/f6.png" alt="">
+                <h6>F24/7 Support</h6>
+            </div>
+        </section>
+    </div>
 
-        <div class="feature">
-            <!-- ===================== -->
-            <!--    Products Section   -->
-            <!-- ===================== -->
-            <section id="product1" class="section-p1">
-                <h2>Featured Products</h2>
-                <p class="heading">Popular Right Now!</p>
-                <%
-                    List<Product> featuredProducts = (List<Product>) request.getAttribute("featuredProducts");
-                %>
-                <div class="pro-container">
-                    <% if (featuredProducts != null) {
-                                for (Product p : featuredProducts) {%>
-                    <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
-                        <img src="<%= p.getImage1()%>">
-                        <div class="des">
-                            <h5><%= p.getProductName()%></h5>
-                            <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
-                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
-                            <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
-                            <% } else {%>
-                            <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
-                            <% } %>
-                            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-                        </div>
-                    </div>
-                    <%  }
-                            }%>
-                </div>
-            </section>
-        </div>
-
+    <div class="feature">
         <!-- ===================== -->
         <!--    Products Section   -->
         <!-- ===================== -->
-        <section id="banner" class="section-m1">
-            <h4>Check Out More!</h4>
-            <h2>Up to <span>50% off</span> - All Gadgets & Accessories</h2>
-            <button class="normal" onclick="window.location.href = '${pageContext.request.contextPath}/product/'">Explore More</button>
+        <section id="product1" class="section-p1">
+            <h2>Featured Products</h2>
+            <p class="heading">Popular Right Now!</p>
+            <%
+                List<Product> featuredProducts = (List<Product>) request.getAttribute("featuredProducts");
+            %>
+            <div class="pro-container">
+                <% if (featuredProducts != null) {
+                        for (Product p : featuredProducts) {%>
+                <div class="pro" onclick="window.location.href = '${pageContext.request.contextPath}/product/<%= p.getId()%>';">
+                    <img src="<%= p.getImage1()%>">
+                    <div class="des">
+                        <h5><%= p.getProductName()%></h5>
+                        <% if ("promotion".equalsIgnoreCase(p.getStatus())) {%>
+                        <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                        <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", p.getUnitPrice())%></span>
+                        <% } else {%>
+                        <h4>RM <%= String.format("%.2f", p.getEffectivePrice())%></h4>
+                        <% } %>
+                        <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+                    </div>
+                </div>
+                <%  }
+                    }%>
+            </div>
         </section>
+    </div>
+
+    <!-- ===================== -->
+    <!--    Products Section   -->
+    <!-- ===================== -->
+    <section id="banner" class="section-m1">
+        <h4>Check Out More!</h4>
+        <h2>Up to <span>50% off</span> - All Gadgets & Accessories</h2>
+        <button class="normal" onclick="window.location.href = '${pageContext.request.contextPath}/product/'">Explore More</button>
+    </section>
 
 
 
-        <script src="${pageContext.request.contextPath}/script/clientscript.js"></script>
+    <script src="${pageContext.request.contextPath}/script/clientscript.js"></script>
 
-        <script>
-                // Get the end date from server-side attribute
-                const endDateStr = '${endDate}'; // This will be in format "yyyy-MM-dd"
-                console.log("End date from server:", endDateStr);
+    <script>
+            // Get the end date from server-side attribute
+            const endDateStr = '${endDate}'; // This will be in format "yyyy-MM-dd"
+            console.log("End date from server:", endDateStr);
 
-                // Parse the end date (add time component to make it end of day)
-                const countdownDate = new Date(endDateStr + 'T23:59:59');
+            // Parse the end date (add time component to make it end of day)
+            const countdownDate = new Date(endDateStr + 'T23:59:59');
 
-                // Update the countdown every second
-                const countdown = setInterval(function () {
-                    const now = new Date().getTime();
-                    const distance = countdownDate - now;
+            // Update the countdown every second
+            const countdown = setInterval(function () {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
 
-                    // Calculate days, hours, minutes and seconds
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                // Calculate days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // Display the result
-                    document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-                    document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-                    document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-                    document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+                // Display the result
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
 
-                    // If the countdown is finished
-                    if (distance < 0) {
-                        clearInterval(countdown);
-                        document.querySelector(".promotion-subtitle").innerHTML = "Promotion Has Ended!";
-                        document.querySelector(".buy-button").disabled = true;
-                    }
-                }, 1000);
-        </script>
-    </body>
+                // If the countdown is finished
+                if (distance < 0) {
+                    clearInterval(countdown);
+                    document.querySelector(".promotion-subtitle").innerHTML = "Promotion Has Ended!";
+                    document.querySelector(".buy-button").disabled = true;
+                }
+            }, 1000);
+    </script>
+</body>
 
-    <jsp:include page="client-footer.jsp" />
+<jsp:include page="client-footer.jsp" />
 </html>

@@ -10,7 +10,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin Login</title>
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
+        <title>MajuTech</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
     </head>
 

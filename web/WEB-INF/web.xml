@@ -155,90 +155,176 @@
     <servlet>
         <servlet-name>CreateUserServlet</servlet-name>
         <servlet-class>controller.RegisterServlet</servlet-class>
+        <init-param>
+            <param-name>createUser</param-name>
+            <param-value>Register a user</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>
+        <init-param>
+            <param-name>userLogin</param-name>
+            <param-value>Login user</param-value>
+        </init-param>
     </servlet>
     <!-- ========== CLIENT PAGE SERVLETS ========== -->
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>controller.HomeServlet</servlet-class>
+        <init-param>
+            <param-name>userHome</param-name>
+            <param-value>User Home dashboard</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ShopServlet</servlet-name>
         <servlet-class>controller.ShopServlet</servlet-class>
+        <init-param>
+            <param-name>userProduct</param-name>
+            <param-value>Show Product List for Client</param-value>
+        </init-param>
     </servlet>
     <!-- ========== CART & CHECKOUT ========== -->
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
         <servlet-class>controller.AddToCartServlet</servlet-class>
+        <init-param>
+            <param-name>userAddToCart</param-name>
+            <param-value>User Add to Cart</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ViewCartServlet</servlet-name>
         <servlet-class>controller.ViewCartServlet</servlet-class>
+        <init-param>
+            <param-name>userViewCart</param-name>
+            <param-value>User View Cart</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <servlet-class>controller.RemoveFromCartServlet</servlet-class>
+        <init-param>
+            <param-name>userRemoveFromCart</param-name>
+            <param-value>Remove from Cart</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>CheckoutCartServlet</servlet-name>
         <servlet-class>controller.CheckoutCartServlet</servlet-class>
+        <init-param>
+            <param-name>userCheckoutCart</param-name>
+            <param-value>Checkout Cart </param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ProcessAddressServlet</servlet-name>
         <servlet-class>controller.ProcessAddressServlet</servlet-class>
+        <init-param>
+            <param-name>userProcessAddress</param-name>
+            <param-value>Process Address</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ProcessPaymentServlet</servlet-name>
         <servlet-class>controller.ProcessPaymentServlet</servlet-class>
+        <init-param>
+            <param-name>userProcessPayment</param-name>
+            <param-value>Process Payment</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>RequestOTPServlet</servlet-name>
         <servlet-class>controller.RequestOTPServlet</servlet-class>
+        <init-param>
+            <param-name>userRequestOTP</param-name>
+            <param-value>Request OTP</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>OrderConfirmationServlet</servlet-name>
         <servlet-class>controller.OrderConfirmationServlet</servlet-class>
+        <init-param>
+            <param-name>userOrderConfirmation</param-name>
+            <param-value>Order Confirmation</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ViewOrderServlet</servlet-name>
         <servlet-class>controller.ViewOrderServlet</servlet-class>
+        <init-param>
+            <param-name>userViewOrder</param-name>
+            <param-value>View Order</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ReviewServlet</servlet-name>
         <servlet-class>controller.ReviewServlet</servlet-class>
+        <init-param>
+            <param-name>userAddReview</param-name>
+            <param-value>User Add Review </param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>UpdateStatusServlet</servlet-name>
         <servlet-class>controller.UpdateStatusServlet</servlet-class>
+        <init-param>
+            <param-name>adminUpdateStatus</param-name>
+            <param-value>Update Order Status</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>AdminListServlet</servlet-name>
         <servlet-class>controller.AdminListServlet</servlet-class>
+        <init-param>
+            <param-name>adminList</param-name>
+            <param-value>View Admin List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>UserListServlet</servlet-name>
         <servlet-class>controller.UserListServlet</servlet-class>
+        <init-param>
+            <param-name>adminUserList</param-name>
+            <param-value>View User List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>DeleteAdminServlet</servlet-name>
         <servlet-class>controller.DeleteAdminServlet</servlet-class>
+        <init-param>
+            <description>Only for manager
+</description>
+            <param-name>adminDeleteStaff</param-name>
+            <param-value>Delete a staff</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>AdminLogoutServlet</servlet-name>
         <servlet-class>controller.AdminLogoutServlet</servlet-class>
+        <init-param>
+            <param-name>adminLogout</param-name>
+            <param-value>Logout for admin</param-value>
+        </init-param>
     </servlet>
     <!-- ========== URL MAPPINGS ========== -->
     <!-- Admin -->
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>controller.LogoutServlet</servlet-class>
+        <init-param>
+            <param-name>userLogout</param-name>
+            <param-value>Logout for user</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>DeleteUserServlet</servlet-name>
         <servlet-class>controller.DeleteUserServlet</servlet-class>
+        <init-param>
+            <param-name>adminDeleteUser</param-name>
+            <param-value>Delete a user</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminLoginServlet</servlet-name>

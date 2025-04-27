@@ -83,9 +83,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title fw-semibold mb-4">Product Reviews & Comments</h5>
-
-
-
                                 <!-- Reviews List -->
                                 <div id="reviewsList">
 

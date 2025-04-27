@@ -68,6 +68,24 @@
                 width: 100%;
                 margin-bottom: 20px;
             }
+            
+            /* Added styles for product table to prevent overflow */
+            .product-table-container {
+                overflow-x: auto;
+            }
+            
+            .product-name-cell {
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            @media (max-width: 768px) {
+                .product-name-cell {
+                    max-width: 150px;
+                }
+            }
         </style>
     </head>
 
@@ -205,7 +223,7 @@
                                 <div class="card w-100">
                                     <div class="card-body p-4">
                                         <h5 class="card-title fw-semibold mb-4">Top 10 Products Sales Report</h5>
-                                        <div class="table-responsive">
+                                        <div class="product-table-container">
                                             <table class="table text-nowrap mb-0 align-middle">
                                                 <thead class="text-white" style="background-color: rgba(75, 192, 192, 0.2);">
                                                     <tr>
@@ -253,8 +271,10 @@
                                                             <h6 class="fw-semibold mb-0"><%= counter++%></h6>
                                                         </td>
                                                         <td class="border-bottom-0">
-                                                            
-                                                            <h6 class="fw-semibold mb-0"><img src="<%= image1%>" alt="<%= productName%>" class="small-images" style="margin-right: 15px"><%= productName%></h6>
+                                                            <div class="d-flex align-items-center">
+                                                                <img src="<%= image1%>" alt="<%= productName%>" class="small-images" style="margin-right: 15px">
+                                                                <h6 class="fw-semibold mb-0 product-name-cell" title="<%= productName%>"><%= productName%></h6>
+                                                            </div>
                                                         </td>
                                                         <td class="border-bottom-0">
                                                             <h6 class="fw-semibold mb-0"><%= categoryName != null ? categoryName : "Unknown"%></h6>

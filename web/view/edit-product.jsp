@@ -42,7 +42,7 @@
             <div class="body-wrapper">
                 <jsp:include page="admin-header.jsp" />
                 <div class="container-fluid">
-                    <h5 class="card-title fw-semibold mb-4">Add a new product</h5>
+                    <h5 class="card-title fw-semibold mb-4">Editing Product: <%= product.getProductName() %></h5>
                     <div class="card">
                         <div class="card-body">
 

@@ -122,8 +122,15 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="mb-0">Order List</h4>
                     <div class="d-flex">
-                        <input type="text" class="form-control me-2" placeholder="Search" style="width:200px;">
+                        <input type="text" id="orderTableSearchInput" class="form-control me-2" placeholder="Search By Order ID:" oninput="filterOrderTable()" style="width:200px;">
+                        <select id="orderTableFilterDropdown" class="form-control w-5" onchange="filterOrderTable()">
+                            <option value="all">All Orders</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="processing">Processing</option>
+                            <option value="shipped">Shipped</option>
+                        </select>
                     </div>
+
                 </div>
 
                 <div class="card">
@@ -283,6 +290,26 @@
         %>
 
         <script>
+
+            function filterOrderTable() {
+                const searchInput = document.getElementById('orderTableSearchInput').value.toLowerCase();
+                const statusFilter = document.getElementById('orderTableFilterDropdown').value.toLowerCase();
+                const rows = document.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const orderId = row.cells[0]?.textContent.trim().toLowerCase();
+                    const status = row.cells[3]?.textContent.trim().toLowerCase(); // Status badge is in cell[3]
+
+                    const matchesId = orderId.includes(searchInput);
+                    const matchesStatus = (statusFilter === 'all') || (status.includes(statusFilter));
+
+                    if (matchesId && matchesStatus) {
+                        row.style.display = ''; // show row
+                    } else {
+                        row.style.display = 'none'; // hide row
+                    }
+                });
+            }
 
 
             function submitStatusUpdate(orderId) {

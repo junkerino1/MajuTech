@@ -35,6 +35,8 @@ public class AdminService {
         Admin admin = em.find(Admin.class, adminId);
         em.remove(admin);
     }
-
-
+    
+    public void updateAdmin(Admin admin){
+        em.merge(admin);
+    }
 }

@@ -101,7 +101,7 @@
                     <div class="card">
 
                         <%
-                            String message = (String) session.getAttribute("campaignMessage");
+                            String message = (String) session.getAttribute("message");
                             if (message != null && !message.isEmpty()) {
                         %>
 
@@ -123,7 +123,7 @@
                         </script>
                             
                         <%
-                                session.removeAttribute("campaignMessage"); // remove it after display
+                                session.removeAttribute("message");
                             }
                         %>
 
@@ -177,7 +177,7 @@
                                                 <a href="${pageContext.request.contextPath}/admin/edit-campaign?id=<%= campaign.getId()%>" class="btn btn-sm btn-primary">
                                                     <i class="bi bi-pen"></i>
                                                 </a>
-                                                <form action="${pageContext.request.contextPath}/delete-campaign" method="post" style="display:inline;">
+                                                <form action="${pageContext.request.contextPath}/admin/delete-campaign" method="post" style="display:inline;">
                                                     <input type="hidden" name="id" value="<%= campaign.getId()%>">
                                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this campaign?');">
                                                         <i class="bi bi-trash"></i>

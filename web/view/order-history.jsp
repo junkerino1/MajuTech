@@ -26,9 +26,9 @@
                 <h1>Order History</h1>
                 <div class="filter-controls">
                     <div class="search-box">
-                        <input type="text" placeholder="Search by order number, product name...">
+                        <input type="text" id="orderSearchInput" placeholder="Search by order number..." oninput="filterOrders()">
                     </div>
-                    <select class="filter-dropdown">
+                    <select class="filter-dropdown" onchange="filterByStatus()">
                         <option value="all">All Orders</option>
                         <option value="delivered">Delivered</option>
                         <option value="processing">Processing</option>
@@ -49,7 +49,7 @@
                 <% for (Map.Entry<Order, List<OrderItem>> entry : orderMap.entrySet()) {
                         Order order = entry.getKey();
                         List<OrderItem> items = entry.getValue();
-                        ShippingAddress address = order.getShippingAddress();                            
+                        ShippingAddress address = order.getShippingAddress();
                 %>
 
                 <!-- Order Card -->
@@ -179,6 +179,41 @@
         </div>
     </body>
     <script>
+        function filterOrders() {
+            const input = document.getElementById('orderSearchInput').value.toLowerCase();
+            const orderCards = document.querySelectorAll('.order-card');
+
+            orderCards.forEach(card => {
+                const orderIdElement = card.querySelector('.order-id');
+                const orderIdText = orderIdElement ? orderIdElement.textContent.toLowerCase() : '';
+
+                if (orderIdText.includes(input)) {
+                    card.style.display = 'block'; // show
+                } else {
+                    card.style.display = 'none'; // hide
+                }
+            });
+        }
+
+        function filterByStatus() {
+            const filterValue = document.querySelector('.filter-dropdown').value.toLowerCase();
+            const orderCards = document.querySelectorAll('.order-card');
+
+            orderCards.forEach(card => {
+                const statusElement = card.querySelector('.order-status');
+                const statusText = statusElement ? statusElement.textContent.toLowerCase() : '';
+
+                if (filterValue === 'all' || statusText.includes(filterValue)) {
+                    card.style.display = 'block'; // show
+                } else {
+                    card.style.display = 'none'; // hide
+                }
+            });
+        }
+
+
+
+
         // Variables to store current product and order IDs
         let currentProductId = 0;
         let currentOrderId = 0;

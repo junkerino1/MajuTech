@@ -64,6 +64,7 @@
 
                     <%
                         }
+                        session.removeAttribute("message");
                     %>
                     <div class="card">
                         <div class="card-body">
@@ -87,7 +88,7 @@
                                         <tr>
                                             <td><%= a.getId()%></td>
                                             <td><%= a.getUsername()%></td>
-                                            <td><%= a.getRole() %></td>
+                                            <td><%= a.getRole()%></td>
 
                                             <td>
                                                 <div style="display: inline-flex; gap: 10px;">
@@ -122,7 +123,7 @@
 
         </div>  
 
-        
+
     </body>
 
 </html>

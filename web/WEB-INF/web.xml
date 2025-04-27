@@ -33,6 +33,10 @@
         <servlet-name>ReviewListServlet</servlet-name>
         <servlet-class>controller.ReviewListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminProfileServlet</servlet-name>
+        <servlet-class>controller.AdminProfileServlet</servlet-class>
+    </servlet>
     <!-- ========== PRODUCT CRUD SERVLETS ========== -->
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
@@ -202,6 +206,10 @@
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/admin/delete-product</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProfileServlet</servlet-name>
+        <url-pattern>/admin/profile</url-pattern>
     </servlet-mapping>
     <!-- Campaign -->
     <servlet-mapping>

@@ -36,36 +36,33 @@
             <!--  Main wrapper -->
             <div class="body-wrapper">
                 <jsp:include page="admin-header.jsp" />
-
-                <%
-                    List<Product> products = (List<Product>) request.getAttribute("products");
-                %>
-
-                <%
-                    String message = (String) request.getAttribute("error");
-                    if (message != null && !message.isEmpty()) {
-                %>
-
-                <div class="card text-white bg-warning mb-3" id="message" style="max-width: 100%;">
-                    <div class="card-body">
-                        <p class="card-text"><%= message%></p>
-                    </div>
-                </div>
-
-                <% } %>
-
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const message = document.getElementById('message');
-
-                        setTimeout(function () {
-                            message.style.display = 'none';
-                        }, 5000);
-                    });
-                </script>
-
                 <div class="container-fluid">
+                    <%
+                        List<Product> products = (List<Product>) request.getAttribute("products");
+                    %>
+
+                    <%
+                        String message = (String) request.getAttribute("error");
+                        if (message != null && !message.isEmpty()) {
+                    %>
+                    <div class="card text-white bg-warning mb-3" id="message" style="max-width: 100%;">
+                        <div class="card-body">
+                            <p class="card-text"><%= message%></p>
+                        </div>
+                    </div>
+
+                    <% } %>
+
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const message = document.getElementById('message');
+
+                            setTimeout(function () {
+                                message.style.display = 'none';
+                            }, 5000);
+                        });
+                    </script>
                     <h5 class="card-title fw-semibold mb-4">Promotion & Campaign</h5>
                     <div class="card">
                         <div class="card-body">
@@ -139,87 +136,87 @@
     <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
     <script src="${pageContext.request.contextPath}/script/script.js"></script>
     <script>
-                            // Get references to elements
-                            const promotionProductInput = document.getElementById("promotionProduct");
-                            const selectedProductsInput = document.getElementById("selectedProducts");
-                            const productError = document.getElementById("productError");
+                    // Get references to elements
+                    const promotionProductInput = document.getElementById("promotionProduct");
+                    const selectedProductsInput = document.getElementById("selectedProducts");
+                    const productError = document.getElementById("productError");
 
-                            renderProductList();
+                    renderProductList();
 
-                            productSearch.addEventListener("input", (e) => {
-                                renderProductList(e.target.value);
-                            });
+                    productSearch.addEventListener("input", (e) => {
+                        renderProductList(e.target.value);
+                    });
 
-                            function renderProductList(filter = "") {
-                                const allCheckboxes = document.querySelectorAll("#productList .form-check");
+                    function renderProductList(filter = "") {
+                        const allCheckboxes = document.querySelectorAll("#productList .form-check");
 
-                                allCheckboxes.forEach(wrapper => {
-                                    const label = wrapper.querySelector("label");
-                                    const name = label.textContent.toLowerCase();
-                                    if (name.includes(filter.toLowerCase())) {
-                                        wrapper.style.display = "block";
-                                    } else {
-                                        wrapper.style.display = "none";
-                                    }
-                                });
+                        allCheckboxes.forEach(wrapper => {
+                            const label = wrapper.querySelector("label");
+                            const name = label.textContent.toLowerCase();
+                            if (name.includes(filter.toLowerCase())) {
+                                wrapper.style.display = "block";
+                            } else {
+                                wrapper.style.display = "none";
                             }
+                        });
+                    }
 
-                            document.getElementById("selectProductsBtn").addEventListener("click", () => {
-                                const checkedBoxes = document.querySelectorAll(".product-checkbox:checked");
+                    document.getElementById("selectProductsBtn").addEventListener("click", () => {
+                        const checkedBoxes = document.querySelectorAll(".product-checkbox:checked");
 
-                                if (checkedBoxes.length < 1 || checkedBoxes.length > 6) {
-                                    productError.style.display = "block";
-                                    return;
-                                }
+                        if (checkedBoxes.length < 1 || checkedBoxes.length > 6) {
+                            productError.style.display = "block";
+                            return;
+                        }
 
-                                productError.style.display = "none";
+                        productError.style.display = "none";
 
-                                const selectedNames = Array.from(checkedBoxes).map(cb =>
-                                    cb.nextElementSibling.textContent
-                                );
-                                const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+                        const selectedNames = Array.from(checkedBoxes).map(cb =>
+                            cb.nextElementSibling.textContent
+                        );
+                        const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
 
-                                // Show selected product names in input
-                                promotionProductInput.value = selectedNames.join(", ");
+                        // Show selected product names in input
+                        promotionProductInput.value = selectedNames.join(", ");
 
-                                // CHANGED: Store selected IDs as JSON in hidden input
-                                selectedProductsInput.value = JSON.stringify(selectedIds);
+                        // CHANGED: Store selected IDs as JSON in hidden input
+                        selectedProductsInput.value = JSON.stringify(selectedIds);
 
-                                const modal = bootstrap.Modal.getInstance(document.getElementById("productModal"));
-                                modal.hide();
-                            });
+                        const modal = bootstrap.Modal.getInstance(document.getElementById("productModal"));
+                        modal.hide();
+                    });
 
-                            function validateForm() {
-                                const startDateInput = document.getElementById("promotionDateStart");
-                                const endDateInput = document.getElementById("promotionDateEnd");
-                                const selectedProductsInput = document.getElementById("selectedProducts");
+                    function validateForm() {
+                        const startDateInput = document.getElementById("promotionDateStart");
+                        const endDateInput = document.getElementById("promotionDateEnd");
+                        const selectedProductsInput = document.getElementById("selectedProducts");
 
-                                const startDate = new Date(startDateInput.value);
-                                const endDate = new Date(endDateInput.value);
+                        const startDate = new Date(startDateInput.value);
+                        const endDate = new Date(endDateInput.value);
 
-                                // Date validation
-                                if (!startDateInput.value || !endDateInput.value) {
-                                    alert("Please select both start and end dates.");
-                                    return false;
-                                }
+                        // Date validation
+                        if (!startDateInput.value || !endDateInput.value) {
+                            alert("Please select both start and end dates.");
+                            return false;
+                        }
 
-                                if (startDate >= endDate) {
-                                    alert("Start date must be before end date.");
-                                    return false;
-                                }
+                        if (startDate >= endDate) {
+                            alert("Start date must be before end date.");
+                            return false;
+                        }
 
-                                // Product count validation
-                                const selectedProductIds = selectedProductsInput.value.split(",");
-                                const filteredProductIds = selectedProductIds.filter(id => id.trim() !== "");
+                        // Product count validation
+                        const selectedProductIds = selectedProductsInput.value.split(",");
+                        const filteredProductIds = selectedProductIds.filter(id => id.trim() !== "");
 
-                                if (filteredProductIds.length > 5) {
-                                    alert("You can only select up to 5 products for the promotion.");
-                                    return false;
-                                }
+                        if (filteredProductIds.length > 5) {
+                            alert("You can only select up to 5 products for the promotion.");
+                            return false;
+                        }
 
 
-                                return true;
-                            }
+                        return true;
+                    }
     </script>
 </body>
 </html>

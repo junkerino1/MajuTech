@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment-gateway.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-        <title>Payment Gateway</title>
+        <title>MajuTech - Payment Gateway</title>
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
         <style>
             /* Form validation styles */
             .form-group {

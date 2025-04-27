@@ -8,8 +8,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin Panel</title>
-        <link rel="shortcut icon" type="image/png" href="img/logos/favicon.png" />
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
+        <title>Admin Panel - List</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
         <style>
@@ -23,6 +23,46 @@
 
             .first-level.show {
                 max-height: 500px;
+            }
+            
+            /* Add action buttons styling */
+            .action-buttons {
+                display: flex;
+                gap: 5px;
+                flex-wrap: wrap;
+            }
+            
+            /* Table responsiveness */
+            .table-responsive {
+                overflow-x: auto;
+                width: 100%;
+            }
+            
+            .table {
+                width: 100%;
+                min-width: 100%;
+                table-layout: fixed;
+                margin-bottom: 0;
+            }
+            
+            .table th, .table td {
+                padding: 0.75rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            /* Column width control */
+            .table th:nth-child(1), .table td:nth-child(1) {
+                width: 15%;
+            }
+            .table th:nth-child(2), .table td:nth-child(2) {
+                width: 35%;
+            }
+            .table th:nth-child(3), .table td:nth-child(3) {
+                width: 25%;
+            }
+            .table th:nth-child(4), .table td:nth-child(4) {
+                width: 25%;
             }
         </style>
         <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
@@ -91,19 +131,18 @@
                                             <td><%= a.getRole()%></td>
 
                                             <td>
-                                                <div style="display: inline-flex; gap: 10px;">
+                                                <div class="action-buttons">
+                                                    <!-- Added Edit Button -->
+                                                    <button class="btn btn-sm btn-primary" onclick="window.location.href = '${pageContext.request.contextPath}/admin/edit-staff?id=<%= a.getId()%>'">
+                                                        <i class="bi bi-pen"></i>
+                                                    </button>
+                                                    
                                                     <form action="${pageContext.request.contextPath}/admin/delete-staff" method="post" style="display:inline;" onsubmit="return confirmDelete();">
                                                         <button class="btn btn-sm btn-danger" type="submit">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                         <input type="hidden" name="id" value="<%= a.getId()%>"/>
                                                     </form>
-
-                                                    <script>
-                                                        function confirmDelete() {
-                                                            return confirm("Are you sure you want to delete this staff?");
-                                                        }
-                                                    </script>
                                                 </div>
                                             </td>
                                         </tr>
@@ -123,7 +162,11 @@
 
         </div>  
 
-
+        <script>
+            function confirmDelete() {
+                return confirm("Are you sure you want to delete this staff?");
+            }
+        </script>
     </body>
 
 </html>

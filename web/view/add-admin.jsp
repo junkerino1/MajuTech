@@ -7,7 +7,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Admin Panel</title>
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
+        <title>Admin Panel - Add Admin</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
         <style>
@@ -64,10 +65,7 @@
                 </div>
             </div>
 
-
-
             <script src="${pageContext.request.contextPath}/script/sidebarmenu.js"></script>
             <script src="${pageContext.request.contextPath}/script/script.js"></script>
     </body>
-
 </html>

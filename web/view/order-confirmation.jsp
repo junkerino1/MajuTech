@@ -12,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order-confirmation.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-        <title>Order Confirmation</title>
+        <title>MajuTech - Order Confirmation</title>
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
     </head>
 
     <jsp:include page="client-navbar.jsp" />

@@ -1,5 +1,7 @@
 <header>
-    <a href="${pageContext.request.contextPath}/home" class="logo"><img src="${pageContext.request.contextPath}/image/logo.png" alt="" class="logo"></a>
+    <a href="${pageContext.request.contextPath}/home" class="logo">
+        <img src="${pageContext.request.contextPath}/image/logo.png" alt="" class="logo">
+    </a>
     <nav>
         <ul id="navbar">
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>

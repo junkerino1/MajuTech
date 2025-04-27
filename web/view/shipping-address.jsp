@@ -10,6 +10,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image" href="${pageContext.request.contextPath}/image/logo.png">
+        <title>MajuTech - Fill in Shipping Address</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/payment-gateway.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
@@ -200,7 +202,7 @@
             function toggleNewAddress() {
                 const newAddressForm = document.getElementById('new-address-form');
                 const existingAddressForm = document.getElementById('existingAddressForm');
-
+        
                 if (newAddressForm.style.display === 'block') {
                     newAddressForm.style.display = 'none';
                     existingAddressForm.style.display = 'block';
@@ -209,16 +211,16 @@
                     existingAddressForm.style.display = 'none';
                 }
             }
-
+        
             // When any address-card is clicked, mark it as selected and select its radio button
             document.querySelectorAll('.address-card:not(.add-new)').forEach(card => {
                 card.addEventListener('click', function () {
                     // Remove 'selected' from all cards
                     document.querySelectorAll('.address-card').forEach(c => c.classList.remove('selected'));
-
+        
                     // Add 'selected' to the clicked one
                     this.classList.add('selected');
-
+        
                     // Select the radio button inside
                     const radio = this.querySelector('input[type="radio"]');
                     if (radio) {
@@ -226,19 +228,65 @@
                     }
                 });
             });
-
+        
+            // Validate existing address form before submission
+            document.getElementById('existingAddressForm').addEventListener('submit', function (e) {
+                const noAddressMsg = document.querySelector('.no-address');
+                
+                // If there's a "no address" message and no new address form is shown
+                if (noAddressMsg && document.getElementById('new-address-form').style.display !== 'block') {
+                    alert('Please add a shipping address before proceeding.');
+                    e.preventDefault();
+                    toggleNewAddress(); // Show the new address form
+                    return;
+                }
+                
+                // Check if any address is selected
+                const hasCheckedRadio = document.querySelector('input[name="existingAddressId"]:checked');
+                if (!hasCheckedRadio) {
+                    alert('Please select a shipping address before proceeding.');
+                    e.preventDefault();
+                }
+            });
+        
             // Validate forms before submission
             document.getElementById('newAddressForm').addEventListener('submit', function (e) {
+                // Validate required fields
+                const requiredFields = ['full-name', 'address-line1', 'state', 'zip', 'phone'];
+                for (const fieldId of requiredFields) {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value.trim()) {
+                        alert('Please complete all required fields.');
+                        field.focus();
+                        e.preventDefault();
+                        return;
+                    }
+                }
+        
+                // Phone validation
                 const phone = document.getElementById('phone').value;
                 if (!/^\d{10,15}$/.test(phone)) {
                     alert('Please enter a valid phone number (10-15 digits)');
+                    document.getElementById('phone').focus();
                     e.preventDefault();
+                    return;
                 }
-
+        
+                // Postal code validation
                 const postcode = document.getElementById('zip').value;
                 if (!/^\d{4,10}$/.test(postcode)) {
                     alert('Please enter a valid postal code');
+                    document.getElementById('zip').focus();
                     e.preventDefault();
+                    return;
+                }
+            });
+            
+            // If no addresses exist, automatically show the new address form on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                const noAddressMsg = document.querySelector('.no-address');
+                if (noAddressMsg) {
+                    toggleNewAddress();
                 }
             });
         </script>

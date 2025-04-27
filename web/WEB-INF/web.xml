@@ -1,75 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
     <!-- ========== ADMIN SERVLETS ========== -->
+    <context-param>
+        <param-name>storeName</param-name>
+        <param-value>MajuTech</param-value>
+    </context-param>
     <servlet>
         <servlet-name>AdminLoginServlet</servlet-name>
         <servlet-class>controller.AdminLoginServlet</servlet-class>
+        <init-param>
+            <description>Login Servlet for Admin
+</description>
+            <param-name>adminLogin</param-name>
+            <param-value>Admin Login</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>CreateAdminServlet</servlet-name>
         <servlet-class>controller.CreateAdminServlet</servlet-class>
+        <init-param>
+            <param-name>createAdmin</param-name>
+            <param-value>Create New Staff</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>DashboardServlet</servlet-name>
         <servlet-class>controller.DashboardServlet</servlet-class>
+        <init-param>
+            <param-name>adminDashboard</param-name>
+            <param-value>Admin Dashboard</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>OrderListServlet</servlet-name>
         <servlet-class>controller.OrderListServlet</servlet-class>
+        <init-param>
+            <param-name>adminOrderList</param-name>
+            <param-value>Admin Order List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>SalesServlet</servlet-name>
         <servlet-class>controller.SalesServlet</servlet-class>
+        <init-param>
+            <param-name>adminSales</param-name>
+            <param-value>Admin Sales List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>SalesDetailServlet</servlet-name>
         <servlet-class>controller.SalesDetailServlet</servlet-class>
+        <init-param>
+            <param-name>adminSalesDetails</param-name>
+            <param-value>Admin Sales Details</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ReplyServlet</servlet-name>
         <servlet-class>controller.ReplyServlet</servlet-class>
+        <init-param>
+            <description>Admin Reply for Each Review</description>
+            <param-name>adminReply</param-name>
+            <param-value>Admin Reply </param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ReviewListServlet</servlet-name>
         <servlet-class>controller.ReviewListServlet</servlet-class>
+        <init-param>
+            <description>Admin Reply Review List
+</description>
+            <param-name>adminReviewList</param-name>
+            <param-value>Admin Review List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>AdminProfileServlet</servlet-name>
         <servlet-class>controller.AdminProfileServlet</servlet-class>
+        <init-param>
+            <param-name>adminProfile</param-name>
+            <param-value>Admin Profile</param-value>
+        </init-param>
     </servlet>
     <!-- ========== PRODUCT CRUD SERVLETS ========== -->
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
         <servlet-class>controller.AddProductServlet</servlet-class>
+        <init-param>
+            <description>Admin side</description>
+            <param-name>adminAddProduct</param-name>
+            <param-value>Add New Product</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>EditProductServlet</servlet-name>
         <servlet-class>controller.EditProductServlet</servlet-class>
+        <init-param>
+            <param-name>adminEditProduct</param-name>
+            <param-value>Edit a product</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>controller.DeleteProductServlet</servlet-class>
+        <init-param>
+            <description>Only for Manager</description>
+            <param-name>adminDeleteProduct</param-name>
+            <param-value>Delete a product</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>ProductListServlet</servlet-name>
         <servlet-class>controller.ProductListServlet</servlet-class>
+        <init-param>
+            <description>Admin side</description>
+            <param-name>adminProductList</param-name>
+            <param-value>Show Product List</param-value>
+        </init-param>
     </servlet>
     <!-- ========== CAMPAIGN SERVLETS ========== -->
     <servlet>
         <servlet-name>CampaignListServlet</servlet-name>
         <servlet-class>controller.CampaignListServlet</servlet-class>
+        <init-param>
+            <param-name>adminCampaignList</param-name>
+            <param-value>Show Campaign List</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>DeleteCampaignServlet</servlet-name>
         <servlet-class>controller.DeleteCampaignServlet</servlet-class>
+        <init-param>
+            <param-name>adminDeleteCampaign</param-name>
+            <param-value>Delete a Campaign</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>CreateCampaignServlet</servlet-name>
         <servlet-class>controller.CreateCampaignServlet</servlet-class>
+        <init-param>
+            <param-name>adminCreateCampaign</param-name>
+            <param-value>Create a Campaign</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name>EditCampaignServlet</servlet-name>
         <servlet-class>controller.EditCampaignServlet</servlet-class>
+        <init-param>
+            <param-name>adminEditCampaign</param-name>
+            <param-value>Edit a campaign</param-value>
+        </init-param>
     </servlet>
     <!-- ========== CLIENT CONTROLS ========== -->
     <servlet>
@@ -321,7 +401,7 @@
     <servlet-mapping>
         <servlet-name>DeleteUserServlet</servlet-name>
         <url-pattern>/admin/delete-user</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReplyServlet</servlet-name>
         <url-pattern>/admin/reply</url-pattern>
@@ -330,46 +410,33 @@
         <servlet-name>ReviewListServlet</servlet-name>
         <url-pattern>/admin/review</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
-    
-    <!--error page--> 
-    
+    <!--error page-->
     <error-page>
         <error-code>401</error-code>
         <location>/view/401.jsp</location>
     </error-page>
-    
     <error-page>
         <error-code>400</error-code>
         <location>/view/400.jsp</location>
     </error-page>
-    
     <error-page>
         <error-code>403</error-code>
         <location>/view/403.jsp</location>
     </error-page>
-    
     <error-page>
         <error-code>404</error-code>
         <location>/view/404.jsp</location>
     </error-page>
-
     <error-page>
         <error-code>500</error-code>
         <location>/view/500.jsp</location>
     </error-page>
-
     <error-page>
         <error-code>503</error-code>
         <location>/view/503.jsp</location>
     </error-page>
-    
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/error.jsp</location>
     </error-page>
-    
 </web-app>

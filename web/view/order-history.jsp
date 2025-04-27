@@ -16,6 +16,87 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order-history.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <style>
+            /* Empty orders styling to match cart.jsp */
+            .empty-orders-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 400px;
+                margin: 40px 0;
+                padding: 0 20px;
+            }
+
+            .empty-orders-content {
+                text-align: center;
+                background-color: #ffffff;
+                border-radius: 8px;
+                padding: 40px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                max-width: 600px;
+                width: 100%;
+            }
+
+            .empty-icon-container {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto 25px;
+                background-color: #f0f8f8;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .empty-icon-container i {
+                font-size: 40px;
+                color: #0d9488; /* Teal color from the image */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .empty-orders-content h2 {
+                margin-bottom: 15px;
+                color: #333;
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .empty-orders-content p {
+                color: #666;
+                margin-bottom: 30px;
+                line-height: 1.6;
+                font-size: 16px;
+            }
+
+            .shop-now-btn {
+                display: inline-block;
+                background-color: #0d9488; /* Teal color from the image */
+                color: white;
+                padding: 14px 28px;
+                text-decoration: none;
+                border-radius: 4px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .shop-now-btn:hover {
+                background-color: #0a7d73;
+            }
+
+            .shop-now-btn i {
+                margin-left: 8px;
+            }
+
+            @media (max-width: 768px) {
+                .empty-orders-content {
+                    padding: 30px 20px;
+                }
+            }
+        </style>
     </head>
     <body>
 
@@ -44,7 +125,20 @@
                 String username = user.getUsername();
             %>
 
-
+            <% if (orderMap == null || orderMap.isEmpty()) { %>
+            <div class="empty-orders-container">
+                <div class="empty-orders-content">
+                    <div class="empty-icon-container">
+                        <i class="fa-solid fa-box-open empty-icon"></i>
+                    </div>
+                    <h2>Your order history is empty</h2>
+                    <p>It looks like you haven't added any orders yet. Browse our collection and discover amazing products that you'll love.</p>
+                    <a href="${pageContext.request.contextPath}/product" class="shop-now-btn">
+                        Start Shopping
+                    </a>
+                </div>
+            </div>
+            <% } else { %>
             <div class="order-list">
                 <% for (Map.Entry<Order, List<OrderItem>> entry : orderMap.entrySet()) {
                         Order order = entry.getKey();
@@ -120,8 +214,9 @@
                         </div>
                     </div>
                 </div>
-                <% }%>
+                <% } %>
             </div>
+            <% }%>
         </div>
 
         <!-- Modal Popup Container -->

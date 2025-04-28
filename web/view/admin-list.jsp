@@ -132,11 +132,6 @@
 
                                             <td>
                                                 <div class="action-buttons">
-                                                    <!-- Added Edit Button -->
-                                                    <button class="btn btn-sm btn-primary" onclick="window.location.href = '${pageContext.request.contextPath}/admin/edit-staff?id=<%= a.getId()%>'">
-                                                        <i class="bi bi-pen"></i>
-                                                    </button>
-                                                    
                                                     <% if (!(a.getRole().equals("manager")) ){ %>
                                                     <form action="${pageContext.request.contextPath}/admin/delete-staff" method="post" style="display:inline;" onsubmit="return confirmDelete();">
                                                         <button class="btn btn-sm btn-danger" type="submit">

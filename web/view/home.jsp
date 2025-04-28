@@ -24,7 +24,7 @@
             <h2>Where Innovation</h2>
             <h1>Meets Your Lifestyle</h1>
             <h5>Always Low Price</h5>
-            <button>Jom Shopping!</button>
+            <button onclick="window.location.href = '${pageContext.request.contextPath}/product'">Jom Shopping!</button>
         </section>
 
 
@@ -82,7 +82,7 @@
                         <img src="<%= product.getImage1()%>" alt="<%= product.getProductName()%>" width="150px" height="150px">
                     </div>
                     <div class="product-details">
-                        <h3 class="product-name"><%= product.getProductName()%></h3>
+                        <h3 class="product-name" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= product.getProductName()%></h3>
                         <div class="price-container">
                             <span class="original-price">RM <%= String.format("%.2f", product.getUnitPrice())%></span><br>
                             <span class="discounted-price">RM <%= String.format("%.2f", product.getEffectivePrice())%></span>

@@ -45,11 +45,11 @@
                                 <input type="radio" style="display: none;" name="existingAddressId" value="<%= addr.getId()%>" 
                                        id="address-<%= addr.getId()%>" <%= (index == 0) ? "checked" : ""%>>
                                 <label for="address-<%= addr.getId()%>">
-                                    <strong><%= addr.getName()%></strong>
-                                    <p><%= addr.getStreet1()%></p>
-                                    <p><%= addr.getStreet2()%></p>
-                                    <p><%= addr.getPostcode()%> <%= addr.getState()%></p>
-                                    <p>Phone: <%= addr.getPhoneNumber()%></p>
+                                    <h4><%= addr.getName()%></h4>
+                                    <p style="margin: 0"><%= addr.getStreet1()%></p>
+                                    <p style="margin: 0"><%= addr.getStreet2()%></p>
+                                    <p style="margin: 0"><%= addr.getPostcode()%> <%= addr.getState()%></p>
+                                    <p style="margin: 0">Phone: <%= addr.getPhoneNumber()%></p>
                                 </label>
                             </div>
                             <%

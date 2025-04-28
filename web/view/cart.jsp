@@ -86,77 +86,6 @@
                 transition: background-color 0.2s ease;
             }
 
-            /* New styles for out of stock items */
-            .out-of-stock-label {
-                display: inline-block;
-                background-color: #e74c3c;
-                color: white;
-                padding: 3px 8px;
-                border-radius: 4px;
-                font-size: 12px;
-                font-weight: bold;
-                margin-top: 5px;
-            }
-            
-            .out-of-stock-row {
-                opacity: 0.65;
-                background-color: #f8f8f8;
-            }
-            
-            .checkout-warning {
-                background-color: #fff3cd;
-                color: #856404;
-                border: 1px solid #ffeeba;
-                border-radius: 6px;
-                padding: 12px 16px;
-                margin-bottom: 16px;
-                font-size: 16px;
-                display: flex;
-                align-items: center;
-            }
-            
-            .checkout-warning i {
-                margin-right: 10px;
-                font-size: 18px;
-            }
-            
-            .disabled-button {
-                background-color: #cccccc !important;
-                cursor: not-allowed !important;
-                opacity: 0.6;
-            }
-
-            .update-quantity {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .quantity-input {
-                width: 60px;
-                text-align: center;
-                margin: 0 8px;
-                padding: 5px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-            }
-            
-            .quantity-btn {
-                background: #088178;
-                color: white;
-                border: none;
-                width: 28px;
-                height: 28px;
-                border-radius: 50%;
-                cursor: pointer;
-                font-weight: bold;
-            }
-            
-            .quantity-btn:disabled {
-                background: #cccccc;
-                cursor: not-allowed;
-            }
-
 
             @media (max-width: 768px) {
                 .nav-menu {
@@ -196,62 +125,36 @@
                             <td>Image</td>
                             <td>Product</td>
                             <td>Price</td>
-                            <td>Available</td>
                             <td>Quantity</td>
                             <td>Subtotal</td>
                         </tr>
                     </thead>
-                    <%                    
-                        double total = 0.0;
+                    <%                    double total = 0.0;
                         double totalDiscount = 0.0;
-                        boolean hasOutOfStockItems = false;
-                        boolean hasQuantityExceeded = false;
 
                         if (cartItems != null && productsInCart != null && cartItems.size() == productsInCart.size()) {
                             for (int i = 0; i < cartItems.size(); i++) {
                                 CartItem item = cartItems.get(i);
                                 Product product = productsInCart.get(i);
-                                
-                                boolean isOutOfStock = product.getQuantity() <= 0;
-                                boolean isQuantityExceeded = item.getQuantity() > product.getQuantity();
-                                
-                                if (isOutOfStock) {
-                                    hasOutOfStockItems = true;
-                                }
-                                
-                                if (isQuantityExceeded && !isOutOfStock) {
-                                    hasQuantityExceeded = true;
-                                }
 
                                 double subtotal = product.getEffectivePrice() * item.getQuantity();
-                                // Only count available items in total
-                                if (!isOutOfStock && !isQuantityExceeded) {
-                                    total += subtotal;
-                                }
+                                total += subtotal;
                     %>
                     <tbody>
 
-                        <tr class="<%= isOutOfStock ? "out-of-stock-row" : "" %>">
+                        <tr>
                             <td>
                                 <a href="<%= request.getContextPath()%>/remove-from-cart/<%= item.getId()%>">
                                     <i class="far fa-times-circle"></i>
                                 </a>
                             </td>
                             <td><img src="<%= product.getImage1()%>" width="80" height="80" /></td>
-                            <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                <%= product.getProductName()%>
-                                <% if (isOutOfStock) { %>
-                                    <div class="out-of-stock-label">Out of Stock</div>
-                                <% } else if (isQuantityExceeded) { %>
-                                    <div class="out-of-stock-label" style="background-color: #f39c12;">Exceeds Available</div>
-                                <% } %>
-                            </td>
+                            <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= product.getProductName()%></td>
                             <td>
+
                                 <% if ("promotion".equalsIgnoreCase(product.getStatus())) {
                                         double discount = product.getUnitPrice() - product.getEffectivePrice();
-                                        if (!isOutOfStock && !isQuantityExceeded) {
-                                            totalDiscount += (discount * item.getQuantity());
-                                        }
+                                        totalDiscount += discount;
                                 %>
                                 <h4  style="color: red;">RM <%= String.format("%.2f", product.getEffectivePrice())%></h4>
                                 <span class="original-price" style="text-decoration: line-through;">RM <%= String.format("%.2f", product.getUnitPrice())%></span>
@@ -259,29 +162,8 @@
                                 RM <%= String.format("%.2f", product.getEffectivePrice())%>
                                 <% }%>
                             </td>
-                            <td><%= product.getQuantity() %></td>
-                            <td>
-                                <div class="update-quantity">
-                                    <form action="${pageContext.request.contextPath}/update-cart/<%= item.getId() %>" method="post" class="quantity-form">
-                                        <input type="number" name="quantity" value="<%= item.getQuantity() %>" 
-                                               class="quantity-input" min="1" max="<%= product.getQuantity() %>" 
-                                               <%= isOutOfStock ? "disabled" : "" %>>
-                                        <button type="submit" class="normal" style="padding: 5px 10px; font-size: 12px;" 
-                                                <%= isOutOfStock ? "disabled" : "" %>>
-                                            Update
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                            <td>
-                                <% if (isOutOfStock) { %>
-                                    <span style="color: #e74c3c;">Unavailable</span>
-                                <% } else if (isQuantityExceeded) { %>
-                                    <span style="color: #f39c12;">Adjust quantity</span>
-                                <% } else { %>
-                                    RM <%= String.format("%.2f", subtotal)%>
-                                <% } %>
-                            </td>
+                            <td><%= item.getQuantity()%></td>
+                            <td>RM <%= String.format("%.2f", subtotal)%></td>
                         </tr>
                         <%
                             }
@@ -300,21 +182,6 @@
         <section id="cart-add" class="section-p1">
             <div id="subtotal">
                 <h3>Cart Totals</h3>
-                
-                <% if (hasOutOfStockItems || hasQuantityExceeded) { %>
-                    <div class="checkout-warning">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <% if (hasOutOfStockItems && hasQuantityExceeded) { %>
-                            Some items in your cart are out of stock and some exceed available quantity. 
-                            Please remove or update these items before checkout.
-                        <% } else if (hasOutOfStockItems) { %>
-                            Some items in your cart are out of stock. Please remove them before proceeding to checkout.
-                        <% } else { %>
-                            Some items in your cart exceed available quantity. Please adjust the quantities before checkout.
-                        <% } %>
-                    </div>
-                <% } %>
-                
                 <table>
                     <tr>
                         <td>Cart Subtotal</td>
@@ -335,20 +202,16 @@
                 </table>
 
                 <% if (shipping == 0.0) { %>
-                <p style="color: green; font-weight: bold;">🎉 Congratulations! You've unlocked free shipping!</p>
+                <p style="color: green; font-weight: bold;">🎉 Congratulations! You’ve unlocked free shipping!</p>
                 <% } %>
 
                 <%
                     int cartId = (Integer) request.getAttribute("cartId");
                 %>
 
-                <% if (hasOutOfStockItems || hasQuantityExceeded) { %>
-                    <button class="normal disabled-button" disabled>Proceed to checkout</button>
-                <% } else { %>
-                    <a href="${pageContext.request.contextPath}/checkout/<%= cartId%>">
-                        <button class="normal">Proceed to checkout</button>
-                    </a>
-                <% } %>
+                <a href="${pageContext.request.contextPath}/checkout/<%= cartId%>">
+                    <button class="normal">Proceed to checkout</button>
+                </a>  
             </div>
             <%
                 }

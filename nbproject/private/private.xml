@@ -6,10 +6,29 @@
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/SalesDetailServlet.java</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/sales-details-month.jsp</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/sales-details.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/order-history.jsp</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/pdf.html</file>
-            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/sales.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/campaign.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/order-list.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/admin-list.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/admin-profile.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/add-admin.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/AdminProfileServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/AdminListServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/CreateCampaignServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/AdminService.java</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/products.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/about-us.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/admin-header.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/sidebar.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/AddProductServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/admin-login.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/model/Product.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/CampaignService.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/list-product.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/add-product.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/HomeServlet.java</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/home.jsp</file>
         </group>
     </open-files>
 </project-private>

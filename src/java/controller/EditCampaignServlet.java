@@ -78,8 +78,7 @@ public class EditCampaignServlet extends HttpServlet {
         if (promoItemList != null && !promoItemList.isEmpty()) {
             // Remove brackets and whitespace
             promoItemList = promoItemList.replaceAll("[\\[\\]\\s\"]", "");
-            System.out.println("items:" + promoItemList);
-
+            
             // Split by comma and convert to integers
             String[] idArray = promoItemList.split(",");
             for (String idStr : idArray) {
@@ -107,7 +106,6 @@ public class EditCampaignServlet extends HttpServlet {
                 double unitPrice = product.getUnitPrice();
                 double discountPrice = unitPrice * (100 - percentageDiscount) / 100;
 
-                product.setStatus("promotion");
                 productService.updateProduct(product);
 
                 CampaignItem newItem = new CampaignItem(campaignId, productIdInt, discountPrice);

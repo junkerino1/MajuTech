@@ -71,7 +71,8 @@ public class CampaignService {
     }
 
     public Campaign getOngoingCampaign() {
-        LocalDate currentDate = LocalDate.now();
+//        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.of(2025, 5, 2);
 
         try {
             // get the ongoing campaign based on current date
@@ -90,8 +91,9 @@ public class CampaignService {
     }
 
     public void checkOngoingCampaign() {
-        LocalDate currentDate = LocalDate.now();
-
+//        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.of(2025, 5, 2);
+        
         Campaign activeCampaign;
         try {
             activeCampaign = em.createQuery(

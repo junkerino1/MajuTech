@@ -137,7 +137,7 @@
                                             <h5 class="card-title mb-1 text-muted">Total Orders</h5>
                                             <h3 class="mb-0 fw-bold"><%= currentMonth.get("orders")%></h3>
                                             <small class="<%= ordersChangePercent >= 0 ? "text-success" : "text-danger"%>">
-                                                <%= salesChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", salesChangePercent)%>% from last month
+                                                <%= ordersChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", ordersChangePercent)%>% from last month
                                             </small>
                                         </div>
                                         <div class="stats-icon bg-success-subtle text-success">
@@ -155,7 +155,7 @@
                                             <h5 class="card-title mb-1 text-muted">Products Sold</h5>
                                             <h3 class="mb-0 fw-bold"><%= currentMonth.get("quantity")%></h3>
                                             <small class="<%= quantityChangePercent >= 0 ? "text-success" : "text-danger"%>">
-                                                <%= salesChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", salesChangePercent)%>% from last month
+                                                <%= quantityChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", quantityChangePercent)%>% from last month
                                             </small>
                                         </div>
                                         <div class="stats-icon bg-warning-subtle text-warning">
@@ -172,8 +172,8 @@
                                         <div>
                                             <h5 class="card-title mb-1 text-muted">Total Discounts</h5>
                                             <h3 class="mb-0 fw-bold">RM <%= String.format("%.2f", currentMonth.get("discount"))%></h3>
-                                            <small class="<%= discountChangePercent >= 0 ? "text-success" : "text-danger"%>">
-                                                <%= salesChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", salesChangePercent)%>% from last month
+                                            <small class="<%= discountChangePercent >= 0 ? "text-danger" : "text-success"%>">
+                                                <%= discountChangePercent >= 0 ? "+" : ""%><%= String.format("%.1f", discountChangePercent)%>% from last month
                                             </small>
                                         </div>
                                         <div class="stats-icon bg-danger-subtle text-danger">

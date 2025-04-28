@@ -271,7 +271,7 @@
                             <div class="mb-3">
                                 <label for="status-<%= orderId%>" class="form-label">Update Status</label>
                                 <select class="form-select" id="status-<%= orderId%>" name="status">
-                                    <option value="Pending" <%= "Processing".equals(order.getStatus()) ? "selected" : ""%>>Processing</option>
+                                    <option value="Processing" <%= "Processing".equals(order.getStatus()) ? "selected" : ""%>>Processing</option>
                                     <option value="Shipped" <%= "Shipped".equals(order.getStatus()) ? "selected" : ""%>>Shipped</option>
                                     <option value="Delivered" <%= "Delivered".equals(order.getStatus()) ? "selected" : ""%>>Delivered</option>
                                 </select>

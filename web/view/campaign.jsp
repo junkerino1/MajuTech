@@ -168,7 +168,7 @@
                                             <td><%= count%></td>
                                             <td>
                                             <span class="badge 
-                                                  <%="expired".equals(campaign.getStatus()) ? "bg-error text-dark"
+                                                  <%="expired".equals(campaign.getStatus()) ? "bg-danger text-dark"
                                                           : "inactive".equals(campaign.getStatus()) ? "bg-warning text-dark"
                                                           : "bg-success text-dark"%>">
                                                 <%= campaign.getStatus()%>

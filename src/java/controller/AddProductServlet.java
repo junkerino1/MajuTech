@@ -90,7 +90,7 @@ public class AddProductServlet extends HttpServlet {
             productService.addProduct(product);
             utx.commit();
 
-            request.getSession().setAttribute("message", "Added new product");
+            request.getSession().setAttribute("productMessage", "Added new product");
             request.getRequestDispatcher("/view/add-product.jsp").forward(request, response);
 
         } catch (Exception e) {

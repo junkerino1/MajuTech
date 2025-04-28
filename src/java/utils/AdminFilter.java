@@ -31,13 +31,12 @@ public class AdminFilter implements Filter {
         if (admin != null) {
             session.setAttribute("adminRole", admin.getRole());
 
-            if (path.startsWith("/admin/staff")) {
+            if (path.startsWith("/admin/staff") || path.startsWith("/admin/sales")) {
                 if (!"manager".equals(admin.getRole())) {
                     request.getRequestDispatcher("/view/403.jsp").forward(request, response);
                     return;
                 }
             }
-
             chain.doFilter(request, response);
 
         } else {

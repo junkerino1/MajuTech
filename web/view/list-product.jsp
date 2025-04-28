@@ -180,7 +180,7 @@
                 <div class="container-fluid">
 
                     <%
-                        String message = (String) session.getAttribute("message");
+                        String message = (String) session.getAttribute("productMessage");
                         Admin admin = (Admin) session.getAttribute("admin");
                         if (message != null && !message.isEmpty()) {
                     %>
@@ -201,6 +201,7 @@
                     </script>
 
                     <%
+                            session.removeAttribute("productMessage");
                         }
                     %>
                     <div class="card">

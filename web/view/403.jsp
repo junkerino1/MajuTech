@@ -75,10 +75,10 @@
                 <h1 class="error-message">Access Denied</h1>
                 <p class="error-description">You don't have permission to access this page. Please contact an administrator if you believe this is an error.</p>
                 <div class="action-buttons">
-                    <a href="${pageContext.request.contextPath}/home" class="btn btn-primary">
+                    <a href="${pageContext.request.contextPath}/admin/dashboard" class="btn btn-primary">
                         <i class="bi bi-house-door me-2"></i>Return to Homepage
                     </a>
-                    <a href="${pageContext.request.contextPath}/login" class="login-link">
+                    <a href="${pageContext.request.contextPath}/admin/login" class="login-link">
                         <i class="bi bi-box-arrow-in-right me-1"></i>Login
                     </a>
                 </div>

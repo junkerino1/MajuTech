@@ -27,8 +27,14 @@
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/service/CampaignService.java</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/list-product.jsp</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/add-product.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/cart.jsp</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/HomeServlet.java</file>
             <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/home.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/sales.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/order-confirmation.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/shipping-address.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/web/view/create-campaign.jsp</file>
+            <file>file:/C:/Users/junka/OneDrive/Documents/NetBeansProjects/MajuTech/src/java/controller/EditCampaignServlet.java</file>
         </group>
     </open-files>
 </project-private>

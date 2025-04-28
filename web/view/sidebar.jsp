@@ -48,7 +48,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                         <span>
@@ -69,20 +69,23 @@
                         </li>
                     </ul>
                 </li>
+
+                <% if ("manager".equals(adminRole)) { %>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/sales">
+                        <i class="bi bi-graph-up"></i>
+                        <span class="hide-menu">Sales</span>
+                    </a>
+                </li>
+                <% } %>
                 
                 <li class="sidebar-item">
-                            <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/sales">
-                                <i class="bi bi-graph-up"></i>
-                                <span class="hide-menu">Sales</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/order">
-                                <i class="bi bi-cart3"></i>
-                                <span class="hide-menu">Orders</span>
-                            </a>
-                        </li>
-                
+                    <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/order">
+                        <i class="bi bi-cart3"></i>
+                        <span class="hide-menu">Orders</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="${pageContext.request.contextPath}/admin/customer" aria-expanded="false">
                         <span>
@@ -91,7 +94,7 @@
                         <span class="hide-menu">Customer</span>
                     </a>
                 </li>
-                
+
                 <% if ("manager".equals(adminRole)) { %>
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">

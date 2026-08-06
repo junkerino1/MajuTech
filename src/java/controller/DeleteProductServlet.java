@@ -36,7 +36,7 @@ public class DeleteProductServlet extends HttpServlet {
             message = "Failed to delete product";
         }
         
-        request.getSession().setAttribute("message", message);
+        request.getSession().setAttribute("productMessage", message);
         response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 

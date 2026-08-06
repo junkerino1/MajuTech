@@ -91,7 +91,7 @@ public class AddProductServlet extends HttpServlet {
             utx.commit();
 
             request.getSession().setAttribute("productMessage", "Added new product");
-            request.getRequestDispatcher("/view/add-product.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/admin/product");
 
         } catch (Exception e) {
             try {

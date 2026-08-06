@@ -49,7 +49,7 @@
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="product_name" name="product_name"
-                                           placeholder="Enter product name">
+                                           required placeholder="Enter product name">
                                 </div>
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label">Category</label>
@@ -68,25 +68,25 @@
                                 <div class="form-group-inline mb-3">
                                     <label for="productDescription" class="form-label">Specification</label>
                                     <textarea class="form-control" id="specification" rows="3" name="specification"
-                                              placeholder="Enter product specification"></textarea>
+                                              required placeholder="Enter product specification"></textarea>
                                 </div>
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea class="form-control" id="description" rows="3" name="description"
-                                              placeholder="Enter product description"></textarea>
+                                              required placeholder="Enter product description"></textarea>
                                 </div>
 
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label" for="unitPrice">Unit Price</label>
-                                    <input type="number" class="form-control" id="unit_price" name="unit_price" placeholder="Enter product unit price" step="0.01" required />
+                                    <input type="number" class="form-control" required id="unit_price" name="unit_price" placeholder="Enter product unit price" step="0.01" required />
                                 </div>
                                 <div class="form-group-inline mb-3">
                                     <label class="form-label" for="quantity">Stock quantity</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter product quantity" min="1" required />
+                                    <input type="number" class="form-control" required id="quantity" name="quantity" placeholder="Enter product quantity" min="1" required />
                                 </div>
                                 <div class="form-group-inline mb-3">
                                     <label for="productImage" class="form-label">Image</label>
-                                    <input type="file" class="form-control" id="images" name="images" multiple>
+                                    <input type="file" class="form-control" required id="images" name="images" multiple>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Submit</button>

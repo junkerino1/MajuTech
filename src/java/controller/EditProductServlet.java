@@ -102,7 +102,7 @@ public class EditProductServlet extends HttpServlet {
             message = "Failed to update product details";
         }
 
-        request.getSession().setAttribute("message", message);
+        request.getSession().setAttribute("productMessage", message);
         response.sendRedirect(request.getContextPath() + "/admin/product");
     }
 

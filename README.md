@@ -400,8 +400,6 @@ Role checks are enforced centrally in `AdminFilter` (a form of role-based access
 
 ## Screenshots
 
-> Placeholders — replace each file under `docs/images/` with a real capture.
-
 ### Customer pages
 
 | Page | Screenshot |
@@ -474,7 +472,7 @@ Role checks are enforced centrally in `AdminFilter` (a form of role-based access
 
 ## Demo Accounts
 
-Development credentials referenced in the original `README.txt` (the database schema is auto-generated and contains no seed script, so on a fresh database these accounts must be re-created via the registration / add-staff flows):
+> The database schema is auto-generated and contains no seed script, so on a fresh database these accounts must be re-created via the registration / add-staff flows:
 
 | Role | Username | Password |
 | --- | --- | --- |
@@ -497,18 +495,6 @@ Common issues and fixes distilled from the project's original `README.txt`:
 1. Verify the contents of `glassfish-resources.xml` (JNDI name, pool name, Derby URL).
 2. Replace older `derby.jar` / `derbyclient.jar` files in `glassfish/domains/domain1/lib/ext/` with versions matching the GlassFish release.
 3. Restart GlassFish, then **Clean and Build** the project before redeploying.
-
----
-
-## My Contributions
-
-*This section is inferred from the repository structure and code (no Git history is available in the workspace). As the primary contributor and backend developer, responsibilities most likely included:*
-
-- **Backend development** — authoring the 38 servlet controllers and the layered `controller → service → model` flow that makes up the entire request pipeline.
-- **Database implementation & persistence layer** — designing the 13-entity JPA data model (users, admins, products, carts, orders, campaigns, reviews) with relationships, and configuring the Derby data source, connection pool, and JPA auto-schema-generation.
-- **Business logic** — implementing the persistent cart, order/inventory transaction with rollback, campaign auto-activation/expiry engine, dynamic discount pricing, and sales aggregation queries (top-10 products, daily/monthly reports).
-- **Authentication & authorization** — building the session-based login for customers and admins, and the filter-based RBAC (`AdminFilter`, `SessionFilter`) with manager/staff role separation.
-- **Module development** — end-to-end feature modules: product CRUD with Cloudinary image upload, checkout & payment gateway, order management, reviews & replies, and the analytics dashboard with Chart.js visualizations.
 
 ---
 
